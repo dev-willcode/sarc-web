@@ -3,10 +3,15 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 import Buefy from "buefy";
-import "buefy/dist/buefy.css";
 import config from "@/config";
 
-// para configuraciones del proyecto
+// estilos
+import "@/scss/main.scss";
+
+/* Service Worker */
+import "./registerServiceWorker";
+
+/* para configuraciones del proyecto */
 config.configurar();
 
 Vue.use(Buefy);

@@ -11,12 +11,10 @@
             a tu alcance.
           </p>
           <div class="buttons">
-            <button class="button is-primary is-rounded">Ver catalogo</button>
-            <button
-              class="button is-primary is-inverted is-outlined is-rounded"
-            >
+            <b-button class="b-button is-primary ">Ver catalogo</b-button>
+            <b-button class="b-button is-primary is-inverted is-outlined ">
               Sobre nosotros
-            </button>
+            </b-button>
           </div>
         </div>
       </div>
@@ -49,20 +47,14 @@
           <div class="column card">
             <div class="card-image">
               <figure class="image">
-                <img
-                  src="@/../public/images/announcement-1.jpg"
-                  alt="anuncio 1"
-                />
+                <img src="@/assets/images/announcement-1.jpg" alt="anuncio 1" />
               </figure>
             </div>
           </div>
           <div class="column card">
             <div class="card-image">
               <figure class="image">
-                <img
-                  src="@/../public/images/announcement-2.jpg"
-                  alt="anuncio 1"
-                />
+                <img src="@/assets/images/announcement-2.jpg" alt="anuncio 1" />
               </figure>
             </div>
           </div>
@@ -102,9 +94,11 @@
               </li>
             </ul>
           </div>
-          <button class="button is-primary is-rounded">
-            Reservar una cita
-          </button>
+          <div class="buttons">
+            <b-button class="b-button is-primary ">
+              Reservar una cita
+            </b-button>
+          </div>
         </div>
       </div>
     </section>
@@ -135,7 +129,7 @@ export default {
 
 <style scoped>
 #hero {
-  background-image: url("./../../public/images/hero-background.jpg");
+  background-image: url("./.././../assets/images/hero-background.jpg");
   background-position: center center;
   background-repeat: no-repeat;
   background-attachment: fixed;
@@ -143,7 +137,7 @@ export default {
   background-color: #999;
 }
 #section-1 {
-  background-image: url("./../../public/images/hero-section-1.jpg");
+  background-image: url("./.././../assets/images/hero-section-1.jpg");
   background-position: center center;
   background-repeat: no-repeat;
   background-attachment: fixed;

@@ -3,18 +3,25 @@
     <b-navbar>
       <template slot="brand">
         <b-navbar-item tag="router-link" :to="{ path: '/' }">
-          <img src="../../../public/images/logo.png" alt="SARC" />
+          <img src="./../../assets/images/logo.png" alt="SARC" />
         </b-navbar-item>
       </template>
       <template slot="end">
         <b-navbar-item tag="div">
           <div class="buttons">
-            <a class="button is-primary is-inverted is-outlined is-rounded">
-              <strong>Registrarse</strong>
-            </a>
-            <a class="button is-primary is-inverted is-outlined is-rounded">
-              <strong>Iniciar sesión</strong>
-            </a>
+            <b-button
+              type="is-primary"
+              inverted
+              @click="$router.push('/login/registro')"
+              >Registrarse</b-button
+            >
+            <b-button
+              type="is-primary"
+              inverted
+              outlined
+              @click="$router.push('/login/sesion')"
+              >Iniciar sesión</b-button
+            >
           </div>
         </b-navbar-item>
       </template>

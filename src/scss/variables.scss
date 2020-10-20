@@ -1,6 +1,3 @@
-// Import Bulma's core
-@import "~bulma/sass/utilities/_all";
-
 // Set your colors
 $primary: #1699f0;
 $primary-invert: findColorInvert($primary);
@@ -50,7 +47,3 @@ $colors: (
     $twitter-invert
   )
 );
-
-// Import Bulma and Buefy styles
-@import "~bulma";
-@import "~buefy/src/scss/buefy";
