@@ -5,7 +5,10 @@ import Login from "@/views/landing/Login";
 import Sesion from "@/views/landing/Sesion";
 import Registro from "@/views/landing/Registro";
 import Application from "@/views/Application";
-import Concesionario from "@/views/concesionario/Concesionario";
+
+//
+import ClientForm from "@/views/ClientForm";
+
 Vue.use(VueRouter);
 
 const routes = [
@@ -32,14 +35,14 @@ const routes = [
     component: Home
   },
   {
-    path: "/app",
-    name: "App",
+    path: "/apps",
+    name: "Apps",
     component: Application,
     children: [
       {
-        path: "",
-        name: "Consesionario",
-        component: Concesionario
+        path: "clientes",
+        name: "Clientes",
+        component: ClientForm
       }
     ]
   }

@@ -15,7 +15,7 @@
       </b-input>
     </b-field>
     <br />
-    <b-button type="is-primary" expanded @click="$router.push('/app/')"
+    <b-button type="is-primary" expanded @click="$router.push('/apps/')"
       >Iniciar sesión</b-button
     ><br />
     <p class="has-text-centered">
