@@ -4,7 +4,8 @@ import Home from "@/views/landing/Home";
 import Login from "@/views/landing/Login";
 import Sesion from "@/views/landing/Sesion";
 import Registro from "@/views/landing/Registro";
-
+import Application from "@/views/Application";
+import Concesionario from "@/views/concesionario/Concesionario";
 Vue.use(VueRouter);
 
 const routes = [
@@ -29,6 +30,18 @@ const routes = [
     path: "/",
     name: "Home",
     component: Home
+  },
+  {
+    path: "/app",
+    name: "App",
+    component: Application,
+    children: [
+      {
+        path: "",
+        name: "Consesionario",
+        component: Concesionario
+      }
+    ]
   }
 ];
 

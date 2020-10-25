@@ -60,7 +60,7 @@ export default {
   methods: {}
 };
 </script>
-<style>
+<style scoped>
 .sesion {
   padding: 0 10vw;
 }

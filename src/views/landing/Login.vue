@@ -49,8 +49,4 @@ export default {
 .back {
   padding: 0.5em;
 }
-
-.is-full-height {
-  height: 100vh;
-}
 </style>

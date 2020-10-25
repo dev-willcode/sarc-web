@@ -12,7 +12,7 @@
             <b-button
               type="is-primary"
               inverted
-              @click="$router.push('/login/registro')"
+              @click="$router.push('/login/register')"
               >Registrarse</b-button
             >
             <b-button

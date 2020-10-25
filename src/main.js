@@ -7,6 +7,7 @@ import config from "@/config";
 
 // estilos
 import "@/scss/main.scss";
+import "@/assets/css/estilos.css";
 
 /* Service Worker */
 import "./registerServiceWorker";

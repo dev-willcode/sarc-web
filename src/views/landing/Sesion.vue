@@ -15,7 +15,9 @@
       </b-input>
     </b-field>
     <br />
-    <b-button type="is-primary" expanded>Iniciar sesión</b-button><br />
+    <b-button type="is-primary" expanded @click="$router.push('/app/')"
+      >Iniciar sesión</b-button
+    ><br />
     <p class="has-text-centered">
       Aún no tienes cuenta?
       <router-link to="register">Regístrate</router-link>.
@@ -42,7 +44,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .sesion {
   padding: 0 10vw;
 }
