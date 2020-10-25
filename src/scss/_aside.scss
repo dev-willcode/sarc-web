@@ -1,5 +1,6 @@
 @include desktop {
   #entry {
+    padding-top: 3.25rem;
     &.has-aside-left {
       &.has-aside-expanded {
         nav.navbar,
@@ -121,6 +122,7 @@ aside.aside {
   }
   #entry.has-aside-mobile-transition {
     #body {
+      padding-top: 3.25rem;
       overflow-x: hidden;
     }
     #body,

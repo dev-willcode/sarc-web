@@ -128,9 +128,9 @@
 import mapValues from "lodash/mapValues";
 import TitleBar from "@/components/application/TitleBar";
 import CardComponent from "@/components/application/CardComponent";
-import CheckboxPicker from "@/components/CheckboxPicker";
-import RadioPicker from "@/components/RadioPicker";
-import FilePicker from "@/components/FilePicker";
+import CheckboxPicker from "@/components/application/CheckboxPicker";
+import RadioPicker from "@/components/application/RadioPicker";
+import FilePicker from "@/components/application/FilePicker";
 import HeroBar from "@/components/application/HeroBar";
 export default {
   name: "Forms",

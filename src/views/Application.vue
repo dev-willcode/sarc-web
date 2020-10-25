@@ -34,7 +34,7 @@ export default {
         "Inventario",
         [
           {
-            to: "clientes",
+            to: "/apps/clientes",
             label: "Clientes",
             icon: "users"
           },

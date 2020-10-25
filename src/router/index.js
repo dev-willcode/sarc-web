@@ -6,8 +6,7 @@ import Sesion from "@/views/landing/Sesion";
 import Registro from "@/views/landing/Registro";
 import Application from "@/views/Application";
 
-//
-import ClientForm from "@/views/ClientForm";
+import Forms from "@/views/inventario/Forms";
 
 Vue.use(VueRouter);
 
@@ -41,8 +40,8 @@ const routes = [
     children: [
       {
         path: "clientes",
-        name: "Clientes",
-        component: ClientForm
+        name: "clientes",
+        component: Forms
       }
     ]
   }
