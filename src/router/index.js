@@ -6,7 +6,8 @@ import Sesion from "@/views/landing/Sesion";
 import Registro from "@/views/landing/Registro";
 import Application from "@/views/Application";
 
-import Forms from "@/views/inventario/Forms";
+// Routing
+import inventarioRouting from "@/views/inventario/Routing/inventarioRouting";
 
 Vue.use(VueRouter);
 
@@ -37,13 +38,7 @@ const routes = [
     path: "/apps",
     name: "Apps",
     component: Application,
-    children: [
-      {
-        path: "clientes",
-        name: "clientes",
-        component: Forms
-      }
-    ]
+    children: [...inventarioRouting]
   }
 ];
 
