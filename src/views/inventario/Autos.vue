@@ -1,12 +1,14 @@
 <template>
-  <header-view titulo="Clientes" :stack-ruta="['SARC', 'Cliente']">
+  <header-view titulo="Autos" :stack-ruta="['SARC', 'Auto']">
     <template v-slot:contenido>
       <section class="section is-main-section">
         <card-component
           class="has-table has-mobile-sort-spaced"
-          title="Clientes"
+          title="Autos"
         >
-          <tabla-listado :url="`clientes/`" />
+          <clients-table-sample
+            :data-url="`${$router.options.base}data-sources/clients.json`"
+          />
         </card-component>
       </section>
     </template>
@@ -20,16 +22,15 @@
 
 <script>
 import baseVista from "@/components/shared/bases/baseVista";
-import TablaListado from "@/components/application/TablaListado";
-
+import ClientsTableSample from "@/components/application/ClientsTableSample";
 export default {
-  name: "Clientes",
+  name: "Autos",
   mixins: [baseVista],
   props: {
     icon: String
   },
   components: {
-    TablaListado
+    ClientsTableSample
   },
   data() {
     return {};

@@ -48,16 +48,18 @@ export default {
   components: {},
   data() {
     return {
-      vehiculosListado: [],
+      vehiculosListado: []
     };
   },
   created() {
-    this.peticion.get("auto/").then(response => {
-      this.vehiculosListado = response.data.results;
-    });
+    this.peticion
+      .get("usuario/?correo=hola&contrasena=hola")
+      .then((response) => {
+        this.vehiculosListado = response.data.results;
+      });
   },
   computed: {},
-  methods: {},
+  methods: {}
 };
 </script>
 <style scoped>
