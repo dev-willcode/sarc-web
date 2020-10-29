@@ -6,7 +6,7 @@
     <div id="body">
       <nav-bar />
       <aside-menu :menu="menu" />
-      <router-view />
+      <router-view :key="$route.path" />
     </div>
   </div>
 </template>

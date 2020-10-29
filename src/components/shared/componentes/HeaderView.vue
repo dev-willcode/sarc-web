@@ -3,7 +3,9 @@
     <title-bar :title-stack="stackRuta" />
     <hero-bar>
       {{ titulo }}
-      <slot name="botones"></slot>
+      <template v-slot:right>
+        <slot name="botones" />
+      </template>
     </hero-bar>
     <slot name="contenido"></slot>
   </div>

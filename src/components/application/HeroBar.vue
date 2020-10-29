@@ -21,12 +21,12 @@
 
 <script>
 export default {
-  name: 'HeroBar',
+  name: "HeroBar",
   props: {
     hasRightVisible: {
       type: Boolean,
       default: true
     }
   }
-}
+};
 </script>
