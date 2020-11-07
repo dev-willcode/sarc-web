@@ -1,11 +1,12 @@
 .field {
   &.has-check {
     .field-body {
-      margin-top: $default-padding * .125;
+      margin-top: $default-padding * 0.125;
     }
   }
   .control {
-    .mdi-24px.mdi-set, .mdi-24px.mdi:before {
+    .mdi-24px.mdi-set,
+    .mdi-24px.mdi:before {
       font-size: inherit;
     }
   }
@@ -16,28 +17,34 @@
   }
 }
 
-.input, .textarea, select {
+.input,
+.textarea,
+select {
   box-shadow: none;
 
-  &:focus, &:active {
-    box-shadow: none!important;
+  &:focus,
+  &:active {
+    box-shadow: none !important;
   }
 }
 
-.switch input[type=checkbox]+.check:before {
+.switch input[type="checkbox"] + .check:before {
   box-shadow: none;
 }
 
-.switch, .b-checkbox.checkbox {
-  input[type=checkbox] {
-    &:focus + .check, &:focus:checked + .check {
-      box-shadow: none!important;
+.switch,
+.b-checkbox.checkbox {
+  input[type="checkbox"] {
+    &:focus + .check,
+    &:focus:checked + .check {
+      box-shadow: none !important;
     }
   }
 }
 
-.b-checkbox.checkbox input[type=checkbox], .b-radio.radio input[type=radio] {
-  &+.check {
+.b-checkbox.checkbox input[type="checkbox"],
+.b-radio.radio input[type="radio"] {
+  & + .check {
     border: $checkbox-border;
   }
 }

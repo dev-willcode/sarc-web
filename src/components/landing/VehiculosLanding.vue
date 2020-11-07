@@ -51,13 +51,7 @@ export default {
       vehiculosListado: []
     };
   },
-  created() {
-    this.peticion
-      .get("usuario/?correo=hola&contrasena=hola")
-      .then((response) => {
-        this.vehiculosListado = response.data.results;
-      });
-  },
+  created() {},
   computed: {},
   methods: {}
 };

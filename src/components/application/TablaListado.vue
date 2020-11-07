@@ -33,7 +33,7 @@
       >
         <div class="buttons is-centeded">
           <router-link
-            :to="{ name: 'client.edit', params: { id: props.row.id } }"
+            :to="{ name: formulario, params: { id: props.row.id } }"
             class="button is-small is-primary"
           >
             <b-icon icon="account-edit" size="is-small" />
@@ -79,6 +79,7 @@ export default {
   components: { ModalBox },
   props: {
     url: String,
+    formulario: String,
     configuracion: {
       type: Array,
       default: () => []
@@ -105,7 +106,7 @@ export default {
   },
   created() {
     if (this.url) {
-      this.peticion("get", this.url, ({ data }) => {
+      this.peticion({ method: "get", url: this.url }, ({ data }) => {
         this.listado = data;
       });
     }

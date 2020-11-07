@@ -1,40 +1,37 @@
 export default {
   cliente: {
     titulo: "Clientes",
-    nuevaVista: "clientesformulario",
+    formulario: "clientesformulario",
     urlListado: "cliente",
     listado: [
       { label: "dni", field: "dni" },
-      { label: "nombres", field: "nombres" },
-      { label: "direccion", field: "direccion" },
-      { label: "telefono", field: "telefono" }
+      { label: "nombre", field: "nombre" },
+      { label: "domicilio", field: "domicilio" }
     ]
   },
   mecanico: {
     titulo: "Mecanicos",
-    nuevaVista: "mecanicosformulario",
+    formulario: "mecanicosformulario",
     urlListado: "mecanico",
     listado: [
       { label: "dni", field: "dni" },
-      { label: "nombres", field: "nombres" },
-      { label: "direccion", field: "direccion" },
-      { label: "telefono", field: "telefono" }
+      { label: "nombres", field: "nombre" },
+      { label: "domicilio", field: "domicilio" }
     ]
   },
   vendedor: {
     titulo: "Vendedores",
-    nuevaVista: "vendedoresformulario",
+    formulario: "vendedoresformulario",
     urlListado: "vendedor",
     listado: [
       { label: "dni", field: "dni" },
-      { label: "nombres", field: "nombres" },
-      { label: "direccion", field: "direccion" },
-      { label: "telefono", field: "telefono" }
+      { label: "nombres", field: "nombre" },
+      { label: "domicilio", field: "domicilio" }
     ]
   },
   auto: {
     titulo: "Autos",
-    nuevaVista: "autosformulario",
+    formulario: "autosformulario",
     urlListado: "auto",
     listado: [
       { label: "bastidor", field: "bastidor" },
@@ -44,7 +41,7 @@ export default {
   },
   servicio: {
     titulo: "Servicio",
-    nuevaVista: "servicioformulario",
+    formulario: "servicioformulario",
     urlListado: "servicio",
     listado: [
       { label: "dni", field: "dni" },
@@ -55,13 +52,13 @@ export default {
   },
   marca: {
     titulo: "Marcas",
-    nuevaVista: "marcasformulario",
+    formulario: "marcasformulario",
     urlListado: "marca",
     listado: [{ label: "descripcion", field: "descripcion" }]
   },
   modeloauto: {
     titulo: "Modelo auto",
-    nuevaVista: "modeloautoformulario",
+    formulario: "modeloautoformulario",
     urlListado: "modelo_auto",
     listado: [
       { label: "modelo", field: "nombre_modelo" },
@@ -72,7 +69,7 @@ export default {
   },
   equipamiento: {
     titulo: "Equipamientos",
-    nuevaVista: "equipamientosformulario",
+    formulario: "equipamientosformulario",
     urlListado: "equipamiento",
     listado: [
       { label: "nombre", field: "nombre" },
@@ -81,7 +78,7 @@ export default {
   },
   vehiculo: {
     titulo: "Vehiculos",
-    nuevaVista: "vehiculosformulario",
+    formulario: "vehiculosformulario",
     urlListado: "vehiculo",
     listado: [
       { label: "chasis", field: "chasis" },
@@ -91,7 +88,7 @@ export default {
   },
   revisiontecnica: {
     titulo: "Revision Técnica",
-    nuevaVista: "revisiontecnicaformulario",
+    formulario: "revisiontecnicaformulario",
     urlListado: "revision_tecnica",
     listado: [
       { label: "vehiculo", field: "vehiculo" },
@@ -101,7 +98,7 @@ export default {
   },
   citas: {
     titulo: "Citas",
-    nuevaVista: "citasformulario",
+    formulario: "citasformulario",
     urlListado: "citas",
     listado: [
       { label: "cliente", field: "cliente" },
@@ -110,7 +107,7 @@ export default {
   },
   facturaventa: {
     titulo: "facturaventa",
-    nuevaVista: "facturaventaformulario",
+    formulario: "facturaventaformulario",
     urlListado: "facturaventa",
     listado: [
       { label: "cliente", field: "cliente" },
@@ -119,7 +116,7 @@ export default {
   },
   facturaservicio: {
     titulo: "facturaservicio",
-    nuevaVista: "facturaservicioformulario",
+    formulario: "facturaservicioformulario",
     urlListado: "facturaservicio",
     listado: [
       { label: "cliente", field: "cliente" },

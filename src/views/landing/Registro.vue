@@ -1,39 +1,91 @@
 <template>
   <section class="column is-full sesion">
-    <h1 class="is-size-4 has-text-centered">Registro de usuario</h1>
+    <div class="is-size-4">
+      <router-link to="/">
+        <i class="back fa fa-arrow-left" />
+      </router-link>
+    </div>
+    <h1 class="is-size-4 has-text-centered">Registro de cliente</h1>
     <br />
-    <b-field label="Nombre">
-      <b-input v-model="usuario.nombre"></b-input>
-    </b-field>
-    <b-field label="Cédula">
-      <b-input v-model="usuario.dni"></b-input>
-    </b-field>
-    <b-field label="Domicilio">
-      <b-input v-model="usuario.domicilio"></b-input>
-    </b-field>
-    <b-field label="Correo">
-      <b-input v-model="usuario.correo"></b-input>
-    </b-field>
-    <b-field label="Contraseña">
-      <b-input
-        v-model="usuario.password"
-        type="password"
-        value=""
-        password-reveal
+    <ValidationObserver ref="observer" v-slot="{ handleSubmit }">
+      <validation-provider rules="required" v-slot="{ errors, valid }">
+        <b-field
+          label="Nombres y apellidos"
+          :type="errors[0] ? 'is-danger' : valid ? 'is-success' : ''"
+        >
+          <b-input v-model="cliente.nombre"></b-input>
+        </b-field>
+        <span class="has-text-danger">{{ errors[0] }}</span>
+      </validation-provider>
+
+      <validation-provider rules="required|min:10" v-slot="{ errors, valid }">
+        <b-field
+          label="Cédula"
+          v-mask="'##########'"
+          :type="errors[0] ? 'is-danger' : valid ? 'is-success' : ''"
+        >
+          <b-input v-model="cliente.dni"></b-input>
+        </b-field>
+        <span class="has-text-danger">{{ errors[0] }}</span>
+      </validation-provider>
+
+      <validation-provider rules="required" v-slot="{ errors, valid }">
+        <b-field
+          label="Domicilio"
+          :type="errors[0] ? 'is-danger' : valid ? 'is-success' : ''"
+        >
+          <b-input v-model="cliente.domicilio"></b-input>
+        </b-field>
+        <span class="has-text-danger">{{ errors[0] }}</span>
+      </validation-provider>
+
+      <validation-provider rules="required|email" v-slot="{ errors, valid }">
+        <b-field
+          label="Correo"
+          :type="errors[0] ? 'is-danger' : valid ? 'is-success' : ''"
+        >
+          <b-input v-model="usuario.correo"></b-input>
+        </b-field>
+        <span class="has-text-danger">{{ errors[0] }}</span>
+      </validation-provider>
+
+      <validation-provider rules="required" v-slot="{ errors, valid }">
+        <b-field
+          label="Contraseña"
+          :type="errors[0] ? 'is-danger' : valid ? 'is-success' : ''"
+        >
+          <b-input v-model="usuario.contrasena" type="password" password-reveal>
+          </b-input>
+        </b-field>
+        <span class="has-text-danger">{{ errors[0] }}</span>
+      </validation-provider>
+
+      <validation-provider
+        :rules="{
+          required: true,
+          is: [usuario.contrasena, 'contraseña']
+        }"
+        v-slot="{ errors, valid }"
       >
-      </b-input>
-    </b-field>
-    <b-field label="Confirme contraseña">
-      <b-input
-        v-model="passwordConfirmada"
-        type="password"
-        value=""
-        password-reveal
+        <b-field
+          label="Confirmar contraseña"
+          :type="errors[0] ? 'is-danger' : valid ? 'is-success' : ''"
+        >
+          <b-input v-model="confirmContrasena" type="password" password-reveal>
+          </b-input>
+        </b-field>
+        <span class="has-text-danger">{{ errors[0] }}</span>
+      </validation-provider>
+      <br />
+      <button
+        class="button is-primary is-fullwidth"
+        :class="{ 'is-loading': cargando }"
+        @click="handleSubmit(registrar)"
       >
-      </b-input>
-    </b-field>
+        Regístrate
+      </button>
+    </ValidationObserver>
     <br />
-    <b-button type="is-primary" expanded>Regístrate</b-button><br />
     <p class="has-text-centered">
       Ya tienes una cuenta?
       <router-link to="sesion">Inicia sesión</router-link>.
@@ -42,26 +94,62 @@
 </template>
 
 <script>
+import baseComponente from "@/components/shared/bases/baseComponente";
+import { mapMutations } from "vuex";
+
 export default {
   name: "Sesion",
   props: {},
-  mixins: [],
+  mixins: [baseComponente],
   data() {
     return {
-      passwordConfirmada: "",
+      confirmContrasena: "",
       usuario: {
         correo: "",
-        password: ""
+        contrasena: ""
+      },
+      cliente: {
+        nombre: "",
+        dni: "",
+        domicilio: ""
       }
     };
   },
   created() {},
   computed: {},
-  methods: {}
+  methods: {
+    ...mapMutations(["inicioSesion"]),
+    registrar() {
+      this.peticion(
+        { method: "post", url: "usuario/", payload: this.usuario },
+        (usuario) => {
+          if (usuario.status === 201) {
+            this.cliente.usuario = usuario.data.id;
+            this.peticion(
+              { method: "post", url: "cliente/", payload: this.cliente },
+              (cliente) => {
+                if (cliente.status === 201) {
+                  this.emitirMensaje(
+                    "Cliente registrado con exito!",
+                    "is-success"
+                  );
+                  this.inicioSesion(cliente.data);
+                  this.$router.push("/apps/");
+                } else this.notificarErrores(cliente);
+              }
+            );
+          } else this.notificarErrores(usuario);
+        }
+      );
+    }
+  }
 };
 </script>
 <style scoped>
 .sesion {
   padding: 0 10vw;
+}
+.field:not(:last-child) {
+  margin-bottom: 0px;
 }
 </style>

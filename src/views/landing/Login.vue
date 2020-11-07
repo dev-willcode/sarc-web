@@ -1,18 +1,15 @@
 <template>
   <div class="columns is-gapless">
     <div class="column">
-      <div class="is-flex is-flex-wrap-wrap is-full-height ">
-        <section class="column is-full is-align-self-flex-start">
-          <router-link to="/">
-            <i class="back is-size-3 fa fa-arrow-left" />
-          </router-link>
-        </section>
+      <div
+        class="is-flex is-flex-wrap-wrap is-full-height is-align-items-center"
+      >
         <router-view />
       </div>
     </div>
     <div
       id="login-background"
-      class="column is-flex is-full-height login-background"
+      class="column is-flex is-full-height login-background is-hidden-mobile"
     ></div>
   </div>
 </template>
@@ -24,19 +21,14 @@ export default {
   mixins: [],
   components: {},
   data() {
-    return {
-      usuario: {
-        user: "",
-        password: ""
-      }
-    };
+    return {};
   },
   created() {},
   computed: {},
   methods: {}
 };
 </script>
-<style>
+<style scoped>
 #login-background {
   background-image: url("./.././../assets/images/login-background.jpg");
   background-position: center center;
@@ -48,5 +40,8 @@ export default {
 
 .back {
   padding: 0.5em;
+}
+.field:not(:last-child) {
+  margin-bottom: 0px;
 }
 </style>

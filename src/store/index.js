@@ -5,38 +5,16 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    /* User */
-    userName: null,
-    userEmail: null,
-    userAvatar: null,
-
+    usuario: {},
     /* NavBar */
     isNavBarVisible: true,
-
-    /* FooterBar */
-    isFooterBarVisible: true,
-
-    /* Aside */
     isAsideVisible: true,
     isAsideMobileExpanded: false
   },
   mutations: {
-    /* A fit-them-all commit */
-    basic(state, payload) {
-      state[payload.key] = payload.value;
-    },
-
     /* User */
-    user(state, payload) {
-      if (payload.name) {
-        state.userName = payload.name;
-      }
-      if (payload.email) {
-        state.userEmail = payload.email;
-      }
-      if (payload.avatar) {
-        state.userAvatar = payload.avatar;
-      }
+    inicioSesion(state, usuario) {
+      state.usuario = usuario;
     },
 
     /* Aside Mobile */

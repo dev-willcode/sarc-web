@@ -4,7 +4,7 @@
     :stack-ruta="['SARC', configuracion.titulo]"
   >
     <template v-slot:botones>
-      <b-button @click="$router.push(configuracion.nuevaVista)">
+      <b-button @click="$router.push(configuracion.formulario)">
         Añadir
       </b-button>
     </template>
@@ -17,6 +17,7 @@
           <tabla-listado
             :url="configuracion.urlListado"
             :configuracion="configuracion.listado"
+            :formulario="configuracion.formulario"
           />
         </card-component>
       </section>

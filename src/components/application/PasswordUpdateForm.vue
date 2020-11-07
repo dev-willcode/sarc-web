@@ -43,7 +43,7 @@
           <button
             type="submit"
             class="button is-primary"
-            :class="{ 'is-loading': isLoading }"
+            :class="{ 'is-loading': cargando }"
           >
             Submit
           </button>

@@ -10,21 +10,33 @@ export default {
   },
   computed: {},
   methods: {
-    peticion(HttpMetthod, url, callback) {
+    peticion({ method, url, payload }, onResolve, onError) {
       this.cargando = true;
-      axios[HttpMetthod](url)
+      axios[method](url, payload)
         .then((response) => {
-          callback(response);
+          onResolve(response);
         })
-        .catch(() => {
-          this.$buefy.toast.open({
-            message: `Error: No se consiguió conectar con el servicio de datos.`,
-            type: "is-danger"
-          });
+        .catch((error) => {
+          if (onError) onError(error);
+          else {
+            this.emitirMensaje(
+              `Error: No se consiguió conectar con el servicio de datos.`,
+              "is-danger"
+            );
+          }
         })
         .finally(() => {
           this.cargando = false;
         });
+    },
+    notificarErrores(response) {
+      console.log(response);
+    },
+    emitirMensaje(mensaje, tipo = "is-dark") {
+      this.$buefy.toast.open({
+        message: mensaje,
+        type: tipo
+      });
     }
   }
 };
