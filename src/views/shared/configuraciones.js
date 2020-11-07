@@ -1,7 +1,7 @@
 export default {
   cliente: {
     titulo: "Clientes",
-    formulario: "clientesformulario",
+    formulario: "ClientesFormulario",
     urlListado: "cliente",
     listado: [
       { label: "dni", field: "dni" },
@@ -11,7 +11,7 @@ export default {
   },
   mecanico: {
     titulo: "Mecanicos",
-    formulario: "mecanicosformulario",
+    formulario: "MecanicoFormulario",
     urlListado: "mecanico",
     listado: [
       { label: "dni", field: "dni" },
@@ -21,7 +21,7 @@ export default {
   },
   vendedor: {
     titulo: "Vendedores",
-    formulario: "vendedoresformulario",
+    formulario: "VendedoresFormulario",
     urlListado: "vendedor",
     listado: [
       { label: "dni", field: "dni" },
@@ -31,7 +31,7 @@ export default {
   },
   auto: {
     titulo: "Autos",
-    formulario: "autosformulario",
+    formulario: "AutosFormulario",
     urlListado: "auto",
     listado: [
       { label: "bastidor", field: "bastidor" },
@@ -41,7 +41,7 @@ export default {
   },
   servicio: {
     titulo: "Servicio",
-    formulario: "servicioformulario",
+    formulario: "ServiciosFormulario",
     urlListado: "servicio",
     listado: [
       { label: "dni", field: "dni" },
@@ -52,13 +52,13 @@ export default {
   },
   marca: {
     titulo: "Marcas",
-    formulario: "marcasformulario",
+    formulario: "MarcasFormulario",
     urlListado: "marca",
     listado: [{ label: "descripcion", field: "descripcion" }]
   },
   modeloauto: {
     titulo: "Modelo auto",
-    formulario: "modeloautoformulario",
+    formulario: "ModeloAutoFormulario",
     urlListado: "modelo_auto",
     listado: [
       { label: "modelo", field: "nombre_modelo" },
@@ -69,7 +69,7 @@ export default {
   },
   equipamiento: {
     titulo: "Equipamientos",
-    formulario: "equipamientosformulario",
+    formulario: "EquipamientosFormulario",
     urlListado: "equipamiento",
     listado: [
       { label: "nombre", field: "nombre" },
@@ -78,7 +78,7 @@ export default {
   },
   vehiculo: {
     titulo: "Vehiculos",
-    formulario: "vehiculosformulario",
+    formulario: "VehiculosFormulario",
     urlListado: "vehiculo",
     listado: [
       { label: "chasis", field: "chasis" },
@@ -88,7 +88,7 @@ export default {
   },
   revisiontecnica: {
     titulo: "Revision Técnica",
-    formulario: "revisiontecnicaformulario",
+    formulario: "RevisionTecnicaFormulario",
     urlListado: "revision_tecnica",
     listado: [
       { label: "vehiculo", field: "vehiculo" },
@@ -98,7 +98,7 @@ export default {
   },
   citas: {
     titulo: "Citas",
-    formulario: "citasformulario",
+    formulario: "CitasFormulario",
     urlListado: "citas",
     listado: [
       { label: "cliente", field: "cliente" },

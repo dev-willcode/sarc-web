@@ -33,7 +33,10 @@
       >
         <div class="buttons is-centeded">
           <router-link
-            :to="{ name: formulario, params: { id: props.row.id } }"
+            :to="{
+              path: `${$route.path}/formulario`,
+              params: { id: props.row.id }
+            }"
             class="button is-small is-primary"
           >
             <b-icon icon="account-edit" size="is-small" />

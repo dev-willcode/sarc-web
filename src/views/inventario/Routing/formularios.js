@@ -1,69 +1,69 @@
 import configuraciones from "@/views/shared/configuraciones";
-export default [
-  {
-    path: "clientesformulario",
-    name: "clientesformulario",
+export default {
+  cliente: {
+    path: "formulario",
+    name: "ClientesFormulario",
     component: () => import("@/views/inventario/ClientesFormulario"),
     configuracion: configuraciones.cliente
   },
-  {
-    path: "mecanicosformulario",
-    name: "mecanicosformulario",
+  mecanico: {
+    path: "formulario",
+    name: "MecanicoFormulario",
     component: () => import("@/views/inventario/MecanicoFormulario"),
     configuracion: configuraciones.mecanico
   },
-  {
-    path: "vendedoresformulario",
-    name: "vendedoresformulario",
+  vendedor: {
+    path: "formulario",
+    name: "VendedoresFormulario",
     component: () => import("@/views/inventario/VendedoresFormulario"),
     configuracion: configuraciones.vendedor
   },
-  {
-    path: "autosformulario",
-    name: "autosformulario",
+  auto: {
+    path: "formulario",
+    name: "AutosFormulario",
     component: () => import("@/views/inventario/AutosFormulario"),
     configuracion: configuraciones.auto
   },
-  {
-    path: "servicioformulario",
-    name: "servicioformulario",
+  servicio: {
+    path: "formulario",
+    name: "ServiciosFormulario",
     component: () => import("@/views/inventario/ServiciosFormulario"),
     configuracion: configuraciones.servicio
   },
-  {
-    path: "marcasformulario",
-    name: "marcasformulario",
+  marca: {
+    path: "formulario",
+    name: "MarcasFormulario",
     component: () => import("@/views/inventario/MarcasFormulario"),
     configuracion: configuraciones.marca
   },
-  {
-    path: "modeloautoformulario",
-    name: "modeloautoformulario",
+  modeloauto: {
+    path: "formulario",
+    name: "ModeloAutoFormulario",
     component: () => import("@/views/inventario/ModeloAutoFormulario"),
     configuracion: configuraciones.modeloauto
   },
-  {
-    path: "equipamientosformulario",
-    name: "equipamientosformulario",
+  equipamiento: {
+    path: "formulario",
+    name: "EquipamientosFormulario",
     component: () => import("@/views/inventario/EquipamientosFormulario"),
     configuracion: configuraciones.equipamiento
   },
-  {
-    path: "vehiculosformulario",
-    name: "vehiculosformulario",
+  vehiculo: {
+    path: "formulario",
+    name: "VehiculosFormulario",
     component: () => import("@/views/inventario/VehiculosFormulario"),
     configuracion: configuraciones.vehiculo
   },
-  {
-    path: "revisiontecnicaformulario",
-    name: "revisiontecnicaformulario",
+  revisiontecnica: {
+    path: "formulario",
+    name: "RevisionTecnicaFormulario",
     component: () => import("@/views/inventario/RevisionTecnicaFormulario"),
     configuracion: configuraciones.revisiontecnica
   },
-  {
-    path: "citasformulario",
-    name: "citasformulario",
+  citas: {
+    path: "formulario",
+    name: "CitasFormulario",
     component: () => import("@/views/inventario/CitasFormulario"),
     configuracion: configuraciones.citas
   }
-];
+};
