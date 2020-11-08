@@ -20,7 +20,8 @@ export default {
         .catch((error) => {
           if (onError) onError(error);
           else {
-            if (error.response && error.response.status < 500) {
+            console.log(typeof error.response.data);
+            if (error.response && error.response.data) {
               this.notificarErrores(error.response);
             } else {
               this.emitirMensaje(

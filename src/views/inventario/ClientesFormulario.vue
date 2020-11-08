@@ -1,5 +1,5 @@
 <template>
-  <card-component title="Formulario de cliente">
+  <card-component title="Formulario">
     <div class="p-5">
       <ValidationObserver ref="observer" v-slot="{ handleSubmit }">
         <validation-provider rules="required|min:10" v-slot="{ errors, valid }">

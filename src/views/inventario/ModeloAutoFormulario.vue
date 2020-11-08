@@ -1,120 +1,158 @@
 <template>
-  <header-view titulo="Modelos de Autos" :stack-ruta="['SARC', 'Modelos de Autos']">
-    <template v-slot:contenido>
-      <section class="section is-main-section">
-        <card-component title="Formulario de Modelos de Autos" :icon="icon">
-          <form @submit.prevent="submit">
-            
-              <b-field label="Marca" horizontal>
-            <b-select placeholder="Elija...">                
+  <card-component title="Formulario">
+    <div class="p-5">
+      <ValidationObserver ref="observer" v-slot="{ handleSubmit }">
+        <validation-provider rules="required" v-slot="{ errors, valid }">
+          <b-field
+            label="Marca"
+            horizontal
+            :type="errors[0] ? 'is-danger' : valid ? 'is-success' : ''"
+          >
+            <div class="row">
+              <b-select
+                v-model="modeloAuto.marca"
+                placeholder="Elija la marca..."
+                expanded
+              >
                 <option
-                    v-for="Marca in data"
-                    :value="Marca.id"
-                    :key="Marca.id">
-                    {{ Marca.user.first_name }}
+                  v-for="marca in marcaListado"
+                  :value="marca.id"
+                  :key="marca.id"
+                >
+                  {{ marca.descripcion }}
                 </option>
-                
-            </b-select>
-            </b-field>
-                        
-            <b-field label="Nombre" horizontal>
+              </b-select>
+              <span class="has-text-danger">{{ errors[0] }}</span>
+            </div>
+          </b-field>
+        </validation-provider>
+        <validation-provider rules="required" v-slot="{ errors, valid }">
+          <b-field
+            label="Nombre"
+            horizontal
+            :type="errors[0] ? 'is-danger' : valid ? 'is-success' : ''"
+          >
+            <div class="row">
               <b-input
-                v-model="form.nombre"
-                placeholder="Nombre del modelo de auto..."
+                v-model="modeloAuto.nombre_modelo"
+                placeholder="nombre..."
               />
-            </b-field>
-            <b-field label="Potencia" horizontal>
-              <b-input
-                v-model="form.potencia"
-                placeholder="Potencia modelo..."
-              />
-            </b-field>
+              <span class="has-text-danger">{{ errors[0] }}</span>
+            </div>
+          </b-field>
+        </validation-provider>
+        <validation-provider rules="required" v-slot="{ errors, valid }">
+          <b-field
+            label="Potencia"
+            horizontal
+            :type="errors[0] ? 'is-danger' : valid ? 'is-success' : ''"
+          >
+            <div class="row">
+              <numeric
+                class="input"
+                :class="valid ? 'is-success' : 'is-danger'"
+                v-model="modeloAuto.potencia"
+                placeholder="potencia..."
+              ></numeric>
+              <span class="has-text-danger">{{ errors[0] }}</span>
+            </div>
+          </b-field>
+        </validation-provider>
+        <validation-provider rules="required" v-slot="{ errors, valid }">
+          <b-field
+            label="Cilindraje"
+            horizontal
+            :type="errors[0] ? 'is-danger' : valid ? 'is-success' : ''"
+          >
+            <div class="row">
+              <numeric
+                class="input"
+                :class="valid ? 'is-success' : 'is-danger'"
+                :options="'integer'"
+                v-model="modeloAuto.cilindraje"
+                placeholder="cilindraje..."
+              ></numeric>
+              <span class="has-text-danger">{{ errors[0] }}</span>
+            </div>
+          </b-field>
+        </validation-provider>
+        <validation-provider rules="required" v-slot="{ errors, valid }">
+          <b-field
+            label="Precio"
+            horizontal
+            :type="errors[0] ? 'is-danger' : valid ? 'is-success' : ''"
+          >
+            <div class="row">
+              <numeric
+                class="input"
+                :class="valid ? 'is-success' : 'is-danger'"
+                :options="'dollar'"
+                v-model="modeloAuto.precio"
+                placeholder="precio..."
+              ></numeric>
+              <span class="has-text-danger">{{ errors[0] }}</span>
+            </div>
+          </b-field>
+        </validation-provider>
 
-            <b-field label="Cilindraje" horizontal>
-              <b-input
-                v-model="form.cilindraje"
-                placeholder="Cilindraje modelo..."
-              />
-            </b-field>
-
-            <b-field label="Precio" horizontal>
-              <b-input
-                v-model="form.precio"
-                placeholder="Precio modelo..."
-              />
-            </b-field>
-            
-            <hr />
-            <b-field horizontal>
-              <b-field grouped>
-                <div class="control">
-                  <b-button native-type="submit" type="is-primary"
-                    >Guardar</b-button>
-                </div>
-                <div class="control">
-                  <b-button type="is-primary is-outlined" @click="reset"
-                    >Cancelar</b-button>
-                </div>
-              </b-field>
-            </b-field>
-          </form>
-        </card-component>
-      </section>
-    </template>
-  </header-view>
+        <br />
+        <b-field horizontal>
+          <b-field grouped>
+            <div class="control">
+              <b-button
+                v-if="accion === 'NUEVO'"
+                type="is-primary"
+                :class="{ 'is-loading': cargando }"
+                @click="handleSubmit(guardar)"
+                >Guardar</b-button
+              >
+              <b-button
+                v-else
+                type="is-primary"
+                :class="{ 'is-loading': cargando }"
+                @click="handleSubmit(editar)"
+                >Editar</b-button
+              >
+            </div>
+            <div class="control">
+              <b-button type="is-primary is-outlined" @click="$router.back()"
+                >Cancelar</b-button
+              >
+            </div>
+          </b-field>
+        </b-field>
+      </ValidationObserver>
+    </div>
+  </card-component>
 </template>
 
 <script>
-
-import baseVista from "@/components/shared/bases/baseVista";
-
-import mapValues from "lodash/mapValues";
-import CardComponent from "@/components/application/CardComponent";
+import baseFormulario from "@/components/shared/bases/baseFormulario";
 
 export default {
-  name: "Servicios",
-  mixins: [baseVista],
-  props: {
-    icon: String
-  },
-  components: {
-    CardComponent
-  },
+  name: "Marcas",
+  mixins: [baseFormulario],
   data() {
     return {
-      isLoading: false,
-      form: {
+      entidad: "modeloAuto",
+      url: "modelo_auto",
+      modeloAuto: {
         marca: null,
-        nombre: null,
-        potencia: null,
-        cilindraje: null,
-        precio: null
+        nombre_modelo: "",
+        potencia: 0,
+        cilindraje: 0,
+        precio: 0
       },
-      customElementsForm: {
-        checkbox: [],
-        radio: null,
-        switch: true,
-        file: null
-      },
-      departments: ["Business Development", "Marketing", "Sales"]
+      //listados
+      marcaListado: []
     };
   },
+  created() {
+    this.peticion({ method: "get", url: "marca" }, ({ data }) => {
+      this.marcaListado = data.results;
+    });
+  },
   computed: {},
-  methods: {
-    submit() {},
-    reset() {
-      this.form = mapValues(this.form, (item) => {
-        if (item && typeof item === "object") {
-          return [];
-        }
-        return null;
-      });
-
-      this.$buefy.snackbar.open({
-        message: "Reset successfully",
-        queue: false
-      });
-    }
-  }
+  methods: {}
 };
 </script>

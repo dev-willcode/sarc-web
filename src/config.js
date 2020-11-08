@@ -1,15 +1,17 @@
 import Vue from "vue";
 import axios from "axios";
 import { ValidationProvider, ValidationObserver } from "vee-validate";
-import { required, email, min } from "vee-validate/dist/rules";
+import { required, email, min, double } from "vee-validate/dist/rules";
 import { extend } from "vee-validate";
 import { VueMaskDirective } from "v-mask";
+import VueAutonumeric from "vue-autonumeric/src/components/VueAutonumeric.vue";
 
 const configuraciones = {
   configurar() {
     this.configurarAxios();
     this.configurarValidaciones();
     this.configurarDirectivas();
+    this.configurarDecimales();
   },
   configurarAxios() {
     axios.defaults.baseURL = "http://localhost:8000/api/";
@@ -27,10 +29,9 @@ const configuraciones = {
       ...email,
       message: "El campo debe ser un email válido"
     });
-    extend("min", {
-      ...min,
-      params: ["length"],
-      message: "El campo debe tener al menos {length} dígitos"
+    extend("decimal", {
+      ...double,
+      message: "El campo debe tener un máximo de {decimals} decimales"
     });
     extend("min", {
       ...min,
@@ -45,6 +46,9 @@ const configuraciones = {
   },
   configurarDirectivas() {
     Vue.directive("mask", VueMaskDirective);
+  },
+  configurarDecimales() {
+    Vue.component("numeric", VueAutonumeric);
   }
 };
 export default configuraciones;
