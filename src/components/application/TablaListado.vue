@@ -1,10 +1,9 @@
 <template>
   <section>
-    <modal-box
-      :is-active="isModalActive"
-      :trash-object-name="trashObjectName"
-      @confirm="trashConfirm"
-      @cancel="trashCancel"
+    <modal-borrar
+      :is-active="modalActivo"
+      @confirm="eliminar"
+      @cancel="cancelar"
     />
     <b-table
       :loading="cargando"
@@ -12,7 +11,6 @@
       :per-page="perPage"
       :striped="true"
       :hoverable="true"
-      default-sort="name"
       :data="listado"
     >
       <b-table-column
@@ -45,7 +43,7 @@
           <button
             class="button is-small is-danger"
             type="button"
-            @click.prevent="trashModal(props.row)"
+            @click.prevent="confirmarEliminacion(props.row)"
           >
             <b-icon icon="trash-can" size="is-small" />
             <span>Eliminar</span>
@@ -75,11 +73,11 @@
 
 <script>
 import baseComponente from "@/components/shared/bases/baseComponente";
-import ModalBox from "@/components/application/ModalBox";
+import ModalBorrar from "@/components/application/ModalBorrar";
 export default {
   name: "TablaListado",
   mixins: [baseComponente],
-  components: { ModalBox },
+  components: { ModalBorrar },
   props: {
     url: String,
     formulario: String,
@@ -93,41 +91,38 @@ export default {
       listado: [],
       paginated: true,
       perPage: 10,
-
-      trashObject: null,
-      isModalActive: false
+      modalActivo: false,
+      entidad: null
     };
   },
-  computed: {
-    trashObjectName() {
-      if (this.trashObject) {
-        return this.trashObject.name;
-      }
-
-      return null;
-    }
-  },
+  computed: {},
   created() {
-    if (this.url) {
+    if (this.url) this.listar();
+  },
+  methods: {
+    listar() {
       this.peticion({ method: "get", url: this.url }, ({ data }) => {
         this.listado = data.results;
       });
-    }
-  },
-  methods: {
-    trashModal(trashObject) {
-      this.trashObject = trashObject;
-      this.isModalActive = true;
     },
-    trashConfirm() {
-      this.isModalActive = false;
-      this.$buefy.snackbar.open({
-        message: "Confirmed",
-        queue: false
-      });
+    confirmarEliminacion(entidad) {
+      this.entidad = entidad;
+      this.modalActivo = true;
     },
-    trashCancel() {
-      this.isModalActive = false;
+    eliminar() {
+      this.modalActivo = false;
+      this.peticion(
+        { method: "delete", url: `${this.url}/${this.entidad.id}/` },
+        (response) => {
+          if (response.status == 204) {
+            this.emitirMensaje("Eliminado con éxito!", "is-success");
+            this.listar();
+          } else this.notificarErrores(response);
+        }
+      );
+    },
+    cancelar() {
+      this.modalActivo = false;
     }
   }
 };

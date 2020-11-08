@@ -5,6 +5,7 @@ import Login from "@/views/landing/Login";
 import Sesion from "@/views/landing/Sesion";
 import Registro from "@/views/landing/Registro";
 import Application from "@/views/Application";
+import store from "@/store";
 
 // Routing
 import inventario from "@/views/inventario/Routing/inventario";
@@ -46,6 +47,13 @@ const router = new VueRouter({
   mode: "history",
   base: process.env.BASE_URL,
   routes
+});
+
+router.beforeEach((to, from, next) => {
+  if (to.fullPath.includes("/apps/")) {
+    if (store.state.usuario) next();
+    else next({ name: "sesion" });
+  } else next();
 });
 
 export default router;

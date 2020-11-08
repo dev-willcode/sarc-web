@@ -22,12 +22,12 @@
     >
       <div class="navbar-end">
         <nav-bar-menu class="has-divider has-user-avatar">
-          <user-avatar />
+          <b-icon pack="fas" icon="user" custom-size="default"></b-icon>
           <div class="is-user-name">
-            <span>{{ userName }}</span>
+            <span>{{ usuario.nombre }}</span>
           </div>
           <div slot="dropdown" class="navbar-dropdown">
-            <a class="navbar-item">
+            <a class="navbar-item" @click="cerrar">
               <b-icon icon="logout" custom-size="default"></b-icon>
               <span>Log Out</span>
             </a>
@@ -39,14 +39,12 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapMutations } from "vuex";
 import NavBarMenu from "@/components/application/NavBarMenu";
-import UserAvatar from "@/components/application/UserAvatar";
 
 export default {
   name: "NavBar",
   components: {
-    UserAvatar,
     NavBarMenu
   },
   data() {
@@ -61,7 +59,7 @@ export default {
     menuToggleMobileIcon() {
       return this.isAsideMobileExpanded ? "bars" : "bars";
     },
-    ...mapState(["isNavBarVisible", "isAsideMobileExpanded", "userName"])
+    ...mapState(["isNavBarVisible", "isAsideMobileExpanded", "usuario"])
   },
   mounted() {
     this.$router.afterEach(() => {
@@ -69,17 +67,16 @@ export default {
     });
   },
   methods: {
+    ...mapMutations(["cerrarSesion"]),
     menuToggleMobile() {
       this.$store.commit("asideMobileStateToggle");
     },
     menuNavBarToggle() {
       this.isMenuNavBarActive = !this.isMenuNavBarActive;
     },
-    logout() {
-      this.$buefy.snackbar.open({
-        message: "Log out clicked",
-        queue: false
-      });
+    cerrar() {
+      this.cerrarSesion();
+      this.$router.push({ path: "/" });
     }
   }
 };

@@ -26,7 +26,7 @@ export default {
         "General",
         [
           {
-            to: "/apps/apps",
+            to: "/apps/",
             label: "Inicio",
             icon: "home"
           }

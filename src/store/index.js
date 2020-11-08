@@ -5,7 +5,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    usuario: {},
+    usuario: null,
     /* NavBar */
     isNavBarVisible: true,
     isAsideVisible: true,
@@ -15,6 +15,9 @@ export default new Vuex.Store({
     /* User */
     inicioSesion(state, usuario) {
       state.usuario = usuario;
+    },
+    cerrarSesion(state) {
+      state.usuario = null;
     },
 
     /* Aside Mobile */

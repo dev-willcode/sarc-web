@@ -20,8 +20,7 @@ export default {
         .catch((error) => {
           if (onError) onError(error);
           else {
-            console.log(typeof error.response.data);
-            if (error.response && error.response.data) {
+            if (error.response && Array.isArray(error.response.data)) {
               this.notificarErrores(error.response);
             } else {
               this.emitirMensaje(
