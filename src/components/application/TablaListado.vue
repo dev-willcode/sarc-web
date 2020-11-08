@@ -34,7 +34,7 @@
         <div class="buttons is-centeded">
           <router-link
             :to="{
-              path: `${$route.path}/formulario`,
+              name: formulario,
               params: { id: props.row.id }
             }"
             class="button is-small is-primary"
@@ -110,7 +110,7 @@ export default {
   created() {
     if (this.url) {
       this.peticion({ method: "get", url: this.url }, ({ data }) => {
-        this.listado = data;
+        this.listado = data.results;
       });
     }
   },

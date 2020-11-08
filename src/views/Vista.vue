@@ -8,10 +8,14 @@
         v-if="!$route.path.includes('formulario')"
         @click="$router.push({ name: configuracion.formulario })"
       >
-        Añadir
+        <b-icon pack="fas" icon="plus" custom-size="default" />
+        <span>Añadir</span>
       </b-button>
       <b-button v-else @click="$router.back()">
-        Regresar
+        <b-icon pack="fas" icon="chevron-left" custom-size="default" />
+        <span>
+          Regresar
+        </span>
       </b-button>
     </template>
     <template v-slot:contenido>

@@ -44,7 +44,7 @@
           label="Correo"
           :type="errors[0] ? 'is-danger' : valid ? 'is-success' : ''"
         >
-          <b-input v-model="usuario.correo"></b-input>
+          <b-input v-model="cliente.correo"></b-input>
         </b-field>
         <span class="has-text-danger">{{ errors[0] }}</span>
       </validation-provider>
@@ -111,7 +111,8 @@ export default {
       cliente: {
         nombre: "",
         dni: "",
-        domicilio: ""
+        domicilio: "",
+        correo: ""
       }
     };
   },
@@ -120,13 +121,14 @@ export default {
   methods: {
     ...mapMutations(["inicioSesion"]),
     registrar() {
+      this.usuario.correo = this.cliente.correo;
       this.peticion(
-        { method: "post", url: "usuario/", payload: this.usuario },
+        { method: "post", url: "usuario", payload: this.usuario },
         (usuario) => {
           if (usuario.status === 201) {
             this.cliente.usuario = usuario.data.id;
             this.peticion(
-              { method: "post", url: "cliente/", payload: this.cliente },
+              { method: "post", url: "cliente", payload: this.cliente },
               (cliente) => {
                 if (cliente.status === 201) {
                   this.emitirMensaje(
@@ -148,8 +150,5 @@ export default {
 <style scoped>
 .sesion {
   padding: 0 10vw;
-}
-.field:not(:last-child) {
-  margin-bottom: 0px;
 }
 </style>

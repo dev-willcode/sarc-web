@@ -67,7 +67,7 @@ export default {
     ...mapMutations(["inicioSesion"]),
     login() {
       this.peticion(
-        { method: "post", url: "login/", payload: this.usuario },
+        { method: "post", url: "login", payload: this.usuario },
         (response) => {
           if (response.status === 200) {
             this.inicioSesion(response.data);

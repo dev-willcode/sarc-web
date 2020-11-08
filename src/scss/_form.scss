@@ -10,6 +10,9 @@
       font-size: inherit;
     }
   }
+  &.is-horizontal {
+    margin-bottom: 1rem !important;
+  }
 }
 .upload {
   .upload-draggable {

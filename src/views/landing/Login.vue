@@ -41,7 +41,4 @@ export default {
 .back {
   padding: 0.5em;
 }
-.field:not(:last-child) {
-  margin-bottom: 0px;
-}
 </style>

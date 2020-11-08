@@ -3,6 +3,7 @@ export default {
   cliente: {
     path: "formulario",
     name: "ClientesFormulario",
+    props: true,
     component: () => import("@/views/inventario/ClientesFormulario"),
     configuracion: configuraciones.cliente
   },

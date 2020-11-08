@@ -26,7 +26,7 @@ export default {
         "General",
         [
           {
-            to: "/apps",
+            to: "/apps/apps",
             label: "Inicio",
             icon: "home"
           }
@@ -39,37 +39,37 @@ export default {
             icon: "users"
           },
           {
-            to: "vendedores",
+            to: "/apps/vendedores",
             label: "Vendedores",
             icon: "user-tie"
           },
           {
-            to: "servicio",
+            to: "/apps/servicio",
             label: "Servicios",
             icon: "location-arrow"
           },
           {
-            to: "autos",
+            to: "/apps/autos",
             label: "Autos",
             icon: "car"
           },
           {
-            to: "modeloauto",
+            to: "/apps/modeloauto",
             label: "Modelo autos",
             icon: "truck-pickup"
           },
           {
-            to: "equipamientos",
+            to: "/apps/equipamientos",
             label: "Equipamientos",
             icon: "cube"
           },
           {
-            to: "marcas",
+            to: "/apps/marcas",
             label: "Marcas",
             icon: "shield-alt"
           },
           {
-            to: "facturaventa",
+            to: "/apps/facturaventa",
             label: "Factura de ventas",
             icon: "file-invoice-dollar"
           }
@@ -77,27 +77,27 @@ export default {
         "Servicios",
         [
           {
-            to: "mecanicos",
+            to: "/apps/mecanicos",
             label: "Mecanicos",
             icon: "user-cog"
           },
           {
-            to: "vehiculos",
+            to: "/apps/vehiculos",
             label: "Vehiculos",
             icon: "car-side"
           },
           {
-            to: "citas",
+            to: "/apps/citas",
             label: "Citas",
             icon: "clock"
           },
           {
-            to: "revisiontecnica",
+            to: "/apps/revisiontecnica",
             label: "Revision tecnica",
             icon: "car-crash"
           },
           {
-            to: "facturaservicio",
+            to: "/apps/facturaservicio",
             label: "Factura de servicio",
             icon: "file-invoice-dollar"
           }

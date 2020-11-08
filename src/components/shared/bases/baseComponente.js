@@ -12,6 +12,7 @@ export default {
   methods: {
     peticion({ method, url, payload }, onResolve, onError) {
       this.cargando = true;
+      url += url[url.length - 1] === "/" ? "" : "/";
       axios[method](url, payload)
         .then((response) => {
           onResolve(response);
@@ -19,10 +20,14 @@ export default {
         .catch((error) => {
           if (onError) onError(error);
           else {
-            this.emitirMensaje(
-              `Error: No se consiguió conectar con el servicio de datos.`,
-              "is-danger"
-            );
+            if (error.response && error.response.status < 500) {
+              this.notificarErrores(error.response);
+            } else {
+              this.emitirMensaje(
+                `Error: No se consiguió conectar con el servicio de datos.`,
+                "is-danger"
+              );
+            }
           }
         })
         .finally(() => {
@@ -30,7 +35,22 @@ export default {
         });
     },
     notificarErrores(response) {
-      console.log(response);
+      this.$buefy.notification.open({
+        duration: 5000,
+        message: `Ocurrió un error al procesar la solicitud.<br />
+         <b>Revise con atención:</b><br/>
+         ${this.procesarErrores(response.data)}`,
+        position: "is-bottom-right",
+        type: "is-danger",
+        hasIcon: true
+      });
+    },
+    procesarErrores(data) {
+      let errores = "";
+      for (const error in data) {
+        errores += `${error}: ${data[error][0]}<br/>`;
+      }
+      return errores;
     },
     emitirMensaje(mensaje, tipo = "is-dark") {
       this.$buefy.toast.open({
