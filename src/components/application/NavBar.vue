@@ -24,12 +24,12 @@
         <nav-bar-menu class="has-divider has-user-avatar">
           <b-icon pack="fas" icon="user" custom-size="default"></b-icon>
           <div class="is-user-name">
-            <span>{{ usuario.nombre }}</span>
+            <span>{{ usuario.persona.nombre }}</span>
           </div>
           <div slot="dropdown" class="navbar-dropdown">
             <a class="navbar-item" @click="cerrar">
               <b-icon icon="logout" custom-size="default"></b-icon>
-              <span>Log Out</span>
+              <span>Cerrar sesión</span>
             </a>
           </div>
         </nav-bar-menu>

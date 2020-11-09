@@ -105,7 +105,7 @@ export default [
     path: "facturaventa",
     name: "facturaventa",
     component: () => import("@/views/Vista"),
-    // children: [formularios.facturaventa],
+    children: [formularios.facturaventa],
     props: {
       configuracion: configuraciones.facturaventa
     }
@@ -114,7 +114,7 @@ export default [
     path: "facturaservicio",
     name: "facturaservicio",
     component: () => import("@/views/Vista"),
-    // children: [formularios.facturaservicio],
+    children: [formularios.facturaservicio],
     props: {
       configuracion: configuraciones.facturaservicio
     }

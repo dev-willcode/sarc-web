@@ -5,6 +5,7 @@
         <b-icon v-if="icon" :icon="icon" custom-size="default" />
         {{ title }}
       </p>
+      <span class="card-header-icon"><slot name="card-header"/></span>
       <a
         v-if="headerIcon"
         href="#"
@@ -23,7 +24,7 @@
 
 <script>
 export default {
-  name: 'CardComponent',
+  name: "CardComponent",
   props: {
     title: {
       type: String,
@@ -39,9 +40,9 @@ export default {
     }
   },
   methods: {
-    headerIconClick () {
-      this.$emit('header-icon-click')
+    headerIconClick() {
+      this.$emit("header-icon-click");
     }
   }
-}
+};
 </script>

@@ -20,7 +20,7 @@ export default {
         .catch((error) => {
           if (onError) onError(error);
           else {
-            if (error.response && Array.isArray(error.response.data)) {
+            if (error.response && [400].includes(error.response.status)) {
               this.notificarErrores(error.response);
             } else {
               this.emitirMensaje(
@@ -35,13 +35,19 @@ export default {
         });
     },
     notificarErrores(response) {
-      this.$buefy.notification.open({
-        duration: 5000,
-        message: `Ocurrió un error al procesar la solicitud.<br />
+      this.notificar(
+        `Ocurrió un error al procesar la solicitud.<br />
          <b>Revise con atención:</b><br/>
          ${this.procesarErrores(response.data)}`,
+        "is-danger"
+      );
+    },
+    notificar(mensaje, tipo) {
+      this.$buefy.notification.open({
+        duration: 5000,
+        message: mensaje,
         position: "is-bottom-right",
-        type: "is-danger",
+        type: tipo,
         hasIcon: true
       });
     },

@@ -1,106 +1,123 @@
 <template>
-  <header-view titulo="Servicios" :stack-ruta="['SARC', 'Servicios']">
-    <template v-slot:contenido>
-      <section class="section is-main-section">
-        <card-component title="Formulario de servicios" :icon="icon">
-          <form @submit.prevent="submit">
-            <b-field label="DNI" horizontal>
+  <card-component title="Formulario">
+    <div class="p-5">
+      <ValidationObserver ref="observer" v-slot="{ handleSubmit }">
+        
+        <validation-provider rules="required" v-slot="{ errors, valid }">
+          <b-field
+            label="DNI"
+            horizontal
+            :type="errors[0] ? 'is-danger' : valid ? 'is-success' : ''"
+          >
+            <div class="row">
               <b-input
-                v-model="form.dni"
+                v-model="servicio.dni"
                 placeholder="Identificador..."
               />
-            </b-field>
-            <b-field label="Nombre" horizontal>
+              <span class="has-text-danger">{{ errors[0] }}</span>
+            </div>
+          </b-field>
+        </validation-provider>
+        <validation-provider rules="required" v-slot="{ errors, valid }">
+          <b-field
+            label="Nombres"
+            horizontal
+            :type="errors[0] ? 'is-danger' : valid ? 'is-success' : ''"
+          >
+            <div class="row">
               <b-input
-                v-model="form.nombre"
-                placeholder="Nombre del servicio..."
+                v-model="servicio.nombre"
+                placeholder="nombres y apellidos..."
               />
-            </b-field>
-            <b-field label="Dirección" horizontal>
+              <span class="has-text-danger">{{ errors[0] }}</span>
+            </div>
+          </b-field>
+        </validation-provider>
+        <validation-provider rules="required" v-slot="{ errors, valid }">
+          <b-field
+            label="Dirección"
+            horizontal
+            :type="errors[0] ? 'is-danger' : valid ? 'is-success' : ''"
+          >
+            <div class="row">
               <b-input
-                v-model="form.domicilio"
+                v-model="servicio.domicilio"
                 placeholder="Dirección o domicilio..."
               />
-            </b-field>
-           <b-field label="Tipo" horizontal>
-            <b-select placeholder="Elija...">
-                <!--for para recorrer las opciones (modelos)--> 
-                <option value="1">Consesionario</option>
-                <option value="2">Taller</option>
-            </b-select>
-            </b-field>  
+              <span class="has-text-danger">{{ errors[0] }}</span>
+            </div>
+          </b-field>
+        </validation-provider>
+        <validation-provider rules="required" v-slot="{ errors, valid }">
+          <b-field
+            label="Tipo"
+            horizontal
+            :type="errors[0] ? 'is-danger' : valid ? 'is-success' : ''"
+          >
+            <div class="row">
+              <b-select
+                v-model="servicio.tipo"
+                placeholder="Elija la marca..."
+                expanded
+              >
+                <option value="Consesionario">Consesionario</option>
+                <option value="Taller">Taller</option>
+              </b-select>
+              <span class="has-text-danger">{{ errors[0] }}</span>
+            </div>
+          </b-field>
+        </validation-provider>
 
-            <hr />
-            <b-field horizontal>
-              <b-field grouped>
-                <div class="control">
-                  <b-button native-type="submit" type="is-primary"
-                    >Guardar</b-button
-                  >
-                </div>
-                <div class="control">
-                  <b-button type="is-primary is-outlined" @click="reset"
-                    >Cancelar</b-button
-                  >
-                </div>
-              </b-field>
-            </b-field>
-          </form>
-        </card-component>
-      </section>
-    </template>
-  </header-view>
+        <br />
+        <b-field horizontal>
+          <b-field grouped>
+            <div class="control">
+              <b-button
+                v-if="accion === 'NUEVO'"
+                type="is-primary"
+                :class="{ 'is-loading': cargando }"
+                @click="handleSubmit(guardar)"
+                >Guardar</b-button
+              >
+              <b-button
+                v-else
+                type="is-primary"
+                :class="{ 'is-loading': cargando }"
+                @click="handleSubmit(editar)"
+                >Editar</b-button
+              >
+            </div>
+            <div class="control">
+              <b-button type="is-primary is-outlined" @click="$router.back()"
+                >Cancelar</b-button
+              >
+            </div>
+          </b-field>
+        </b-field>
+      </ValidationObserver>
+    </div>
+  </card-component>
 </template>
 
 <script>
-import baseVista from "@/components/shared/bases/baseVista";
-
-import mapValues from "lodash/mapValues";
-import CardComponent from "@/components/application/CardComponent";
+import baseFormulario from "@/components/shared/bases/baseFormulario";
 
 export default {
   name: "Servicios",
-  mixins: [baseVista],
-  props: {
-    icon: String
-  },
-  components: {
-    CardComponent
-  },
+  mixins: [baseFormulario],
   data() {
     return {
-      isLoading: false,
-      form: {
-        dni: null,
-        nombre: null,
-        domicilio: null,
-        tipo: null
-      },
-      customElementsForm: {
-        checkbox: [],
-        radio: null,
-        switch: true,
-        file: null
-      },
-      departments: ["Business Development", "Marketing", "Sales"]
+      entidad: "servicio",
+      url: "servicio",
+      servicio: {
+        dni: "",
+        nombre: "",
+        domicilio: "",
+        tipo: ""
+      }
     };
   },
   computed: {},
-  methods: {
-    submit() {},
-    reset() {
-      this.form = mapValues(this.form, (item) => {
-        if (item && typeof item === "object") {
-          return [];
-        }
-        return null;
-      });
-
-      this.$buefy.snackbar.open({
-        message: "Reset successfully",
-        queue: false
-      });
-    }
-  }
+  methods: {}
 };
 </script>

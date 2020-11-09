@@ -107,8 +107,8 @@ export default {
   },
   facturaventa: {
     titulo: "facturaventa",
-    formulario: "facturaventaformulario",
-    urlListado: "facturaventa",
+    formulario: "VentasFacturaFormulario",
+    urlListado: "factura_venta",
     listado: [
       { label: "cliente", field: "cliente" },
       { label: "fecha", field: "fecha" }
@@ -116,8 +116,8 @@ export default {
   },
   facturaservicio: {
     titulo: "facturaservicio",
-    formulario: "facturaservicioformulario",
-    urlListado: "facturaservicio",
+    formulario: "ServiciosFacturaFormulario",
+    urlListado: "factura_servicio",
     listado: [
       { label: "cliente", field: "cliente" },
       { label: "fecha", field: "fecha" }

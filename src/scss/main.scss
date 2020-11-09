@@ -20,3 +20,25 @@
 @import "modal";
 @import "footer";
 @import "misc";
+.modal-card {
+  // force datepicker as mobile when is into a modal
+  .datepicker {
+    .background {
+      display: block;
+    }
+    .dropdown-menu {
+      position: fixed;
+      width: calc(100vw - 40px);
+      max-width: 460px;
+      max-height: calc(100vh - 120px);
+      top: 25% !important;
+      left: 50% !important;
+      transform: translate3d(-50%, -25%, 0);
+      white-space: normal;
+      overflow-y: auto;
+      .dropdown-item {
+        padding: 1rem 1.5rem;
+      }
+    }
+  }
+}

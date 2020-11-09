@@ -1,11 +1,15 @@
 import CardComponent from "@/components/application/CardComponent";
 import baseComponente from "@/components/shared/bases/baseComponente";
+import configuraciones from "@/views/shared/configuraciones";
 export default {
   mixins: [baseComponente],
   props: {
     id: Number
   },
   components: { CardComponent },
+  data() {
+    return { configuraciones: configuraciones };
+  },
   computed: {
     accion() {
       return !this.id ? "NUEVO" : "MODIFICAR";
@@ -15,8 +19,8 @@ export default {
     if (this.id) this.obtenerEntidad(this.id);
   },
   methods: {
-    guardar() {
-      this.guardarEntidad(this[this.entidad]);
+    guardar(entidad) {
+      this.guardarEntidad(entidad || this[this.entidad]);
     },
     editar() {
       this.editarEntidad(this[this.entidad]);

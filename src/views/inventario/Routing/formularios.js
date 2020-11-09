@@ -76,5 +76,19 @@ export default {
     props: true,
     component: () => import("@/views/inventario/CitasFormulario"),
     configuracion: configuraciones.citas
+  },
+  facturaventa: {
+    path: "formulario",
+    name: "VentasFacturaFormulario",
+    props: true,
+    component: () => import("@/views/inventario/VentasFacturaFormulario"),
+    configuracion: configuraciones.ventafactura
+  },
+  facturaservicio: {
+    path: "formulario",
+    name: "ServiciosFacturaFormulario",
+    props: true,
+    component: () => import("@/views/inventario/ServiciosFacturaFormulario"),
+    configuracion: configuraciones.facturaservicio
   }
 };

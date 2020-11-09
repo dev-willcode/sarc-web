@@ -1,100 +1,177 @@
 <template>
-  <header-view titulo="Revision tecnica" :stack-ruta="['SARC', 'Revision tecnica']">
-    <template v-slot:contenido>
-      <section class="section is-main-section">
-        <card-component title="Formulario de Revision tecnica" :icon="icon">
-          <form @submit.prevent="submit">                   
-
-            <b-field label="Vehículo" horizontal>
-              <b-input
-                v-model="form.vehiculo"
-                placeholder="Vehículo de Revision tecnica..."
-              />
-            </b-field>
-            <b-field label="Mecanico" horizontal>
-              <b-input
-                v-model="form.mecanico"
-                placeholder="Nombre del Mecanico encargado..."
-              />
-            </b-field>
-
-            <b-field label="Kilometraje Actual" horizontal>
-              <b-input
-                v-model="form.kilometraje_actual"
+  <card-component title="Formulario">
+    <div class="p-5">
+      <ValidationObserver ref="observer" v-slot="{ handleSubmit }">
+        
+        <validation-provider rules="required" v-slot="{ errors, valid }">
+          <b-field
+            label="Vehiculo"
+            horizontal
+            :type="errors[0] ? 'is-danger' : valid ? 'is-success' : ''"
+          >
+            <div class="row">
+              <b-select
+                v-model="revision_tecnica.vehiculo"
+                placeholder="Seleccione el vehiculo..."
+                expanded
+              >
+                <option
+                  v-for="vehiculo in vehiculosListado"
+                  :value="vehiculo.id"
+                  :key="vehiculo.id"
+                >
+                  {{ vehiculo.nombre }}
+                </option>
+              </b-select>
+              <span class="has-text-danger">{{ errors[0] }}</span>
+            </div>
+          </b-field>
+        </validation-provider>
+        
+        <validation-provider rules="required" v-slot="{ errors, valid }">
+          <b-field
+            label="Mecánico"
+            horizontal
+            :type="errors[0] ? 'is-danger' : valid ? 'is-success' : ''"
+          >
+            <div class="row">
+              <b-select
+                v-model="revision_tecnica.mecanico"
+                placeholder="Seleccione el mecánico..."
+                expanded
+              >
+                <option
+                  v-for="mecanico in mecanicosListadon"
+                  :value="mecanico.id"
+                  :key="mecanico.id"
+                >
+                  {{ mecanico.nombre }}
+                </option>
+              </b-select>
+              <span class="has-text-danger">{{ errors[0] }}</span>
+            </div>
+          </b-field>
+        </validation-provider>
+        <validation-provider rules="required" v-slot="{ errors, valid }">
+          <b-field
+            label="Kilometraje Actual"
+            horizontal
+            :type="errors[0] ? 'is-danger' : valid ? 'is-success' : ''"
+          >
+            <div class="row">
+              <numeric
+                class="input"
+                :class="valid ? 'is-success' : 'is-danger'"
+                v-model="revision_tecnica.kilometraje_actual"
                 placeholder="Kilometraje Actual..."
-              />
-            </b-field>            
-            
-            <hr />
-            <b-field horizontal>
-              <b-field grouped>
-                <div class="control">
-                  <b-button native-type="submit" type="is-primary"
-                    >Guardar</b-button
-                  >
-                </div>
-                <div class="control">
-                  <b-button type="is-primary is-outlined" @click="reset"
-                    >Cancelar</b-button
-                  >
-                </div>
-              </b-field>
-            </b-field>
-          </form>
-        </card-component>
-      </section>
-    </template>
-  </header-view>
+              ></numeric>
+              <span class="has-text-danger">{{ errors[0] }}</span>
+            </div>
+          </b-field>
+        </validation-provider>
+        <validation-provider rules="required" v-slot="{ errors, valid }">
+          <b-field
+            label="Fecha Revisión"
+            horizontal
+            :type="errors[0] ? 'is-danger' : valid ? 'is-success' : ''"
+          >
+            <div class="row">
+              <b-datepicker
+                v-model="revision_tecnica.fecha_revision"                
+                    :show-week-number="showWeekNumber"
+                    :locale="locale"
+                    placeholder="Click to select..."
+                    icon="calendar-today"
+                    trap-focus>
+              </b-datepicker>
+              <span class="has-text-danger">{{ errors[0] }}</span>
+            </div>
+          </b-field>
+        </validation-provider>
+
+        <validation-provider rules="required" v-slot="{ errors, valid }">
+          <b-field
+            label="Fecha Proxima Revisión"
+            horizontal
+            :type="errors[0] ? 'is-danger' : valid ? 'is-success' : ''"
+          >
+            <div class="row">
+              <b-datepicker
+                v-model="revision_tecnica.fecha_prox_revision"                
+                    :show-week-number="showWeekNumber"
+                    :locale="locale"
+                    placeholder="Click to select..."
+                    icon="calendar-today"
+                    trap-focus>
+              </b-datepicker>
+              <span class="has-text-danger">{{ errors[0] }}</span>
+            </div>
+          </b-field>
+        </validation-provider>
+
+        <br />
+        <b-field horizontal>
+          <b-field grouped>
+            <div class="control">
+              <b-button
+                v-if="accion === 'NUEVO'"
+                type="is-primary"
+                :class="{ 'is-loading': cargando }"
+                @click="handleSubmit(guardar)"
+                >Guardar</b-button
+              >
+              <b-button
+                v-else
+                type="is-primary"
+                :class="{ 'is-loading': cargando }"
+                @click="handleSubmit(editar)"
+                >Editar</b-button
+              >
+            </div>
+            <div class="control">
+              <b-button type="is-primary is-outlined" @click="$router.back()"
+                >Cancelar</b-button
+              >
+            </div>
+          </b-field>
+        </b-field>
+      </ValidationObserver>
+    </div>
+  </card-component>
 </template>
 
 <script>
-import baseVista from "@/components/shared/bases/baseVista";
-
-import mapValues from "lodash/mapValues";
-import CardComponent from "@/components/application/CardComponent";
+import baseFormulario from "@/components/shared/bases/baseFormulario";
 
 export default {
-  name: "Revision tecnica",
-  mixins: [baseVista],
-  props: {
-    icon: String
-  },
-  components: {
-    CardComponent
-  },
+  name: "Revision_tecnica",
+  mixins: [baseFormulario],
   data() {
     return {
-      isLoading: false,
-      form: {
+      entidad: "revision_tecnica",
+      url: "revision_tecnica",
+      revision_tecnica: {
         vehiculo: null,
         mecanico: null,
-        kilometraje_actual: null,        
+        kilometraje_actual: 0,
+        fecha_revision: "",
+        fecha_prox_revision:""
       },
-      customElementsForm: {
-        checkbox: [],
-        radio: null,
-        switch: true,
-        file: null
-      },
-      departments: ["Business Development", "Marketing", "Sales"]
+      //listados
+      vehiculosListado:[],
+      mecanicosListado:[]
     };
+  }, 
+  created() {
+    this.peticion({ method: "get", url: "vehiculo" }, ({ data }) => {
+      this.modelosListado = data.results;
+    });
+    this.peticion({ method: "get", url: "mecanico" }, ({ data }) => {
+      this.consesionarioListado = data.results;
+    });
+    
   },
   computed: {},
-  methods: {
-    submit() {},
-    reset() {
-      this.form = mapValues(this.form, (item) => {
-        if (item && typeof item === "object") {
-          return [];
-        }
-        return null;
-      });
-
-      this.$buefy.snackbar.open({
-        message: "Reset successfully",
-        queue: false
-      });
-    }
-  }
+  methods: {}
 };
 </script>
