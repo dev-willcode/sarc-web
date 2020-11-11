@@ -48,12 +48,6 @@ export default {
       } else {
         this.notificar("El equipamiento ya esta agregado!", "is-warning");
       }
-    },
-    establecerDatos(datos) {
-      this.peticion(
-        { method: "get", url: `modelo_auto/?id=${datos.id}` },
-        ({ data }) => this.$emit("input", data.results[0].equipamientos)
-      );
     }
   }
 };

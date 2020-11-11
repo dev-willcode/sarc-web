@@ -141,7 +141,7 @@
 import baseFormulario from "@/components/shared/bases/baseFormulario";
 import TablaEquipamientos from "@/components/inventario/TablaEquipamientos";
 export default {
-  name: "Marcas",
+  name: "ModeloAuto",
   mixins: [baseFormulario],
   components: { TablaEquipamientos },
   data() {
@@ -180,7 +180,7 @@ export default {
     },
     // @Override
     despuesObtener(entidad) {
-      this.$refs.TablaEquipamientos.establecerDatos(entidad);
+      this.listados.equipamientos = entidad.equipamientos_auto;
     }
   }
 };
