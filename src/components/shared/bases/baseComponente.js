@@ -1,23 +1,27 @@
 import axios from "axios";
+import configuraciones from "@/views/shared/configuraciones";
+
 export default {
   mixins: [],
   props: {},
   components: {},
   data() {
     return {
-      cargando: false
+      cargando: false,
+      configuraciones: configuraciones
     };
   },
   computed: {},
   methods: {
     peticion({ method, url, payload }, onResolve, onError) {
       this.cargando = true;
-      url += url[url.length - 1] === "/" ? "" : "/";
+      url += url[url.length - 1] === "/" || url.includes("?") ? "" : "/";
       axios[method](url, payload)
         .then((response) => {
           onResolve(response);
         })
         .catch((error) => {
+          console.log(error);
           if (onError) onError(error);
           else {
             if (error.response && [400].includes(error.response.status)) {
@@ -63,6 +67,9 @@ export default {
         message: mensaje,
         type: tipo
       });
+    },
+    agregarCeros(num, size) {
+      return (Math.pow(10, size) + ~~num).toString().substring(1);
     }
   }
 };

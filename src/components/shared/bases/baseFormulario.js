@@ -1,6 +1,7 @@
+/* eslint-disable no-unused-vars */
 import CardComponent from "@/components/application/CardComponent";
 import baseComponente from "@/components/shared/bases/baseComponente";
-import configuraciones from "@/views/shared/configuraciones";
+
 export default {
   mixins: [baseComponente],
   props: {
@@ -8,7 +9,7 @@ export default {
   },
   components: { CardComponent },
   data() {
-    return { configuraciones: configuraciones };
+    return {};
   },
   computed: {
     accion() {
@@ -25,7 +26,20 @@ export default {
     editar() {
       this.editarEntidad(this[this.entidad]);
     },
+    /**
+     * Metodo sobrescribible que se ejecuta antes de guardar la entidad
+     * @param {entidad} entidad
+     */
+    antesGuardar(entidad) {},
+    /**
+     * Metodo sobreescribible que se ejecuta despues de obtener la entidad
+     * @param {entidad} entidad
+     */
+    despuesObtener(entidad) {},
+
+    //acciones CRUD
     guardarEntidad(entidad) {
+      this.antesGuardar(entidad);
       this.peticion(
         { method: "post", url: `${this.url}/`, payload: entidad },
         (response) => {
@@ -39,11 +53,13 @@ export default {
     obtenerEntidad(id) {
       this.peticion({ method: "get", url: `${this.url}/${id}` }, (response) => {
         if (response.status == 200) {
+          this.despuesObtener(response.data);
           this[this.entidad] = response.data;
         } else this.notificarErrores(response);
       });
     },
     editarEntidad(entidad) {
+      this.antesGuardar(entidad);
       this.peticion(
         { method: "put", url: `${this.url}/${entidad.id}/`, payload: entidad },
         (response) => {

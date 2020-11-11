@@ -2,99 +2,110 @@
   <card-component title="Formulario">
     <div class="p-5">
       <ValidationObserver ref="observer" v-slot="{ handleSubmit }">
-        <validation-provider rules="required" v-slot="{ errors, valid }">
-          <b-field
-            label="Marca"
-            horizontal
-            :type="errors[0] ? 'is-danger' : valid ? 'is-success' : ''"
-          >
-            <div class="row">
-              <b-select
-                v-model="modeloAuto.marca"
-                placeholder="Elija la marca..."
-                expanded
+        <div class="columns">
+          <section class="column">
+            <validation-provider rules="required" v-slot="{ errors, valid }">
+              <b-field
+                label="Marca"
+                horizontal
+                :type="errors[0] ? 'is-danger' : valid ? 'is-success' : ''"
               >
-                <option
-                  v-for="marca in marcaListado"
-                  :value="marca.id"
-                  :key="marca.id"
-                >
-                  {{ marca.descripcion }}
-                </option>
-              </b-select>
-              <span class="has-text-danger">{{ errors[0] }}</span>
-            </div>
-          </b-field>
-        </validation-provider>
-        <validation-provider rules="required" v-slot="{ errors, valid }">
-          <b-field
-            label="Nombre"
-            horizontal
-            :type="errors[0] ? 'is-danger' : valid ? 'is-success' : ''"
-          >
-            <div class="row">
-              <b-input
-                v-model="modeloAuto.nombre_modelo"
-                placeholder="nombre..."
-              />
-              <span class="has-text-danger">{{ errors[0] }}</span>
-            </div>
-          </b-field>
-        </validation-provider>
-        <validation-provider rules="required" v-slot="{ errors, valid }">
-          <b-field
-            label="Potencia"
-            horizontal
-            :type="errors[0] ? 'is-danger' : valid ? 'is-success' : ''"
-          >
-            <div class="row">
-              <numeric
-                class="input"
-                :class="valid ? 'is-success' : 'is-danger'"
-                v-model="modeloAuto.potencia"
-                placeholder="potencia..."
-              ></numeric>
-              <span class="has-text-danger">{{ errors[0] }}</span>
-            </div>
-          </b-field>
-        </validation-provider>
-        <validation-provider rules="required" v-slot="{ errors, valid }">
-          <b-field
-            label="Cilindraje"
-            horizontal
-            :type="errors[0] ? 'is-danger' : valid ? 'is-success' : ''"
-          >
-            <div class="row">
-              <numeric
-                class="input"
-                :class="valid ? 'is-success' : 'is-danger'"
-                :options="'integer'"
-                v-model="modeloAuto.cilindraje"
-                placeholder="cilindraje..."
-              ></numeric>
-              <span class="has-text-danger">{{ errors[0] }}</span>
-            </div>
-          </b-field>
-        </validation-provider>
-        <validation-provider rules="required" v-slot="{ errors, valid }">
-          <b-field
-            label="Precio"
-            horizontal
-            :type="errors[0] ? 'is-danger' : valid ? 'is-success' : ''"
-          >
-            <div class="row">
-              <numeric
-                class="input"
-                :class="valid ? 'is-success' : 'is-danger'"
-                :options="'dollar'"
-                v-model="modeloAuto.precio"
-                placeholder="precio..."
-              ></numeric>
-              <span class="has-text-danger">{{ errors[0] }}</span>
-            </div>
-          </b-field>
-        </validation-provider>
-
+                <div class="row">
+                  <b-select
+                    v-model="modeloAuto.marca"
+                    placeholder="Elija la marca..."
+                    expanded
+                  >
+                    <option
+                      v-for="marca in marcaListado"
+                      :value="marca.id"
+                      :key="marca.id"
+                    >
+                      {{ marca.descripcion }}
+                    </option>
+                  </b-select>
+                  <span class="has-text-danger">{{ errors[0] }}</span>
+                </div>
+              </b-field>
+            </validation-provider>
+            <validation-provider rules="required" v-slot="{ errors, valid }">
+              <b-field
+                label="Nombre"
+                horizontal
+                :type="errors[0] ? 'is-danger' : valid ? 'is-success' : ''"
+              >
+                <div class="row">
+                  <b-input
+                    v-model="modeloAuto.nombre_modelo"
+                    placeholder="nombre..."
+                  />
+                  <span class="has-text-danger">{{ errors[0] }}</span>
+                </div>
+              </b-field>
+            </validation-provider>
+            <validation-provider rules="required" v-slot="{ errors, valid }">
+              <b-field
+                label="Potencia"
+                horizontal
+                :type="errors[0] ? 'is-danger' : valid ? 'is-success' : ''"
+              >
+                <div class="row">
+                  <numeric
+                    class="input"
+                    :class="valid ? 'is-success' : 'is-danger'"
+                    v-model="modeloAuto.potencia"
+                    placeholder="potencia..."
+                  ></numeric>
+                  <span class="has-text-danger">{{ errors[0] }}</span>
+                </div>
+              </b-field>
+            </validation-provider>
+            <validation-provider rules="required" v-slot="{ errors, valid }">
+              <b-field
+                label="Cilindraje"
+                horizontal
+                :type="errors[0] ? 'is-danger' : valid ? 'is-success' : ''"
+              >
+                <div class="row">
+                  <numeric
+                    class="input"
+                    :class="valid ? 'is-success' : 'is-danger'"
+                    :options="'integer'"
+                    v-model="modeloAuto.cilindraje"
+                    placeholder="cilindraje..."
+                  ></numeric>
+                  <span class="has-text-danger">{{ errors[0] }}</span>
+                </div>
+              </b-field>
+            </validation-provider>
+            <validation-provider rules="required" v-slot="{ errors, valid }">
+              <b-field
+                label="Precio"
+                horizontal
+                :type="errors[0] ? 'is-danger' : valid ? 'is-success' : ''"
+              >
+                <div class="row">
+                  <numeric
+                    class="input"
+                    :class="valid ? 'is-success' : 'is-danger'"
+                    :options="'dollar'"
+                    v-model="modeloAuto.precio"
+                    placeholder="precio..."
+                  ></numeric>
+                  <span class="has-text-danger">{{ errors[0] }}</span>
+                </div>
+              </b-field>
+            </validation-provider>
+          </section>
+          <section class="column">
+            <tabla-equipamientos
+              ref="TablaEquipamientos"
+              label="Equipamientos del auto por defecto"
+              v-model="listados.equipamientos"
+              :configuracion="equipamientoConfiguracion"
+            />
+          </section>
+        </div>
         <br />
         <b-field horizontal>
           <b-field grouped>
@@ -128,10 +139,11 @@
 
 <script>
 import baseFormulario from "@/components/shared/bases/baseFormulario";
-
+import TablaEquipamientos from "@/components/inventario/TablaEquipamientos";
 export default {
   name: "Marcas",
   mixins: [baseFormulario],
+  components: { TablaEquipamientos },
   data() {
     return {
       entidad: "modeloAuto",
@@ -141,10 +153,16 @@ export default {
         nombre_modelo: "",
         potencia: 0,
         cilindraje: 0,
-        precio: 0
+        precio: 0,
+        equipamientos: []
       },
       //listados
-      marcaListado: []
+      listados: {
+        equipamientos: []
+      },
+      marcaListado: [],
+      // configuraciones
+      equipamientoConfiguracion: [{ label: "nombre", field: "nombre" }]
     };
   },
   created() {
@@ -153,6 +171,17 @@ export default {
     });
   },
   computed: {},
-  methods: {}
+  methods: {
+    // @Override
+    antesGuardar(entidad) {
+      entidad.equipamientos = this.listados.equipamientos.map(
+        (elem) => elem.id
+      );
+    },
+    // @Override
+    despuesObtener(entidad) {
+      this.$refs.TablaEquipamientos.establecerDatos(entidad);
+    }
+  }
 };
 </script>

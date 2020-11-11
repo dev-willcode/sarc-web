@@ -102,8 +102,15 @@ export default {
   computed: {},
   created() {},
   methods: {
+    recuperarEntidad(id) {
+      this.peticion(
+        { method: "get", url: `${this.configuracion.urlListado}/${id}/` },
+        ({ data }) => this.establecerEntidad(data)
+      );
+    },
     establecerEntidad(entidad) {
-      this.$emit("input", this.type == "input" ? entidad.id : entidad);
+      this.$emit("input", entidad.id);
+      this.$emit("modelo", entidad);
       this.entidad = entidad;
       this.cerrarModal();
     },

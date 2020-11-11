@@ -1,5 +1,5 @@
 import configuraciones from "@/views/shared/configuraciones";
-import formularios from "@/views/inventario/Routing/formularios";
+import formularios from "@/router/Routing/formularios";
 
 export default [
   {

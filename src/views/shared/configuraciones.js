@@ -6,7 +6,8 @@ export default {
     listado: [
       { label: "dni", field: "dni" },
       { label: "nombre", field: "nombre" },
-      { label: "domicilio", field: "domicilio" }
+      { label: "domicilio", field: "domicilio" },
+      { label: "correo", field: "correo" }
     ]
   },
   mecanico: {
@@ -16,7 +17,8 @@ export default {
     listado: [
       { label: "dni", field: "dni" },
       { label: "nombres", field: "nombre" },
-      { label: "domicilio", field: "domicilio" }
+      { label: "domicilio", field: "domicilio" },
+      { label: "correo", field: "correo" }
     ]
   },
   vendedor: {
@@ -26,7 +28,8 @@ export default {
     listado: [
       { label: "dni", field: "dni" },
       { label: "nombres", field: "nombre" },
-      { label: "domicilio", field: "domicilio" }
+      { label: "domicilio", field: "domicilio" },
+      { label: "correo", field: "correo" }
     ]
   },
   auto: {
@@ -36,7 +39,7 @@ export default {
     listado: [
       { label: "bastidor", field: "bastidor" },
       { label: "modelo", field: "modelo" },
-      { label: "concesionario", field: "concesionario" }
+      { label: "concesionario", field: "servicio" }
     ]
   },
   servicio: {
@@ -45,7 +48,7 @@ export default {
     urlListado: "servicio",
     listado: [
       { label: "dni", field: "dni" },
-      { label: "nombres", field: "nombres" },
+      { label: "nombres", field: "nombre" },
       { label: "domicilio", field: "domicilio" },
       { label: "tipo", field: "tipo" }
     ]
@@ -110,8 +113,10 @@ export default {
     formulario: "VentasFacturaFormulario",
     urlListado: "factura_venta",
     listado: [
-      { label: "cliente", field: "cliente" },
-      { label: "fecha", field: "fecha" }
+      { label: "cliente", field: "nombre_cliente" },
+      { label: "modelo", field: "modelo" },
+      { label: "fecha", field: "fecha_emision" },
+      { label: "precio", field: "precio" }
     ]
   },
   facturaservicio: {
@@ -119,8 +124,10 @@ export default {
     formulario: "ServiciosFacturaFormulario",
     urlListado: "factura_servicio",
     listado: [
-      { label: "cliente", field: "cliente" },
-      { label: "fecha", field: "fecha" }
+      { label: "cliente", field: "nombre_cliente" },
+      { label: "modelo", field: "modelo" },
+      { label: "fecha", field: "fecha_emision" },
+      { label: "precio", field: "precio" }
     ]
   }
 };

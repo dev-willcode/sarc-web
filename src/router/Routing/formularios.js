@@ -11,7 +11,7 @@ export default {
     path: "formulario",
     name: "MecanicoFormulario",
     props: true,
-    component: () => import("@/views/inventario/MecanicoFormulario"),
+    component: () => import("@/views/servicio/MecanicoFormulario"),
     configuracion: configuraciones.mecanico
   },
   vendedor: {
@@ -60,21 +60,21 @@ export default {
     path: "formulario",
     name: "VehiculosFormulario",
     props: true,
-    component: () => import("@/views/inventario/VehiculosFormulario"),
+    component: () => import("@/views/servicio/VehiculosFormulario"),
     configuracion: configuraciones.vehiculo
   },
   revisiontecnica: {
     path: "formulario",
     name: "RevisionTecnicaFormulario",
     props: true,
-    component: () => import("@/views/inventario/RevisionTecnicaFormulario"),
+    component: () => import("@/views/servicio/RevisionTecnicaFormulario"),
     configuracion: configuraciones.revisiontecnica
   },
   citas: {
     path: "formulario",
     name: "CitasFormulario",
     props: true,
-    component: () => import("@/views/inventario/CitasFormulario"),
+    component: () => import("@/views/servicio/CitasFormulario"),
     configuracion: configuraciones.citas
   },
   facturaventa: {
@@ -88,7 +88,7 @@ export default {
     path: "formulario",
     name: "ServiciosFacturaFormulario",
     props: true,
-    component: () => import("@/views/inventario/ServiciosFacturaFormulario"),
+    component: () => import("@/views/servicio/ServiciosFacturaFormulario"),
     configuracion: configuraciones.facturaservicio
   }
 };

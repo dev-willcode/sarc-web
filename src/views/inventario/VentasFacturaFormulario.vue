@@ -5,7 +5,11 @@
         <div class="columns">
           <section class="column is-half">
             <b-field label="N° Factura" horizontal v-if="accion !== 'NUEVO'">
-              <b-input readonly v-model="ventaFactura.numero_factura" />
+              <b-input
+                readonly
+                v-mask="'###-###-####'"
+                v-model="ventaFactura.numero_factura"
+              />
             </b-field>
             <validation-provider rules="required" v-slot="{ errors, valid }">
               <b-field
@@ -28,6 +32,7 @@
             </validation-provider>
 
             <seleccionar-entidad
+              ref="SeleccionarCliente"
               label="Cliente"
               field-visible="nombre"
               v-model="ventaFactura.cliente"
@@ -37,6 +42,7 @@
 
           <section class="column is-half">
             <seleccionar-entidad
+              ref="SeleccionarVendedor"
               label="Vendedor"
               field-visible="nombre"
               v-model="ventaFactura.vendedor"
@@ -44,10 +50,12 @@
             />
 
             <seleccionar-entidad
+              ref="SeleccionarAuto"
               label="Auto"
               field-visible="bastidor"
               v-model="ventaFactura.auto"
               :configuracion="configuraciones.auto"
+              @modelo="seleccionarAuto"
             />
 
             <validation-provider rules="required" v-slot="{ errors, valid }">
@@ -76,26 +84,12 @@
             </validation-provider>
           </section>
         </div>
-        <card-component
-          class="has-table has-mobile-sort-spaced"
-          title="Equipamientos del auto"
+        <tabla-equipamientos
+          ref="TablaEquipamientos"
+          label="Equipamientos del auto"
+          v-model="listados.equipamientos"
           v-if="ventaFactura.auto"
-        >
-          <template slot="card-header">
-            <seleccionar-entidad
-              label="Auto"
-              type="button"
-              icon="plus"
-              @input="seleccionarEquipamiento"
-              :configuracion="configuraciones.equipamiento"
-            />
-          </template>
-          <tabla-editable
-            :url="configuraciones.equipamiento.urlListado"
-            :configuracion="configuraciones.equipamiento.listado"
-            v-model="ventaFactura.equipamientos"
-          />
-        </card-component>
+        />
         <br />
         <b-field horizontal>
           <b-field grouped>
@@ -104,7 +98,7 @@
                 v-if="accion === 'NUEVO'"
                 type="is-primary"
                 :class="{ 'is-loading': cargando }"
-                @click="handleSubmit(guardar(modelarFactura()))"
+                @click="handleSubmit(guardar)"
                 >Guardar</b-button
               >
               <b-button
@@ -131,12 +125,12 @@
 import dayjs from "dayjs";
 import baseFormulario from "@/components/shared/bases/baseFormulario";
 import SeleccionarEntidad from "@/components/application/SeleccionarEntidad";
-import TablaEditable from "@/components/application/TablaEditable";
+import TablaEquipamientos from "@/components/inventario/TablaEquipamientos";
 
 export default {
   name: "VentaFactura",
   mixins: [baseFormulario],
-  components: { SeleccionarEntidad, TablaEditable },
+  components: { SeleccionarEntidad, TablaEquipamientos },
   data() {
     return {
       entidad: "ventaFactura",
@@ -151,27 +145,33 @@ export default {
         forma_pago: null,
         equipamientos: []
       },
+      autoSeleccionado: {},
       // listados
+      listados: {
+        equipamientos: []
+      },
       formaPagoListado: ["Efectivo", "Tarjeta de crédito", "Debito bancario"]
     };
   },
   computed: {},
   methods: {
-    modelarFactura() {
-      let factura = {};
-      Object.assign(factura, this.ventaFactura);
-      factura.fecha_emision = dayjs(factura.fecha_emision).format("YYYY-MM-DD");
-      return factura;
+    // @Override
+    antesGuardar(entidad) {
+      entidad.fecha_emision = dayjs(entidad.fecha_emision).format("YYYY-MM-DD");
     },
-    seleccionarEquipamiento(equipamiento) {
-      let duplicado = !this.ventaFactura.equipamientos.some(
-        (equip) => equip.id == equipamiento.id
-      );
-      if (duplicado) {
-        this.ventaFactura.equipamientos.push(equipamiento);
-      } else {
-        this.notificar("El equipamiento ya esta agregado!", "is-warning");
-      }
+    // @Override
+    despuesObtener(entidad) {
+      entidad.fecha_emision = dayjs(entidad.fecha_emision).toDate();
+      entidad.numero_factura = this.agregarCeros(entidad.id, 10);
+      this.$refs.SeleccionarCliente.recuperarEntidad(entidad.cliente);
+      this.$refs.SeleccionarVendedor.recuperarEntidad(entidad.vendedor);
+      this.$refs.SeleccionarAuto.recuperarEntidad(entidad.auto);
+    },
+    seleccionarAuto(auto) {
+      this.autoSeleccionado = auto;
+      this.listados.equipamientos = auto.equipamientos_auto.map((elem) => {
+        return { ...elem, disabled: true };
+      });
     }
   }
 };

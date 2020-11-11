@@ -14,6 +14,7 @@
             </div>
           </b-field>
         </validation-provider>
+
         <validation-provider rules="required" v-slot="{ errors, valid }">
           <b-field
             label="Modelo del auto"
@@ -38,6 +39,7 @@
             </div>
           </b-field>
         </validation-provider>
+
         <validation-provider rules="required" v-slot="{ errors, valid }">
           <b-field
             label="Consesionario"
@@ -99,6 +101,7 @@ import baseFormulario from "@/components/shared/bases/baseFormulario";
 export default {
   name: "Autos",
   mixins: [baseFormulario],
+  components: {},
   data() {
     return {
       entidad: "auto",

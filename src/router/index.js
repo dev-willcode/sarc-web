@@ -8,7 +8,7 @@ import Application from "@/views/Application";
 import store from "@/store";
 
 // Routing
-import inventario from "@/views/inventario/Routing/inventario";
+import vistas from "@/router/Routing/vistas";
 
 Vue.use(VueRouter);
 
@@ -39,7 +39,7 @@ const routes = [
     path: "/apps",
     name: "Apps",
     component: Application,
-    children: [...inventario]
+    children: [...vistas]
   }
 ];
 
