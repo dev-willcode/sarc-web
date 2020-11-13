@@ -11,7 +11,7 @@
             <div class="row">
               <b-input
                 v-model="mecanicos.dni"
-                v-mask="'##########'"
+                maxlength="10"
                 placeholder="cédula de identidad..."
               />
               <span class="has-text-danger">{{ errors[0] }}</span>
@@ -142,13 +142,16 @@ export default {
         taller: null
       },
       //listados
-      tallerListado:[]
+      tallerListado: []
     };
   },
-   created() {
-    this.peticion({ method: "get", url: "servicio" }, ({ data }) => {
-      this.tallerListado = data.results;
-    });
+  created() {
+    this.peticion(
+      { method: "get", url: "servicio/?tipo=Taller" },
+      ({ data }) => {
+        this.tallerListado = data.results;
+      }
+    );
   },
   computed: {},
   methods: {}

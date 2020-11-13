@@ -16,7 +16,12 @@
         v-slot="props"
         sortable
       >
-        {{ props.row[item.field] }}
+        <b-checkbox
+          v-if="item.type === 'boolean'"
+          v-model="props.row[item.field]"
+          disabled
+        ></b-checkbox>
+        <span v-else>{{ props.row[item.field] }}</span>
       </b-table-column>
       <b-table-column
         custom-key="actions"
@@ -62,6 +67,7 @@ export default {
   components: {},
   props: {
     url: String,
+    argumentos: String,
     configuracion: {
       type: Array,
       default: () => []
@@ -82,9 +88,12 @@ export default {
   },
   methods: {
     listar() {
-      this.peticion({ method: "get", url: this.url }, ({ data }) => {
-        this.listado = data.results;
-      });
+      this.peticion(
+        { method: "get", url: `${this.url}/${this.argumentos || ""}` },
+        ({ data }) => {
+          this.listado = data.results;
+        }
+      );
     },
     seleccionar(data) {
       this.$emit("seleccionar", data);

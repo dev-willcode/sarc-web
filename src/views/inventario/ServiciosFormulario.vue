@@ -2,8 +2,7 @@
   <card-component title="Formulario">
     <div class="p-5">
       <ValidationObserver ref="observer" v-slot="{ handleSubmit }">
-        
-        <validation-provider rules="required" v-slot="{ errors, valid }">
+        <validation-provider rules="required|min:13" v-slot="{ errors, valid }">
           <b-field
             label="DNI"
             horizontal
@@ -11,6 +10,7 @@
           >
             <div class="row">
               <b-input
+                maxlength="13"
                 v-model="servicio.dni"
                 placeholder="Identificador..."
               />

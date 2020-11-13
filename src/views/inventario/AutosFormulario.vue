@@ -2,14 +2,18 @@
   <card-component title="Formulario">
     <div class="p-5">
       <ValidationObserver ref="observer" v-slot="{ handleSubmit }">
-        <validation-provider rules="required" v-slot="{ errors, valid }">
+        <validation-provider rules="required|min:17" v-slot="{ errors, valid }">
           <b-field
             label="Bastidor"
             horizontal
             :type="errors[0] ? 'is-danger' : valid ? 'is-success' : ''"
           >
             <div class="row">
-              <b-input v-model="auto.bastidor" placeholder="Bastidor..." />
+              <b-input
+                v-model="auto.bastidor"
+                maxlength="17"
+                placeholder="Bastidor..."
+              />
               <span class="has-text-danger">{{ errors[0] }}</span>
             </div>
           </b-field>
@@ -120,9 +124,12 @@ export default {
     this.peticion({ method: "get", url: "modelo_auto" }, ({ data }) => {
       this.modelosListado = data.results;
     });
-    this.peticion({ method: "get", url: "servicio" }, ({ data }) => {
-      this.consesionarioListado = data.results;
-    });
+    this.peticion(
+      { method: "get", url: "servicio/?tipo=Consesionario" },
+      ({ data }) => {
+        this.consesionarioListado = data.results;
+      }
+    );
   },
   computed: {},
   methods: {}

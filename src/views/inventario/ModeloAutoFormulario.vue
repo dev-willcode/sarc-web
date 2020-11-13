@@ -103,6 +103,7 @@
               label="Equipamientos del auto por defecto"
               v-model="listados.equipamientos"
               :configuracion="equipamientoConfiguracion"
+              @seleccionar="seleccionarEquipamiento"
             />
           </section>
         </div>
@@ -181,6 +182,14 @@ export default {
     // @Override
     despuesObtener(entidad) {
       this.listados.equipamientos = entidad.equipamientos_auto;
+    },
+    seleccionarEquipamiento(equipamiento) {
+      let duplicado = !this.value.some((equip) => equip.id == equipamiento.id);
+      if (duplicado) {
+        this.value.push(equipamiento);
+      } else {
+        this.notificar("El equipamiento ya esta agregado!", "is-warning");
+      }
     }
   }
 };

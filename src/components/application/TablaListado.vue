@@ -21,7 +21,12 @@
         v-slot="props"
         sortable
       >
-        {{ props.row[item.field] }}
+        <b-checkbox
+          v-if="item.type === 'boolean'"
+          v-model="props.row[item.field]"
+          disabled
+        ></b-checkbox>
+        <span v-else>{{ props.row[item.field] }}</span>
       </b-table-column>
       <b-table-column
         custom-key="actions"

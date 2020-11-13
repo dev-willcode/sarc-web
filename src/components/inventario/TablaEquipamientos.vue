@@ -5,13 +5,14 @@
         label="Añadir"
         type="button"
         icon="plus"
-        @modelo="seleccionarEquipamiento"
+        @modelo="seleccionar"
         :configuracion="configuraciones.equipamiento"
       />
     </template>
     <tabla-editable
       :url="configuraciones.equipamiento.urlListado"
       :configuracion="configuracionTabla"
+      disabled-item="es_serie"
       v-model="value"
     />
   </card-component>
@@ -41,13 +42,8 @@ export default {
   },
   created() {},
   methods: {
-    seleccionarEquipamiento(equipamiento) {
-      let duplicado = !this.value.some((equip) => equip.id == equipamiento.id);
-      if (duplicado) {
-        this.value.push(equipamiento);
-      } else {
-        this.notificar("El equipamiento ya esta agregado!", "is-warning");
-      }
+    seleccionar(equipamiento) {
+      this.$emit("seleccionar", equipamiento);
     }
   }
 };

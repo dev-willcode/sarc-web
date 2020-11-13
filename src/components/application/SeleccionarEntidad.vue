@@ -29,6 +29,7 @@
               type="is-primary"
               class="ml-2"
               @click="abrirModal"
+              v-if="!disabled"
             />
             <b-button
               icon-pack="fas"
@@ -36,7 +37,7 @@
               type="is-danger"
               class="ml-2"
               @click="resetear"
-              v-if="entidad[fieldVisible]"
+              v-if="entidad[fieldVisible] && !disabled"
             />
           </span>
           <span class="has-text-danger">{{ errors[0] }}</span>
@@ -56,6 +57,7 @@
           >
             <tabla-seleccionable
               :url="configuracion.urlListado"
+              :argumentos="argumentos"
               :configuracion="configuracion.listado"
               @seleccionar="establecerEntidad"
             />
@@ -91,7 +93,9 @@ export default {
     value: Number,
     label: String,
     fieldVisible: String,
-    configuracion: Object
+    argumentos: String,
+    configuracion: Object,
+    disabled: Boolean
   },
   data() {
     return {
@@ -102,6 +106,11 @@ export default {
   computed: {},
   created() {},
   methods: {
+    establecerCampoVisible(dato) {
+      this.entidad = {};
+      this.entidad[this.fieldVisible] = dato;
+      this.entidad.id = this.value;
+    },
     recuperarEntidad(id) {
       this.peticion(
         { method: "get", url: `${this.configuracion.urlListado}/${id}/` },

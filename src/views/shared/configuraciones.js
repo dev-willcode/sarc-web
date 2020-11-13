@@ -38,8 +38,9 @@ export default {
     urlListado: "auto",
     listado: [
       { label: "bastidor", field: "bastidor" },
-      { label: "modelo", field: "modelo" },
-      { label: "concesionario", field: "servicio" }
+      { label: "modelo", field: "nombre_modelo" },
+      { label: "concesionario", field: "servicio" },
+      { label: "disponible", field: "estado", type: "boolean" }
     ]
   },
   servicio: {
@@ -109,18 +110,18 @@ export default {
     ]
   },
   facturaventa: {
-    titulo: "facturaventa",
+    titulo: "Facturas de venta",
     formulario: "VentasFacturaFormulario",
     urlListado: "factura_venta",
     listado: [
       { label: "cliente", field: "nombre_cliente" },
-      { label: "modelo", field: "modelo" },
+      { label: "modelo", field: "nombre_modelo" },
       { label: "fecha", field: "fecha_emision" },
       { label: "precio", field: "precio" }
     ]
   },
   facturaservicio: {
-    titulo: "facturaservicio",
+    titulo: "Facturas de servicio",
     formulario: "ServiciosFacturaFormulario",
     urlListado: "factura_servicio",
     listado: [

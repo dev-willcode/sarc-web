@@ -37,6 +37,7 @@
               field-visible="nombre"
               v-model="ventaFactura.cliente"
               :configuracion="configuraciones.cliente"
+              :disabled="accion !== 'NUEVO'"
             />
           </section>
 
@@ -53,9 +54,11 @@
               ref="SeleccionarAuto"
               label="Auto"
               field-visible="bastidor"
+              argumentos="?estado=true"
               v-model="ventaFactura.auto"
               :configuracion="configuraciones.auto"
               @modelo="seleccionarAuto"
+              :disabled="accion !== 'NUEVO'"
             />
 
             <validation-provider rules="required" v-slot="{ errors, valid }">
@@ -87,9 +90,41 @@
         <tabla-equipamientos
           ref="TablaEquipamientos"
           label="Equipamientos del auto"
-          v-model="listados.equipamientos"
+          v-model="ventaFactura.detalle_factura"
+          :configuracion="detalleConfiguracion"
+          @seleccionar="seleccionarEquipamiento"
           v-if="ventaFactura.auto"
         />
+        <section class="level box" v-if="ventaFactura.auto">
+          <div class="level-item has-text-centered">
+            <div>
+              <p class="heading">Precio del auto</p>
+              <p class="title">{{ precioAuto }}</p>
+            </div>
+          </div>
+          <div class="level-item has-text-centered">
+            <div>
+              <p class="title is-1">+</p>
+            </div>
+          </div>
+          <div class="level-item has-text-centered">
+            <div>
+              <p class="heading">Equipamientos</p>
+              <p class="title">{{ precioEquipamientos }}</p>
+            </div>
+          </div>
+          <div class="level-item has-text-centered">
+            <div>
+              <p class="title is-1">=</p>
+            </div>
+          </div>
+          <div class="level-item has-text-centered">
+            <div>
+              <p class="heading">total</p>
+              <p class="title">{{ precioTotal }}</p>
+            </div>
+          </div>
+        </section>
         <br />
         <b-field horizontal>
           <b-field grouped>
@@ -143,17 +178,32 @@ export default {
         cliente: null,
         auto: null,
         forma_pago: null,
-        equipamientos: []
+        detalle_factura: []
       },
       autoSeleccionado: {},
       // listados
-      listados: {
-        equipamientos: []
-      },
-      formaPagoListado: ["Efectivo", "Tarjeta de crédito", "Debito bancario"]
+      formaPagoListado: ["Efectivo", "Tarjeta de crédito", "Debito bancario"],
+      // configuraciones
+      detalleConfiguracion: [
+        { label: "descripcion", field: "descripcion" },
+        { label: "precio", field: "precio" }
+      ]
     };
   },
-  computed: {},
+  computed: {
+    precioAuto() {
+      return parseFloat(this.ventaFactura.precio || 0);
+    },
+    precioEquipamientos() {
+      return this.ventaFactura.detalle_factura.reduce(
+        (acumulador, elem) => (acumulador += parseFloat(elem.precio)),
+        0
+      );
+    },
+    precioTotal() {
+      return this.precioAuto + this.precioEquipamientos;
+    }
+  },
   methods: {
     // @Override
     antesGuardar(entidad) {
@@ -163,15 +213,41 @@ export default {
     despuesObtener(entidad) {
       entidad.fecha_emision = dayjs(entidad.fecha_emision).toDate();
       entidad.numero_factura = this.agregarCeros(entidad.id, 10);
-      this.$refs.SeleccionarCliente.recuperarEntidad(entidad.cliente);
-      this.$refs.SeleccionarVendedor.recuperarEntidad(entidad.vendedor);
-      this.$refs.SeleccionarAuto.recuperarEntidad(entidad.auto);
+      this.$refs.SeleccionarCliente.establecerCampoVisible(
+        entidad.nombre_cliente
+      );
+      this.$refs.SeleccionarVendedor.establecerCampoVisible(
+        entidad.nombre_vendedor
+      );
+      this.$refs.SeleccionarAuto.establecerCampoVisible(entidad.auto_bastidor);
     },
     seleccionarAuto(auto) {
       this.autoSeleccionado = auto;
-      this.listados.equipamientos = auto.equipamientos_auto.map((elem) => {
-        return { ...elem, disabled: true };
-      });
+
+      if (this.accion == "NUEVO") {
+        this.ventaFactura.precio = auto.precio_modelo;
+        this.ventaFactura.detalle_factura = auto.equipamientos_auto.map(
+          (elem) => this.crearDetalle(elem, true)
+        );
+      }
+    },
+    seleccionarEquipamiento(equipamiento) {
+      if (
+        !this.ventaFactura.detalle_factura.some(
+          (elem) => elem.descripcion === equipamiento.nombre
+        )
+      ) {
+        this.ventaFactura.detalle_factura.push(this.crearDetalle(equipamiento));
+      } else {
+        this.notificar("El equipamiento ya esta agregado!", "is-warning");
+      }
+    },
+    crearDetalle(equipamiento, defecto = false) {
+      return {
+        descripcion: equipamiento.nombre,
+        precio: defecto ? 0 : equipamiento.precio,
+        es_serie: defecto
+      };
     }
   }
 };

@@ -16,7 +16,11 @@
         v-slot="props"
         sortable
       >
-        {{ props.row[item.field] }}
+        <b-checkbox
+          v-if="item.type === 'boolean'"
+          v-model="props.row[item.field]"
+        ></b-checkbox>
+        <span v-else>{{ props.row[item.field] }}</span>
       </b-table-column>
       <b-table-column
         custom-key="actions"
@@ -25,7 +29,7 @@
         v-slot="props"
       >
         <button
-          v-if="props.row.disabled"
+          v-if="props.row[disabledItem]"
           class="button is-small is-fullwidth is-black"
           disabled
         >
@@ -64,6 +68,7 @@ export default {
   components: {},
   props: {
     value: Array,
+    disabledItem: String,
     configuracion: {
       type: Array,
       default: () => []

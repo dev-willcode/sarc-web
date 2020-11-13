@@ -11,7 +11,7 @@
             <div class="row">
               <b-input
                 v-model="vendedores.dni"
-                v-mask="'##########'"
+                maxlength="10"
                 placeholder="cédula de identidad..."
               />
               <span class="has-text-danger">{{ errors[0] }}</span>
