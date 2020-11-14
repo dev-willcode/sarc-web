@@ -4,14 +4,13 @@
       <span slot="label"> <b>SARC</b> Systems </span>
     </aside-tools>
     <div class="menu is-menu-main">
-      <template v-for="(menuGroup, index) in menu">
-        <p v-if="typeof menuGroup === 'string'" :key="index" class="menu-label">
-          {{ menuGroup }}
+      <template v-for="(menu, index) in menu">
+        <p :key="`modulo_${index}`" class="menu-label">
+          {{ menu.modulo }}
         </p>
         <aside-menu-list
-          v-else
-          :key="index"
-          :menu="menuGroup"
+          :key="`vista_${index}`"
+          :menu="menu.vistas"
           @menu-click="menuClick"
         />
       </template>

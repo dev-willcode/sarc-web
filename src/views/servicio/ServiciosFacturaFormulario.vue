@@ -8,133 +8,49 @@
               <b-input
                 readonly
                 v-mask="'###-###-####'"
-                v-model="revisionTecnica.numero_revision"
+                v-model="facturaServicio.numero_revision"
               />
             </b-field>
 
-            <seleccionar-entidad
-              ref="SeleccionarMecanico"
-              label="Mecánico"
-              field-visible="nombre"
-              v-model="revisionTecnica.mecanico"
-              :configuracion="configuraciones.mecanico"
-            />
+            <validation-provider rules="required" v-slot="{ errors, valid }">
+              <b-field
+                label="Fecha emisión"
+                horizontal
+                :type="errors[0] ? 'is-danger' : valid ? 'is-success' : ''"
+              >
+                <div class="row">
+                  <b-datepicker
+                    icon="calendar-today"
+                    locale="fr-CA"
+                    editable
+                    v-model="facturaServicio.fecha_emision"
+                  >
+                  </b-datepicker>
+                  <span class="has-text-danger">{{ errors[0] }}</span>
+                </div>
+              </b-field>
+            </validation-provider>
 
             <seleccionar-entidad
               ref="SeleccionarCliente"
               label="Cliente"
               field-visible="nombre"
-              v-model="revisionTecnica.cliente"
+              v-model="facturaServicio.cliente"
               :configuracion="configuraciones.cliente"
               :disabled="accion !== 'NUEVO'"
             />
-
-            <seleccionar-entidad
-              ref="SeleccionarVehiculo"
-              label="Vehículo"
-              field-visible="matricula"
-              v-model="revisionTecnica.vehiculo"
-              :argumentos="`?cliente=${revisionTecnica.cliente}`"
-              :configuracion="configuraciones.vehiculo"
-              :disabled="accion !== 'NUEVO' || !revisionTecnica.cliente"
-            />
-            <validation-provider rules="required" v-slot="{ errors, valid }">
-              <b-field
-                label="Costo revisión"
-                horizontal
-                :type="errors[0] ? 'is-danger' : valid ? 'is-success' : ''"
-              >
-                <div class="row">
-                  <numeric
-                    class="input"
-                    :class="valid ? 'is-success' : 'is-danger'"
-                    v-model="revisionTecnica.costo_revision"
-                    placeholder="Costo revisión..."
-                  ></numeric>
-                  <span class="has-text-danger">{{ errors[0] }}</span>
-                </div>
-              </b-field>
-            </validation-provider>
-          </section>
-
-          <section class="column is-half">
-            <validation-provider rules="required" v-slot="{ errors, valid }">
-              <b-field
-                label="Revisión"
-                horizontal
-                :type="errors[0] ? 'is-danger' : valid ? 'is-success' : ''"
-              >
-                <div class="row">
-                  <b-datepicker
-                    icon="calendar-today"
-                    locale="fr-CA"
-                    editable
-                    v-model="revisionTecnica.fecha_revision"
-                  >
-                  </b-datepicker>
-                  <span class="has-text-danger">{{ errors[0] }}</span>
-                </div>
-              </b-field>
-            </validation-provider>
-
-            <validation-provider rules="required" v-slot="{ errors, valid }">
-              <b-field
-                label="Próxima revisión"
-                horizontal
-                :type="errors[0] ? 'is-danger' : valid ? 'is-success' : ''"
-              >
-                <div class="row">
-                  <b-datepicker
-                    icon="calendar-today"
-                    locale="fr-CA"
-                    editable
-                    v-model="revisionTecnica.fecha_proxima_revision"
-                  >
-                  </b-datepicker>
-                  <span class="has-text-danger">{{ errors[0] }}</span>
-                </div>
-              </b-field>
-            </validation-provider>
-
-            <validation-provider rules="required" v-slot="{ errors, valid }">
-              <b-field
-                label="Kilometraje Actual"
-                horizontal
-                :type="errors[0] ? 'is-danger' : valid ? 'is-success' : ''"
-              >
-                <div class="row">
-                  <numeric
-                    class="input"
-                    :class="valid ? 'is-success' : 'is-danger'"
-                    v-model="revisionTecnica.kilometraje_actual"
-                    placeholder="Kilometraje Actual..."
-                  ></numeric>
-                  <span class="has-text-danger">{{ errors[0] }}</span>
-                </div>
-              </b-field>
-            </validation-provider>
           </section>
         </div>
         <tabla-repuestos
           ref="TablaRepuestos"
           label="Repuestos del vehiculo"
-          v-model="revisionTecnica.detalle_factura"
+          v-model="facturaServicio.detalle_servicio"
           :configuracion="detalleConfiguracion"
           @seleccionar="seleccionarEquipamiento"
-          v-if="revisionTecnica.vehiculo"
         />
-        <section class="level box" v-if="revisionTecnica.vehiculo">
-          <div class="level-item has-text-centered">
-            <div>
-              <p class="heading">Costo de la revisión</p>
-              <p class="title">{{ revisionTecnica.costo_revision }}</p>
-            </div>
-          </div>
-          <div class="level-item has-text-centered">
-            <div>
-              <p class="title is-1">+</p>
-            </div>
-          </div>
+        <section class="level box">
+          <div class="level-item has-text-centered" />
+          <div class="level-item has-text-centered" />
           <div class="level-item has-text-centered">
             <div>
               <p class="heading">Repuestos</p>
@@ -191,22 +107,22 @@ import SeleccionarEntidad from "@/components/application/SeleccionarEntidad";
 import TablaRepuestos from "@/components/servicio/TablaRepuestos";
 
 export default {
-  name: "RevisionTecnicaFormulario",
+  name: "ServicioFacturaFormulario",
   mixins: [baseFormulario],
   components: { SeleccionarEntidad, TablaRepuestos },
   data() {
     return {
-      entidad: "revisionTecnica",
-      revisionTecnica: {
+      entidad: "facturaServicio",
+      facturaServicio: {
         cliente: null,
         mecanico: null,
         vehiculo: null,
-        fecha_revision: new Date(),
+        fecha_emision: new Date(),
         fecha_proxima_revision: new Date(),
         kilometraje_actual: 0,
         costo_revision: 0,
         total: 0,
-        detalle_revision: []
+        detalle_servicio: []
       },
       // configuraciones
       detalleConfiguracion: [
@@ -217,13 +133,13 @@ export default {
   },
   computed: {
     precioRepuestos() {
-      return this.revisionTecnica.detalle_revision.reduce(
+      return this.facturaServicio.detalle_servicio.reduce(
         (acumulador, elem) => (acumulador += parseFloat(elem.precio)),
         0
       );
     },
     precioTotal() {
-      return this.revisionTecnica.costo_revision + this.precioRepuestos;
+      return this.precioRepuestos;
     }
   },
   methods: {
@@ -238,18 +154,14 @@ export default {
       this.$refs.SeleccionarCliente.establecerCampoVisible(
         entidad.nombre_cliente
       );
-      this.$refs.SeleccionarMecanico.establecerCampoVisible(
-        entidad.nombre_mecanico
-      );
-      this.$refs.SeleccionarVehiculo.establecerCampoVisible(entidad.matricula);
     },
     seleccionarEquipamiento(repuesto) {
       if (
-        !this.revisionTecnica.detalle_factura.some(
+        !this.facturaServicio.detalle_servicio.some(
           (elem) => elem.descripcion === repuesto.nombre
         )
       ) {
-        this.revisionTecnica.detalle_factura.push(this.crearDetalle(repuesto));
+        this.facturaServicio.detalle_servicio.push(this.crearDetalle(repuesto));
       } else {
         this.notificar("El repuesto ya esta agregado!", "is-warning");
       }

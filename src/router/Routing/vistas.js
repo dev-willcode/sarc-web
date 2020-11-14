@@ -84,6 +84,15 @@ export default [
     }
   },
   {
+    path: "repuestos",
+    name: "repuestos",
+    component: () => import("@/views/Vista"),
+    children: [formularios.repuesto],
+    props: {
+      configuracion: configuraciones.repuesto
+    }
+  },
+  {
     path: "revisiontecnica",
     name: "revisiontecnica",
     component: () => import("@/views/Vista"),

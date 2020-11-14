@@ -87,17 +87,28 @@ export default {
     listado: [
       { label: "chasis", field: "chasis" },
       { label: "matricula", field: "matricula" },
-      { label: "cliente", field: "cliente" }
+      { label: "cliente", field: "nombre_cliente" }
+    ]
+  },
+  repuesto: {
+    titulo: "Repuestos",
+    formulario: "RepuestosFormulario",
+    urlListado: "repuestos",
+    listado: [
+      { label: "nombre", field: "nombre" },
+      { label: "precio", field: "precio" }
     ]
   },
   revisiontecnica: {
-    titulo: "Revision Técnica",
+    titulo: "Revision técnica",
     formulario: "RevisionTecnicaFormulario",
     urlListado: "revision_tecnica",
     listado: [
-      { label: "vehiculo", field: "vehiculo" },
-      { label: "fecha_revision", field: "fecha_revision" },
-      { label: "fecha_proxima_revision", field: "fecha_proxima_revision" }
+      { label: "cliente", field: "nombre_cliente" },
+      { label: "vehiculo", field: "matricula" },
+      { label: "fecha revision", field: "fecha_revision" },
+      { label: "fecha proxima revision", field: "fecha_proxima_revision" },
+      { label: "Costo", field: "costo_revision" }
     ]
   },
   citas: {
@@ -105,7 +116,7 @@ export default {
     formulario: "CitasFormulario",
     urlListado: "citas",
     listado: [
-      { label: "cliente", field: "cliente" },
+      { label: "cliente", field: "nombre_cliente" },
       { label: "fecha", field: "fecha" }
     ]
   },

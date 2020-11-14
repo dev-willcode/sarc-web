@@ -38,27 +38,6 @@
               :configuracion="configuraciones.cliente"
               :disabled="accion !== 'NUEVO'"
             />
-          </section>
-
-          <section class="column is-half">
-            <seleccionar-entidad
-              ref="SeleccionarVendedor"
-              label="Vendedor"
-              field-visible="nombre"
-              v-model="ventaFactura.vendedor"
-              :configuracion="configuraciones.vendedor"
-            />
-
-            <seleccionar-entidad
-              ref="SeleccionarAuto"
-              label="Auto"
-              field-visible="bastidor"
-              argumentos="?estado=true"
-              v-model="ventaFactura.auto"
-              :configuracion="configuraciones.auto"
-              @modelo="seleccionarAuto"
-              :disabled="accion !== 'NUEVO'"
-            />
 
             <validation-provider rules="required" v-slot="{ errors, valid }">
               <b-field
@@ -84,6 +63,27 @@
                 </div>
               </b-field>
             </validation-provider>
+          </section>
+
+          <section class="column is-half">
+            <seleccionar-entidad
+              ref="SeleccionarVendedor"
+              label="Vendedor"
+              field-visible="nombre"
+              v-model="ventaFactura.vendedor"
+              :configuracion="configuraciones.vendedor"
+            />
+
+            <seleccionar-entidad
+              ref="SeleccionarAuto"
+              label="Auto"
+              field-visible="bastidor"
+              argumentos="?estado=true"
+              v-model="ventaFactura.auto"
+              :configuracion="configuraciones.auto"
+              @modelo="seleccionarAuto"
+              :disabled="accion !== 'NUEVO'"
+            />
           </section>
         </div>
         <tabla-equipamientos
@@ -175,7 +175,7 @@ export default {
         vendedor: null,
         cliente: null,
         auto: null,
-        forma_pago: null,
+        forma_pago: "Efectivo",
         detalle_factura: []
       },
       autoSeleccionado: {},

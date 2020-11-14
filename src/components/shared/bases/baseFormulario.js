@@ -14,6 +14,9 @@ export default {
   computed: {
     accion() {
       return !this.id ? "NUEVO" : "MODIFICAR";
+    },
+    configuracion() {
+      return this.$parent.$parent.configuracion;
     }
   },
   created() {
@@ -41,7 +44,11 @@ export default {
     guardarEntidad(entidad) {
       this.antesGuardar(entidad);
       this.peticion(
-        { method: "post", url: `${this.url}/`, payload: entidad },
+        {
+          method: "post",
+          url: `${this.configuracion.urlListado}/`,
+          payload: entidad
+        },
         (response) => {
           if (response.status == 201) {
             this.emitirMensaje("Guardado con éxito!", "is-success");
@@ -51,17 +58,24 @@ export default {
       );
     },
     obtenerEntidad(id) {
-      this.peticion({ method: "get", url: `${this.url}/${id}` }, (response) => {
-        if (response.status == 200) {
-          this.despuesObtener(response.data);
-          this[this.entidad] = response.data;
-        } else this.notificarErrores(response);
-      });
+      this.peticion(
+        { method: "get", url: `${this.configuracion.urlListado}/${id}` },
+        (response) => {
+          if (response.status == 200) {
+            this.despuesObtener(response.data);
+            this[this.entidad] = response.data;
+          } else this.notificarErrores(response);
+        }
+      );
     },
     editarEntidad(entidad) {
       this.antesGuardar(entidad);
       this.peticion(
-        { method: "put", url: `${this.url}/${entidad.id}/`, payload: entidad },
+        {
+          method: "put",
+          url: `${this.configuracion.urlListado}/${entidad.id}/`,
+          payload: entidad
+        },
         (response) => {
           if (response.status == 200) {
             this.emitirMensaje("Editado con éxito!", "is-success");
@@ -72,7 +86,10 @@ export default {
     },
     eliminarEntidad(entidad) {
       this.peticion(
-        { method: "delete", url: `${this.url}/${entidad.id}/` },
+        {
+          method: "delete",
+          url: `${this.configuracion.urlListado}/${entidad.id}/`
+        },
         (response) => {
           if (response.status == 200) {
             this.emitirMensaje("Eliminado con éxito!", "is-success");
