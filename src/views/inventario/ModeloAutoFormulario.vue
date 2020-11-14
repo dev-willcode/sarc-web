@@ -142,13 +142,12 @@
 import baseFormulario from "@/components/shared/bases/baseFormulario";
 import TablaEquipamientos from "@/components/inventario/TablaEquipamientos";
 export default {
-  name: "ModeloAuto",
+  name: "ModeloAutoFormulario",
   mixins: [baseFormulario],
   components: { TablaEquipamientos },
   data() {
     return {
       entidad: "modeloAuto",
-      url: "modelo_auto",
       modeloAuto: {
         marca: null,
         nombre_modelo: "",

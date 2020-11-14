@@ -103,13 +103,12 @@
 import baseFormulario from "@/components/shared/bases/baseFormulario";
 
 export default {
-  name: "Autos",
+  name: "AutosFormulario",
   mixins: [baseFormulario],
   components: {},
   data() {
     return {
       entidad: "auto",
-      url: "auto",
       auto: {
         bastidor: "",
         modelo_auto: null,

@@ -127,12 +127,11 @@
 import baseFormulario from "@/components/shared/bases/baseFormulario";
 
 export default {
-  name: "Mecanicos",
+  name: "MecanicosFormulario",
   mixins: [baseFormulario],
   data() {
     return {
       entidad: "mecanicos",
-      url: "mecanico",
       mecanicos: {
         dni: "",
         nombre: "",

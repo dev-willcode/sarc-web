@@ -71,7 +71,7 @@ export default {
         (response) => {
           if (response.status === 200) {
             this.inicioSesion(response.data);
-            this.$router.push("/apps/");
+            this.$router.push({ name: "Apps" });
           } else this.notificarErrores(response);
         },
         () => {

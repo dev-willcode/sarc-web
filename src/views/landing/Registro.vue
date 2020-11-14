@@ -54,7 +54,11 @@
           label="Contraseña"
           :type="errors[0] ? 'is-danger' : valid ? 'is-success' : ''"
         >
-          <b-input v-model="usuario.contrasena" type="password" password-reveal>
+          <b-input
+            v-model="cliente.usuario.contrasena"
+            type="password"
+            password-reveal
+          >
           </b-input>
         </b-field>
         <span class="has-text-danger">{{ errors[0] }}</span>
@@ -63,7 +67,7 @@
       <validation-provider
         :rules="{
           required: true,
-          is: [usuario.contrasena, 'contraseña']
+          is: [cliente.usuario.contrasena, 'contraseña']
         }"
         v-slot="{ errors, valid }"
       >
@@ -104,15 +108,15 @@ export default {
   data() {
     return {
       confirmContrasena: "",
-      usuario: {
-        correo: "",
-        contrasena: ""
-      },
       cliente: {
         nombre: "",
         dni: "",
         domicilio: "",
-        correo: ""
+        correo: "",
+        usuario: {
+          correo: "",
+          contrasena: ""
+        }
       }
     };
   },
@@ -121,26 +125,15 @@ export default {
   methods: {
     ...mapMutations(["inicioSesion"]),
     registrar() {
-      this.usuario.correo = this.cliente.correo;
+      this.cliente.usuario.correo = this.cliente.correo;
       this.peticion(
-        { method: "post", url: "usuario", payload: this.usuario },
-        (usuario) => {
-          if (usuario.status === 201) {
-            this.cliente.usuario = usuario.data.id;
-            this.peticion(
-              { method: "post", url: "cliente", payload: this.cliente },
-              (cliente) => {
-                if (cliente.status === 201) {
-                  this.emitirMensaje(
-                    "Cliente registrado con exito!",
-                    "is-success"
-                  );
-                  this.inicioSesion(cliente.data);
-                  this.$router.push("/apps/");
-                } else this.notificarErrores(cliente);
-              }
-            );
-          } else this.notificarErrores(usuario);
+        { method: "post", url: "register", payload: this.cliente },
+        (response) => {
+          if (response.status === 201) {
+            this.emitirMensaje("Cliente registrado con exito!", "is-success");
+            this.inicioSesion(response.data);
+            this.$router.push({ name: "Apps" });
+          } else this.notificarErrores(response);
         }
       );
     }

@@ -92,6 +92,11 @@ export default {
             icon: "clock"
           },
           {
+            to: "/apps/repuestos",
+            label: "Repuestos",
+            icon: "tools"
+          },
+          {
             to: "/apps/revisiontecnica",
             label: "Revision tecnica",
             icon: "car-crash"

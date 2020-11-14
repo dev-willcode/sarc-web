@@ -19,7 +19,6 @@
               >
                 <div class="row">
                   <b-datepicker
-                    placeholder="Type or select a date..."
                     icon="calendar-today"
                     locale="fr-CA"
                     editable
@@ -169,7 +168,6 @@ export default {
   data() {
     return {
       entidad: "ventaFactura",
-      url: "factura_venta",
       ventaFactura: {
         numero_factura: "",
         fecha_emision: new Date(),

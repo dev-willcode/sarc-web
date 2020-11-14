@@ -3,7 +3,9 @@ import CardComponent from "@/components/application/CardComponent";
 import Notification from "@/components/application/Notification";
 export default {
   mixins: [],
-  props: {},
+  props: {
+    configuracion: Object
+  },
   components: { HeaderView, CardComponent, Notification },
   data() {
     return {};

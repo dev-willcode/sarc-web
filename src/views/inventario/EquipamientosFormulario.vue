@@ -1,7 +1,7 @@
 <template>
   <card-component title="Formulario">
     <div class="p-5">
-      <ValidationObserver ref="observer" v-slot="{ handleSubmit }">        
+      <ValidationObserver ref="observer" v-slot="{ handleSubmit }">
         <validation-provider rules="required" v-slot="{ errors, valid }">
           <b-field
             label="Nombre"
@@ -16,7 +16,7 @@
               <span class="has-text-danger">{{ errors[0] }}</span>
             </div>
           </b-field>
-        </validation-provider>                
+        </validation-provider>
         <validation-provider rules="required" v-slot="{ errors, valid }">
           <b-field
             label="Precio"
@@ -71,18 +71,17 @@
 import baseFormulario from "@/components/shared/bases/baseFormulario";
 
 export default {
-  name: "Equipamientos",
+  name: "EquipamientosFormulario",
   mixins: [baseFormulario],
   data() {
     return {
       entidad: "equipamiento",
-      url: "equipamiento",
       equipamiento: {
-        nombre: "",       
+        nombre: "",
         precio: 0
       }
     };
-  },  
+  },
   computed: {},
   methods: {}
 };

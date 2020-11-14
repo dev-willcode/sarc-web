@@ -4,19 +4,38 @@
       <ValidationObserver ref="observer" v-slot="{ handleSubmit }">
         <validation-provider rules="required" v-slot="{ errors, valid }">
           <b-field
-            label="Descripción"
+            label="Nombre"
             horizontal
             :type="errors[0] ? 'is-danger' : valid ? 'is-success' : ''"
           >
             <div class="row">
               <b-input
-                v-model="marca.descripcion"
-                placeholder="descripción..."
+                v-model="repuesto.nombre"
+                placeholder="Nombre del repuesto..."
               />
               <span class="has-text-danger">{{ errors[0] }}</span>
             </div>
           </b-field>
         </validation-provider>
+        <validation-provider rules="required" v-slot="{ errors, valid }">
+          <b-field
+            label="Precio"
+            horizontal
+            :type="errors[0] ? 'is-danger' : valid ? 'is-success' : ''"
+          >
+            <div class="row">
+              <numeric
+                class="input"
+                :class="valid ? 'is-success' : 'is-danger'"
+                :options="'dollar'"
+                v-model="repuesto.precio"
+                placeholder="Precio del repuesto..."
+              ></numeric>
+              <span class="has-text-danger">{{ errors[0] }}</span>
+            </div>
+          </b-field>
+        </validation-provider>
+
         <br />
         <b-field horizontal>
           <b-field grouped>
@@ -52,13 +71,14 @@
 import baseFormulario from "@/components/shared/bases/baseFormulario";
 
 export default {
-  name: "MarcasFormulario",
+  name: "RepuestosFormulario",
   mixins: [baseFormulario],
   data() {
     return {
-      entidad: "marca",
-      marca: {
-        descripcion: ""
+      entidad: "repuesto",
+      repuesto: {
+        nombre: "",
+        precio: 0
       }
     };
   },

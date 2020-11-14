@@ -24,7 +24,7 @@
         <nav-bar-menu class="has-divider has-user-avatar">
           <b-icon pack="fas" icon="user" custom-size="default"></b-icon>
           <div class="is-user-name">
-            <span>{{ usuario.persona.nombre }}</span>
+            <span>{{ usuario.nombre }}</span>
           </div>
           <div slot="dropdown" class="navbar-dropdown">
             <a class="navbar-item" @click="cerrar">
