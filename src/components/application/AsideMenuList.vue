@@ -5,11 +5,13 @@
       :key="index"
       :item="item"
       @menu-click="menuClick"
+      v-show="havePermission(item)"
     />
   </ul>
 </template>
 
 <script>
+import { mapState } from "vuex";
 import AsideMenuItem from "@/components/application/AsideMenuItem";
 
 export default {
@@ -27,7 +29,13 @@ export default {
       default: () => []
     }
   },
+  computed: {
+    ...mapState(["usuario"])
+  },
   methods: {
+    havePermission(item) {
+      return item.permisos.includes(this.usuario.tipo);
+    },
     menuClick(item) {
       this.$emit("menu-click", item);
     }

@@ -22,20 +22,13 @@
         <b-icon :icon="dropdownIcon" custom-size="default" />
       </div>
     </component>
-    <aside-menu-list
-      v-if="hasDropdown"
-      :menu="item.menu"
-      :is-submenu-list="true"
-    />
   </li>
 </template>
 
 <script>
 export default {
   name: "AsideMenuItem",
-  components: {
-    AsideMenuList: () => import("@/components/application/AsideMenuList")
-  },
+  components: {},
   props: {
     item: {
       type: Object,

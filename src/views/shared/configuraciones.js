@@ -1,22 +1,13 @@
 export default {
+  // modulo de inventario
   cliente: {
     titulo: "Clientes",
     formulario: "ClientesFormulario",
     urlListado: "cliente",
+    permisos: ["Admin", "Vendedor", "Mecanico"],
     listado: [
       { label: "dni", field: "dni" },
       { label: "nombre", field: "nombre" },
-      { label: "domicilio", field: "domicilio" },
-      { label: "correo", field: "correo" }
-    ]
-  },
-  mecanico: {
-    titulo: "Mecanicos",
-    formulario: "MecanicoFormulario",
-    urlListado: "mecanico",
-    listado: [
-      { label: "dni", field: "dni" },
-      { label: "nombres", field: "nombre" },
       { label: "domicilio", field: "domicilio" },
       { label: "correo", field: "correo" }
     ]
@@ -25,6 +16,7 @@ export default {
     titulo: "Vendedores",
     formulario: "VendedoresFormulario",
     urlListado: "vendedor",
+    permisos: ["Admin"],
     listado: [
       { label: "dni", field: "dni" },
       { label: "nombres", field: "nombre" },
@@ -32,21 +24,11 @@ export default {
       { label: "correo", field: "correo" }
     ]
   },
-  auto: {
-    titulo: "Autos",
-    formulario: "AutosFormulario",
-    urlListado: "auto",
-    listado: [
-      { label: "bastidor", field: "bastidor" },
-      { label: "modelo", field: "nombre_modelo" },
-      { label: "concesionario", field: "servicio" },
-      { label: "disponible", field: "estado", type: "boolean" }
-    ]
-  },
   servicio: {
     titulo: "Servicio",
     formulario: "ServiciosFormulario",
     urlListado: "servicio",
+    permisos: ["Admin"],
     listado: [
       { label: "dni", field: "dni" },
       { label: "nombres", field: "nombre" },
@@ -58,12 +40,24 @@ export default {
     titulo: "Marcas",
     formulario: "MarcasFormulario",
     urlListado: "marca",
+    permisos: ["Admin", "Vendedor"],
     listado: [{ label: "descripcion", field: "descripcion" }]
+  },
+  equipamiento: {
+    titulo: "Equipamientos",
+    formulario: "EquipamientosFormulario",
+    urlListado: "equipamiento",
+    permisos: ["Admin", "Vendedor"],
+    listado: [
+      { label: "nombre", field: "nombre" },
+      { label: "precio", field: "precio" }
+    ]
   },
   modeloauto: {
     titulo: "Modelo auto",
     formulario: "ModeloAutoFormulario",
     urlListado: "modelo_auto",
+    permisos: ["Admin", "Vendedor"],
     listado: [
       { label: "modelo", field: "nombre_modelo" },
       { label: "potencia", field: "potencia" },
@@ -71,19 +65,48 @@ export default {
       { label: "precio", field: "precio" }
     ]
   },
-  equipamiento: {
-    titulo: "Equipamientos",
-    formulario: "EquipamientosFormulario",
-    urlListado: "equipamiento",
+  auto: {
+    titulo: "Autos",
+    formulario: "AutosFormulario",
+    urlListado: "auto",
+    permisos: ["Admin", "Vendedor"],
     listado: [
-      { label: "nombre", field: "nombre" },
+      { label: "bastidor", field: "bastidor" },
+      { label: "modelo", field: "nombre_modelo" },
+      { label: "concesionario", field: "servicio" },
+      { label: "disponible", field: "estado", type: "boolean" }
+    ]
+  },
+  facturaventa: {
+    titulo: "Facturas de venta",
+    formulario: "VentasFacturaFormulario",
+    urlListado: "factura_venta",
+    permisos: ["Admin", "Vendedor"],
+    listado: [
+      { label: "cliente", field: "nombre_cliente" },
+      { label: "modelo", field: "nombre_modelo" },
+      { label: "fecha", field: "fecha_emision" },
       { label: "precio", field: "precio" }
+    ]
+  },
+  // modulo de servicio
+  mecanico: {
+    titulo: "Mecanicos",
+    formulario: "MecanicoFormulario",
+    urlListado: "mecanico",
+    permisos: ["Admin"],
+    listado: [
+      { label: "dni", field: "dni" },
+      { label: "nombres", field: "nombre" },
+      { label: "domicilio", field: "domicilio" },
+      { label: "correo", field: "correo" }
     ]
   },
   vehiculo: {
     titulo: "Vehiculos",
     formulario: "VehiculosFormulario",
     urlListado: "vehiculo",
+    permisos: ["Admin", "Mecanico"],
     listado: [
       { label: "chasis", field: "chasis" },
       { label: "matricula", field: "matricula" },
@@ -94,6 +117,7 @@ export default {
     titulo: "Repuestos",
     formulario: "RepuestosFormulario",
     urlListado: "repuestos",
+    permisos: ["Admin", "Vendedor", "Mecanico"],
     listado: [
       { label: "nombre", field: "nombre" },
       { label: "precio", field: "precio" }
@@ -103,6 +127,7 @@ export default {
     titulo: "Revision técnica",
     formulario: "RevisionTecnicaFormulario",
     urlListado: "revision_tecnica",
+    permisos: ["Admin", "Vendedor", "Mecanico"],
     listado: [
       { label: "cliente", field: "nombre_cliente" },
       { label: "vehiculo", field: "matricula" },
@@ -115,31 +140,20 @@ export default {
     titulo: "Citas",
     formulario: "CitasFormulario",
     urlListado: "citas",
+    permisos: ["Admin", "Vendedor", "Mecanico"],
     listado: [
       { label: "cliente", field: "nombre_cliente" },
       { label: "fecha", field: "fecha" }
-    ]
-  },
-  facturaventa: {
-    titulo: "Facturas de venta",
-    formulario: "VentasFacturaFormulario",
-    urlListado: "factura_venta",
-    listado: [
-      { label: "cliente", field: "nombre_cliente" },
-      { label: "modelo", field: "nombre_modelo" },
-      { label: "fecha", field: "fecha_emision" },
-      { label: "precio", field: "precio" }
     ]
   },
   facturaservicio: {
     titulo: "Facturas de servicio",
     formulario: "ServiciosFacturaFormulario",
     urlListado: "factura_servicio",
+    permisos: ["Admin", "Mecanico"],
     listado: [
       { label: "cliente", field: "nombre_cliente" },
-      { label: "modelo", field: "modelo" },
-      { label: "fecha", field: "fecha_emision" },
-      { label: "precio", field: "precio" }
+      { label: "fecha", field: "fecha_emision" }
     ]
   }
 };

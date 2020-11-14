@@ -72,6 +72,17 @@ export default {
           if (response.status === 200) {
             this.inicioSesion(response.data);
             this.$router.push({ name: "Apps" });
+            this.notificar(
+              `Bienvenido al sistema ${response.data.tipo.toLowerCase()}
+              <br/> <b>${response.data.nombre}<b/>!`,
+              "is-primary"
+            );
+          } else if (response.status === 204) {
+            this.notificar(
+              `Correo y contraseña incorrectos
+              <br/> Verifique sus credenciales de acceso!`,
+              "is-danger"
+            );
           } else this.notificarErrores(response);
         },
         () => {

@@ -5,14 +5,12 @@
     </aside-tools>
     <div class="menu is-menu-main">
       <template v-for="(menu, index) in menu">
-        <p :key="`modulo_${index}`" class="menu-label">
-          {{ menu.modulo }}
-        </p>
-        <aside-menu-list
-          :key="`vista_${index}`"
-          :menu="menu.vistas"
-          @menu-click="menuClick"
-        />
+        <span :key="`modulo_${index}`" v-if="haveItemPermission(menu)">
+          <p class="menu-label">
+            {{ menu.modulo }}
+          </p>
+          <aside-menu-list :key="`vista_${index}`" :menu="menu.vistas" />
+        </span>
       </template>
     </div>
   </aside>
@@ -33,11 +31,13 @@ export default {
     }
   },
   computed: {
-    ...mapState(["isAsideVisible"])
+    ...mapState(["isAsideVisible", "usuario"])
   },
   methods: {
-    menuClick() {
-      //
+    haveItemPermission(menu) {
+      return menu.vistas.some((vista) =>
+        vista.permisos.includes(this.usuario.tipo)
+      );
     }
   }
 };
