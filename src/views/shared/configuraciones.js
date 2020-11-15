@@ -143,7 +143,8 @@ export default {
     permisos: ["Admin", "Vendedor", "Mecanico"],
     listado: [
       { label: "cliente", field: "nombre_cliente" },
-      { label: "fecha", field: "fecha" }
+      { label: "fecha", field: "fecha" },
+      { label: "hora", field: "hora" }
     ]
   },
   facturaservicio: {

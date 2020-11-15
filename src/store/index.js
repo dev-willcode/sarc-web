@@ -43,5 +43,17 @@ export default new Vuex.Store({
       state.isAsideMobileExpanded = isShow;
     }
   },
-  actions: {}
+  actions: {
+    actualizarUsuario(context, usuario) {
+      context.commit("inicioSesion", {
+        dni: usuario.dni,
+        nombre: usuario.nombre,
+        domicilio: usuario.domicilio,
+        correo: usuario.correo,
+        id: usuario.id,
+        tipo: context.state.usuario.tipo,
+        usuario: context.state.usuario.usuario
+      });
+    }
+  }
 });

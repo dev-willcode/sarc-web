@@ -21,13 +21,7 @@ export default [
     modulo: "Clientes",
     vistas: [
       {
-        to: "/apps/cliente/vehiculos",
-        label: "Mis vehiculos",
-        icon: "car",
-        permisos: ["Cliente"]
-      },
-      {
-        to: "/apps/cliente/citas",
+        to: "/apps/cliente_citas",
         label: "Mis citas",
         icon: "clock",
         permisos: ["Cliente"]

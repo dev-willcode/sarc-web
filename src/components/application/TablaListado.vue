@@ -34,7 +34,10 @@
         width="200"
         v-slot="props"
       >
-        <div class="buttons is-centeded">
+        <div v-if="customActions">
+          <slot name="acciones" :data="props.row"></slot>
+        </div>
+        <div class="buttons is-centeded" v-else>
           <router-link
             :to="{
               name: formulario,
@@ -86,6 +89,8 @@ export default {
   props: {
     url: String,
     formulario: String,
+    argumentos: String,
+    customActions: { type: Boolean, default: false },
     configuracion: {
       type: Array,
       default: () => []
@@ -106,9 +111,13 @@ export default {
   },
   methods: {
     listar() {
-      this.peticion({ method: "get", url: this.url }, ({ data }) => {
-        this.listado = data.results;
-      });
+      this.peticion(
+        { method: "get", url: `${this.url}/${this.argumentos || ""}` },
+        ({ data }) => {
+          this.listado = data.results;
+          this.$emit("listado", data.results);
+        }
+      );
     },
     confirmarEliminacion(entidad) {
       this.entidad = entidad;

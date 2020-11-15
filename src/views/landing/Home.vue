@@ -1,7 +1,6 @@
 <template>
   <div>
-    <section id="hero" class="hero is-link is-fullheight-with-navbar">
-      <Header />
+    <section id="hero" class="hero is-fullheight-with-navbar">
       <div class="hero-body">
         <div class="container">
           <p class="title has-text-white is-1">
@@ -11,9 +10,16 @@
             a tu alcance.
           </p>
           <div class="buttons">
-            <b-button class="b-button is-primary ">Ver catalogo</b-button>
-            <b-button class="b-button is-primary is-inverted is-outlined ">
-              Sobre nosotros
+            <b-button
+              class="b-button is-primary"
+              @click="$router.push('/login/sesion')"
+              >Iniciar sesión</b-button
+            >
+            <b-button
+              class="b-button is-primary is-inverted is-outlined"
+              @click="$router.push('/login/register')"
+            >
+              Resgistrarse
             </b-button>
           </div>
         </div>
@@ -95,7 +101,10 @@
             </ul>
           </div>
           <div class="buttons">
-            <b-button class="b-button is-primary ">
+            <b-button
+              class="b-button is-primary"
+              @click="$router.push('/login/sesion')"
+            >
               Reservar una cita
             </b-button>
           </div>
@@ -115,13 +124,11 @@
 </template>
 
 <script>
-import Header from "@/components/landing/Header";
 import VehiculosLanding from "@/components/landing/VehiculosLanding";
 
 export default {
   name: "Home",
   components: {
-    Header,
     VehiculosLanding
   }
 };

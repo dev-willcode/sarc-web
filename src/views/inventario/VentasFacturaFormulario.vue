@@ -22,7 +22,7 @@
                     icon="calendar-today"
                     locale="fr-CA"
                     editable
-                    v-model="ventaFactura.fecha_emision"
+                    v-model="fecha_emision"
                   >
                   </b-datepicker>
                   <span class="has-text-danger">{{ errors[0] }}</span>
@@ -170,7 +170,7 @@ export default {
       entidad: "ventaFactura",
       ventaFactura: {
         numero_factura: "",
-        fecha_emision: new Date(),
+        fecha_emision: dayjs().format("YYYY-MM-DD"),
         precio: 0,
         vendedor: null,
         cliente: null,
@@ -200,16 +200,19 @@ export default {
     },
     precioTotal() {
       return this.precioAuto + this.precioEquipamientos;
+    },
+    fecha_emision: {
+      get() {
+        return dayjs(this.ventaFactura.fecha_emision || new Date()).toDate();
+      },
+      set(value) {
+        this.ventaFactura.fecha_emision = dayjs(value).format("YYYY-MM-DD");
+      }
     }
   },
   methods: {
     // @Override
-    antesGuardar(entidad) {
-      entidad.fecha_emision = dayjs(entidad.fecha_emision).format("YYYY-MM-DD");
-    },
-    // @Override
     despuesObtener(entidad) {
-      entidad.fecha_emision = dayjs(entidad.fecha_emision).toDate();
       entidad.numero_factura = this.agregarCeros(entidad.id, 10);
       this.$refs.SeleccionarCliente.establecerCampoVisible(
         entidad.nombre_cliente

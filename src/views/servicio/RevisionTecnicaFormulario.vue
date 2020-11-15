@@ -69,7 +69,7 @@
                     icon="calendar-today"
                     locale="fr-CA"
                     editable
-                    v-model="revisionTecnica.fecha_revision"
+                    v-model="fecha_revision"
                   >
                   </b-datepicker>
                   <span class="has-text-danger">{{ errors[0] }}</span>
@@ -88,7 +88,7 @@
                     icon="calendar-today"
                     locale="fr-CA"
                     editable
-                    v-model="revisionTecnica.fecha_proxima_revision"
+                    v-model="fecha_proxima_revision"
                   >
                   </b-datepicker>
                   <span class="has-text-danger">{{ errors[0] }}</span>
@@ -163,32 +163,41 @@ export default {
         cliente: null,
         mecanico: null,
         vehiculo: null,
-        fecha_revision: new Date(),
-        fecha_proxima_revision: new Date(),
+        fecha_revision: dayjs().format("YYYY-MM-DD"),
+        fecha_proxima_revision: dayjs().format("YYYY-MM-DD"),
         kilometraje_actual: 0,
         costo_revision: 0,
         total: 0
       }
     };
   },
-  computed: {},
+  computed: {
+    fecha_revision: {
+      get() {
+        return dayjs(
+          this.revisionTecnica.fecha_revision || new Date()
+        ).toDate();
+      },
+      set(value) {
+        this.revisionTecnica.fecha_revision = dayjs(value).format("YYYY-MM-DD");
+      }
+    },
+    fecha_proxima_revision: {
+      get() {
+        return dayjs(
+          this.revisionTecnica.fecha_proxima_revision || new Date()
+        ).toDate();
+      },
+      set(value) {
+        this.revisionTecnica.fecha_proxima_revision = dayjs(value).format(
+          "YYYY-MM-DD"
+        );
+      }
+    }
+  },
   methods: {
     // @Override
-    antesGuardar(entidad) {
-      entidad.fecha_revision = dayjs(entidad.fecha_revision).format(
-        "YYYY-MM-DD"
-      );
-      entidad.fecha_proxima_revision = dayjs(
-        entidad.fecha_proxima_revision
-      ).format("YYYY-MM-DD");
-    },
-    // @Override
     despuesObtener(entidad) {
-      entidad.fecha_revision = dayjs(entidad.fecha_revision).toDate();
-      entidad.fecha_proxima_revision = dayjs(
-        entidad.fecha_proxima_revision
-      ).toDate();
-
       entidad.numero_revision = this.agregarCeros(entidad.id, 10);
       this.$refs.SeleccionarCliente.establecerCampoVisible(
         entidad.nombre_cliente

@@ -1,10 +1,5 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Home from "@/views/landing/Home";
-import Login from "@/views/landing/Login";
-import Sesion from "@/views/landing/Sesion";
-import Registro from "@/views/landing/Registro";
-import Application from "@/views/Application";
 import store from "@/store";
 
 // Routing
@@ -16,30 +11,42 @@ const routes = [
   {
     path: "/login",
     name: "login",
-    component: Login,
+    component: () => import("@/views/landing/Login"),
     children: [
       {
         path: "sesion",
         name: "sesion",
-        component: Sesion
+        component: () => import("@/views/landing/Sesion")
       },
       {
         path: "register",
         name: "registro",
-        component: Registro
+        component: () => import("@/views/landing/Registro")
       }
     ]
   },
   {
     path: "/",
     name: "Home",
-    component: Home
+    component: () => import("@/views/landing/Home")
   },
   {
     path: "/apps",
     name: "Apps",
-    component: Application,
-    children: [...vistas]
+    component: () => import("@/views/Application"),
+    children: [
+      {
+        path: "perfil",
+        name: "perfil",
+        component: () => import("@/views/Perfil/Perfil")
+      },
+      {
+        path: "cliente_citas",
+        name: "citasCliente",
+        component: () => import("@/views/Perfil/Citas")
+      },
+      ...vistas
+    ]
   }
 ];
 

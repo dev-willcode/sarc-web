@@ -23,7 +23,7 @@
                     icon="calendar-today"
                     locale="fr-CA"
                     editable
-                    v-model="facturaServicio.fecha_emision"
+                    v-model="fecha_emision"
                   >
                   </b-datepicker>
                   <span class="has-text-danger">{{ errors[0] }}</span>
@@ -117,8 +117,8 @@ export default {
         cliente: null,
         mecanico: null,
         vehiculo: null,
-        fecha_emision: new Date(),
-        fecha_proxima_revision: new Date(),
+        fecha_emision: dayjs().format("YYYY-MM-DD"),
+        fecha_proxima_revision: dayjs().format("YYYY-MM-DD"),
         kilometraje_actual: 0,
         costo_revision: 0,
         total: 0,
@@ -140,16 +140,19 @@ export default {
     },
     precioTotal() {
       return this.precioRepuestos;
+    },
+    fecha_emision: {
+      get() {
+        return dayjs(this.facturaServicio.fecha_emision || new Date()).toDate();
+      },
+      set(value) {
+        this.facturaServicio.fecha_emision = dayjs(value).format("YYYY-MM-DD");
+      }
     }
   },
   methods: {
     // @Override
-    antesGuardar(entidad) {
-      entidad.fecha_emision = dayjs(entidad.fecha_emision).format("YYYY-MM-DD");
-    },
-    // @Override
     despuesObtener(entidad) {
-      entidad.fecha_emision = dayjs(entidad.fecha_emision).toDate();
       entidad.numero_revision = this.agregarCeros(entidad.id, 10);
       this.$refs.SeleccionarCliente.establecerCampoVisible(
         entidad.nombre_cliente

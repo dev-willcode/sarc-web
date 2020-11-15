@@ -1,13 +1,13 @@
 <template>
   <div class="is-user-avatar">
-    <img :src="newUserAvatar" :alt="userName" />
+    <img src="@/assets/images/user.png" :alt="usuario.nombre" />
   </div>
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState } from "vuex";
 export default {
-  name: 'UserAvatar',
+  name: "UserAvatar",
   props: {
     avatar: {
       type: String,
@@ -15,24 +15,7 @@ export default {
     }
   },
   computed: {
-    newUserAvatar () {
-      if (this.avatar) {
-        return this.avatar
-      }
-
-      if (this.userAvatar) {
-        return this.userAvatar
-      }
-
-      let name = 'somename'
-
-      if (this.userName) {
-        name = this.userName.replace(/[^a-z0-9]+/i, '')
-      }
-
-      return `https://avatars.dicebear.com/v2/human/${name}.svg?options[mood][]=happy`
-    },
-    ...mapState(['userAvatar', 'userName'])
+    ...mapState(["usuario"])
   }
-}
+};
 </script>
