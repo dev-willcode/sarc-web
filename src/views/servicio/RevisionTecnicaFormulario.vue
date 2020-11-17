@@ -49,6 +49,10 @@
                     class="input"
                     :class="valid ? 'is-success' : 'is-danger'"
                     v-model="revisionTecnica.costo_revision"
+                    :options="{
+                      currencySymbol: '$',
+                      emptyInputBehavior: 'zero'
+                    }"
                     placeholder="Costo revisión..."
                   ></numeric>
                   <span class="has-text-danger">{{ errors[0] }}</span>
@@ -107,6 +111,10 @@
                     class="input"
                     :class="valid ? 'is-success' : 'is-danger'"
                     v-model="revisionTecnica.kilometraje_actual"
+                    :options="{
+                      decimalPlaces: 0,
+                      emptyInputBehavior: 'zero'
+                    }"
                     placeholder="Kilometraje Actual..."
                   ></numeric>
                   <span class="has-text-danger">{{ errors[0] }}</span>

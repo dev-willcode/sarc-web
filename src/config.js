@@ -1,7 +1,13 @@
 import Vue from "vue";
 import axios from "axios";
 import { ValidationProvider, ValidationObserver } from "vee-validate";
-import { required, email, min, double } from "vee-validate/dist/rules";
+import {
+  required,
+  email,
+  min,
+  double,
+  max_value
+} from "vee-validate/dist/rules";
 import { extend } from "vee-validate";
 import { VueMaskDirective } from "v-mask";
 import VueAutonumeric from "vue-autonumeric/src/components/VueAutonumeric.vue";
@@ -32,6 +38,11 @@ const configuraciones = {
     extend("decimal", {
       ...double,
       message: "El campo debe tener un máximo de {decimals} decimales"
+    });
+    extend("max_value", {
+      ...max_value,
+      params: ["max"],
+      message: "El campo debe tener un valor maximo de {max}"
     });
     extend("min", {
       ...min,

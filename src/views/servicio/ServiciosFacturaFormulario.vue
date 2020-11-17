@@ -45,7 +45,6 @@
           ref="TablaRepuestos"
           label="Repuestos del vehiculo"
           v-model="facturaServicio.detalle_servicio"
-          :configuracion="detalleConfiguracion"
           @seleccionar="seleccionarEquipamiento"
         />
         <section class="level box">
@@ -123,18 +122,14 @@ export default {
         costo_revision: 0,
         total: 0,
         detalle_servicio: []
-      },
-      // configuraciones
-      detalleConfiguracion: [
-        { label: "descripcion", field: "descripcion" },
-        { label: "precio", field: "precio" }
-      ]
+      }
     };
   },
   computed: {
     precioRepuestos() {
       return this.facturaServicio.detalle_servicio.reduce(
-        (acumulador, elem) => (acumulador += parseFloat(elem.precio)),
+        (acumulador, elem) =>
+          (acumulador += parseFloat(elem.precio) * parseFloat(elem.cantidad)),
         0
       );
     },
@@ -169,11 +164,12 @@ export default {
         this.notificar("El repuesto ya esta agregado!", "is-warning");
       }
     },
-    crearDetalle(repuesto, defecto = false) {
+    crearDetalle(repuesto) {
       return {
         descripcion: repuesto.nombre,
-        precio: defecto ? 0 : repuesto.precio,
-        es_serie: defecto
+        precio: repuesto.precio,
+        cantidad: 1,
+        max: repuesto.cantidad
       };
     }
   }

@@ -70,6 +70,9 @@ export default {
     },
     agregarCeros(num, size) {
       return (Math.pow(10, size) + ~~num).toString().substring(1);
+    },
+    corregirNumeric(event, referencia) {
+      referencia.$emit("input", 10);
     }
   }
 };

@@ -84,6 +84,34 @@
               @modelo="seleccionarAuto"
               :disabled="accion !== 'NUEVO'"
             />
+            <validation-provider
+              :rules="{
+                required: true,
+                max_value: ventaFactura.precio
+              }"
+              v-slot="{ errors, valid }"
+            >
+              <b-field
+                v-if="ventaFactura.auto"
+                label="Descuento"
+                horizontal
+                :type="errors[0] ? 'is-danger' : valid ? 'is-success' : ''"
+              >
+                <div class="row">
+                  <numeric
+                    class="input"
+                    :class="valid ? 'is-success' : 'is-danger'"
+                    :options="{
+                      currencySymbol: '$',
+                      emptyInputBehavior: 'zero'
+                    }"
+                    v-model="ventaFactura.descuento"
+                    placeholder="descuento..."
+                  ></numeric>
+                  <span class="has-text-danger">{{ errors[0] }}</span>
+                </div>
+              </b-field>
+            </validation-provider>
           </section>
         </div>
         <tabla-equipamientos
@@ -110,6 +138,17 @@
             <div>
               <p class="heading">Equipamientos</p>
               <p class="title">{{ precioEquipamientos }}</p>
+            </div>
+          </div>
+          <div class="level-item has-text-centered">
+            <div>
+              <p class="title is-1">-</p>
+            </div>
+          </div>
+          <div class="level-item has-text-centered">
+            <div>
+              <p class="heading">Descuento</p>
+              <p class="title">{{ descuentos }}</p>
             </div>
           </div>
           <div class="level-item has-text-centered">
@@ -172,6 +211,7 @@ export default {
         numero_factura: "",
         fecha_emision: dayjs().format("YYYY-MM-DD"),
         precio: 0,
+        descuento: 0,
         vendedor: null,
         cliente: null,
         auto: null,
@@ -189,6 +229,9 @@ export default {
     };
   },
   computed: {
+    descuentos() {
+      return parseFloat(this.ventaFactura.descuento || 0);
+    },
     precioAuto() {
       return parseFloat(this.ventaFactura.precio || 0);
     },
@@ -199,7 +242,7 @@ export default {
       );
     },
     precioTotal() {
-      return this.precioAuto + this.precioEquipamientos;
+      return this.precioAuto + this.precioEquipamientos - this.descuentos;
     },
     fecha_emision: {
       get() {
@@ -227,6 +270,7 @@ export default {
 
       if (this.accion == "NUEVO") {
         this.ventaFactura.precio = auto.precio_modelo;
+        this.ventaFactura.descuento = auto.descuento_modelo;
         this.ventaFactura.detalle_factura = auto.equipamientos_auto.map(
           (elem) => this.crearDetalle(elem, true)
         );

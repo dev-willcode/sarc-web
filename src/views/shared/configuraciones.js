@@ -120,7 +120,8 @@ export default {
     permisos: ["Admin", "Vendedor", "Mecanico"],
     listado: [
       { label: "nombre", field: "nombre" },
-      { label: "precio", field: "precio" }
+      { label: "precio", field: "precio" },
+      { label: "cantidad", field: "cantidad" }
     ]
   },
   revisiontecnica: {

@@ -27,7 +27,10 @@
               <numeric
                 class="input"
                 :class="valid ? 'is-success' : 'is-danger'"
-                :options="'dollar'"
+                :options="{
+                  currencySymbol: '$',
+                  emptyInputBehavior: 'zero'
+                }"
                 v-model="equipamiento.precio"
                 placeholder="Precio del equipamiento..."
               ></numeric>

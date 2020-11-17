@@ -27,9 +27,33 @@
               <numeric
                 class="input"
                 :class="valid ? 'is-success' : 'is-danger'"
-                :options="'dollar'"
+                :options="{
+                  currencySymbol: '$',
+                  emptyInputBehavior: 'zero'
+                }"
                 v-model="repuesto.precio"
                 placeholder="Precio del repuesto..."
+              ></numeric>
+              <span class="has-text-danger">{{ errors[0] }}</span>
+            </div>
+          </b-field>
+        </validation-provider>
+        <validation-provider rules="required" v-slot="{ errors, valid }">
+          <b-field
+            label="Cantidad"
+            horizontal
+            :type="errors[0] ? 'is-danger' : valid ? 'is-success' : ''"
+          >
+            <div class="row">
+              <numeric
+                class="input"
+                :class="valid ? 'is-success' : 'is-danger'"
+                :options="{
+                  decimalPalces: 0,
+                  emptyInputBehavior: 'zero'
+                }"
+                v-model="repuesto.cantidad"
+                placeholder="Cantidad del repuesto..."
               ></numeric>
               <span class="has-text-danger">{{ errors[0] }}</span>
             </div>
@@ -78,7 +102,8 @@ export default {
       entidad: "repuesto",
       repuesto: {
         nombre: "",
-        precio: 0
+        precio: 0,
+        cantidad: 0
       }
     };
   },

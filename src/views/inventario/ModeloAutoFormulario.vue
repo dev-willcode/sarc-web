@@ -54,6 +54,9 @@
                     class="input"
                     :class="valid ? 'is-success' : 'is-danger'"
                     v-model="modeloAuto.potencia"
+                    :options="{
+                      emptyInputBehavior: 'zero'
+                    }"
                     placeholder="potencia..."
                   ></numeric>
                   <span class="has-text-danger">{{ errors[0] }}</span>
@@ -70,7 +73,10 @@
                   <numeric
                     class="input"
                     :class="valid ? 'is-success' : 'is-danger'"
-                    :options="'integer'"
+                    :options="{
+                      decimalPlaces: 0,
+                      emptyInputBehavior: 'zero'
+                    }"
                     v-model="modeloAuto.cilindraje"
                     placeholder="cilindraje..."
                   ></numeric>
@@ -88,9 +94,39 @@
                   <numeric
                     class="input"
                     :class="valid ? 'is-success' : 'is-danger'"
-                    :options="'dollar'"
+                    :options="{
+                      currencySymbol: '$',
+                      emptyInputBehavior: 'zero'
+                    }"
                     v-model="modeloAuto.precio"
                     placeholder="precio..."
+                  ></numeric>
+                  <span class="has-text-danger">{{ errors[0] }}</span>
+                </div>
+              </b-field>
+            </validation-provider>
+            <validation-provider
+              :rules="{
+                required: true,
+                max_value: modeloAuto.precio
+              }"
+              v-slot="{ errors, valid }"
+            >
+              <b-field
+                label="Descuento"
+                horizontal
+                :type="errors[0] ? 'is-danger' : valid ? 'is-success' : ''"
+              >
+                <div class="row">
+                  <numeric
+                    class="input"
+                    :class="valid ? 'is-success' : 'is-danger'"
+                    :options="{
+                      currencySymbol: '$',
+                      emptyInputBehavior: 'zero'
+                    }"
+                    v-model="modeloAuto.descuento"
+                    placeholder="descuento..."
                   ></numeric>
                   <span class="has-text-danger">{{ errors[0] }}</span>
                 </div>
@@ -154,6 +190,7 @@ export default {
         potencia: 0,
         cilindraje: 0,
         precio: 0,
+        descuento: 0,
         equipamientos: []
       },
       //listados
@@ -183,9 +220,11 @@ export default {
       this.listados.equipamientos = entidad.equipamientos_auto;
     },
     seleccionarEquipamiento(equipamiento) {
-      let duplicado = !this.value.some((equip) => equip.id == equipamiento.id);
+      let duplicado = !this.listados.equipamientos.some(
+        (equip) => equip.id == equipamiento.id
+      );
       if (duplicado) {
-        this.value.push(equipamiento);
+        this.listados.equipamientos.push(equipamiento);
       } else {
         this.notificar("El equipamiento ya esta agregado!", "is-warning");
       }

@@ -16,11 +16,40 @@
         v-slot="props"
         sortable
       >
-        <b-checkbox
-          v-if="item.type === 'boolean'"
-          v-model="props.row[item.field]"
-        ></b-checkbox>
-        <span v-else>{{ props.row[item.field] }}</span>
+        <section v-if="!item.editable">
+          <b-checkbox
+            v-if="item.type === 'boolean'"
+            v-model="props.row[item.field]"
+          ></b-checkbox>
+          <span v-else>{{ props.row[item.field] }}</span>
+        </section>
+        <section v-else>
+          <ValidationObserver ref="observer">
+            <validation-provider
+              v-if="['integer', 'decimal'].includes(item.type)"
+              :rules="item.rules ? item.rules(props.row) : 'required'"
+              v-slot="{ errors, valid }"
+            >
+              <b-field
+                :type="errors[0] ? 'is-danger' : valid ? 'is-success' : ''"
+              >
+                <div class="row">
+                  <numeric
+                    :ref="`numeric_${item.field}`"
+                    class="input"
+                    :options="{
+                      emptyInputBehavior: 'zero',
+                      minimumValue: 0
+                    }"
+                    :class="valid ? 'is-success' : 'is-danger'"
+                    v-model="props.row[item.field]"
+                  ></numeric>
+                  <span class="has-text-danger">{{ errors[0] }}</span>
+                </div>
+              </b-field>
+            </validation-provider>
+          </ValidationObserver>
+        </section>
       </b-table-column>
       <b-table-column
         custom-key="actions"

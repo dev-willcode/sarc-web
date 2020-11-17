@@ -5,6 +5,7 @@
         label="Añadir"
         type="button"
         icon="plus"
+        argumentos="?cantidad__gt=0"
         @modelo="seleccionar"
         :configuracion="configuraciones.repuesto"
       />
@@ -36,7 +37,22 @@ export default {
   },
   computed: {
     configuracionTabla() {
-      return this.configuracion || this.configuraciones.repuesto.listado;
+      return [
+        { label: "descripcion", field: "descripcion" },
+        { label: "precio", field: "precio", editable: true, type: "decimal" },
+        {
+          label: "cantidad",
+          field: "cantidad",
+          editable: true,
+          type: "integer",
+          rules: (data) => {
+            return {
+              required: true,
+              max_value: data.max || 999999999
+            };
+          }
+        }
+      ];
     }
   },
   created() {},
