@@ -40,16 +40,68 @@
               :disabled="accion !== 'NUEVO'"
             />
           </section>
+
+          <section class="column">
+            <seleccionar-entidad
+              ref="SeleccionarRevision"
+              label="Revisión Técnica"
+              field-visible="id"
+              v-model="facturaServicio.revision_tecnica"
+              :configuracion="configuraciones.revisiontecnica"
+              @modelo="revisionSeleccionada = $event"
+            />
+            <validation-provider
+              v-if="facturaServicio.revision_tecnica"
+              rules="required"
+              v-slot="{ errors, valid }"
+            >
+              <b-field
+                label="Costo revisión"
+                horizontal
+                :type="errors[0] ? 'is-danger' : valid ? 'is-success' : ''"
+              >
+                <div class="row">
+                  <numeric
+                    class="input"
+                    disabled
+                    v-model="revisionSeleccionada.costo_revision"
+                    :options="{
+                      currencySymbol: '$',
+                      emptyInputBehavior: 'zero'
+                    }"
+                    placeholder="Costo revisión..."
+                  ></numeric>
+                  <span class="has-text-danger">{{ errors[0] }}</span>
+                </div>
+              </b-field>
+            </validation-provider>
+          </section>
         </div>
         <tabla-repuestos
           ref="TablaRepuestos"
           label="Repuestos del vehiculo"
           v-model="facturaServicio.detalle_servicio"
+          :accion="accion"
           @seleccionar="seleccionarEquipamiento"
         />
         <section class="level box">
-          <div class="level-item has-text-centered" />
-          <div class="level-item has-text-centered" />
+          <div
+            class="level-item has-text-centered"
+            v-show="facturaServicio.revision_tecnica"
+          >
+            <div>
+              <p class="heading">Costo revisión</p>
+              <p class="title">{{ precioRevision }}</p>
+            </div>
+          </div>
+          <div
+            class="level-item has-text-centered"
+            v-show="facturaServicio.revision_tecnica"
+          >
+            <div>
+              <p class="title is-1">+</p>
+            </div>
+          </div>
           <div class="level-item has-text-centered">
             <div>
               <p class="heading">Repuestos</p>
@@ -88,7 +140,7 @@
               >
             </div>
             <div class="control">
-              <b-button type="is-primary is-outlined" @click="$router.back()"
+              <b-button type="is-primary is-outlined" @click="cancelar"
                 >Cancelar</b-button
               >
             </div>
@@ -116,13 +168,15 @@ export default {
         cliente: null,
         mecanico: null,
         vehiculo: null,
+        revision_tecnica: null,
         fecha_emision: dayjs().format("YYYY-MM-DD"),
         fecha_proxima_revision: dayjs().format("YYYY-MM-DD"),
         kilometraje_actual: 0,
         costo_revision: 0,
         total: 0,
         detalle_servicio: []
-      }
+      },
+      revisionSeleccionada: {}
     };
   },
   computed: {
@@ -133,8 +187,11 @@ export default {
         0
       );
     },
+    precioRevision() {
+      return this.revisionSeleccionada.costo_revision || 0;
+    },
     precioTotal() {
-      return this.precioRepuestos;
+      return this.precioRevision + this.precioRepuestos;
     },
     fecha_emision: {
       get() {
@@ -152,6 +209,10 @@ export default {
       this.$refs.SeleccionarCliente.establecerCampoVisible(
         entidad.nombre_cliente
       );
+      if (entidad.revision_tecnica)
+        this.$refs.SeleccionarRevision.recuperarEntidad(
+          entidad.revision_tecnica
+        );
     },
     seleccionarEquipamiento(repuesto) {
       if (
@@ -166,6 +227,7 @@ export default {
     },
     crearDetalle(repuesto) {
       return {
+        repuesto: repuesto.id,
         descripcion: repuesto.nombre,
         precio: repuesto.precio,
         cantidad: 1,

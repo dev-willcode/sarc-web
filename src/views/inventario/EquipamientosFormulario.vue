@@ -59,7 +59,7 @@
               >
             </div>
             <div class="control">
-              <b-button type="is-primary is-outlined" @click="$router.back()"
+              <b-button type="is-primary is-outlined" @click="cancelar"
                 >Cancelar</b-button
               >
             </div>

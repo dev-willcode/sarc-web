@@ -7,13 +7,13 @@ export default [
         to: "/apps/",
         label: "Inicio",
         icon: "home",
-        permisos: ["Cliente", "Vendedor", "Mecanico"]
+        permisos: ["Admin", "Cliente", "Vendedor", "Mecanico"]
       },
       {
         to: "/apps/perfil",
         label: "Mi perifl",
         icon: "user-cog",
-        permisos: ["Cliente", "Vendedor", "Mecanico"]
+        permisos: ["Admin", "Cliente", "Vendedor", "Mecanico"]
       }
     ]
   },

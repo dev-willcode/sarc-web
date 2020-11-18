@@ -5,7 +5,7 @@
       type="is-primary"
       icon-pack="fas"
       :icon-left="icon"
-      @click="abrirModal"
+      @click="abrirModal('modalSeleccionar')"
     >
       {{ label }}
     </b-button>
@@ -28,7 +28,7 @@
               icon-left="search"
               type="is-primary"
               class="ml-2"
-              @click="abrirModal"
+              @click="abrirModal('modalSeleccionar')"
               v-if="!disabled"
             />
             <b-button
@@ -44,7 +44,7 @@
         </div>
       </b-field>
     </validation-provider>
-    <b-modal v-model="modalActivo">
+    <b-modal v-model="modalSeleccionar">
       <div class="modal-card" style="width: auto">
         <header class="modal-card-head">
           <p class="modal-card-title">Seleccione un registro ...</p>
@@ -53,23 +53,34 @@
           <card-component
             class="has-table has-mobile-sort-spaced"
             :title="configuracion.titulo"
-            v-if="modalActivo"
           >
             <tabla-seleccionable
               :url="configuracion.urlListado"
               :argumentos="argumentos"
               :configuracion="configuracion.listado"
               @seleccionar="establecerEntidad"
+              v-if="!mostrarFormulario"
             />
+            <component
+              v-else
+              :is="formulario"
+              :config="configuracion"
+              :accionesFormulario="accionesFormulario"
+            >
+            </component>
           </card-component>
         </section>
         <footer class="modal-card-foot is-justify-content-flex-end">
           <b-button
-            type="is-primary"
-            @click="$router.push({ name: configuracion.formulario })"
-            >Crear registro</b-button
+            :type="!mostrarFormulario ? 'is-primary' : 'is-secondary'"
+            @click="visualizarFormulario"
+            >{{
+              !mostrarFormulario ? "Crear registro" : "Volver al listado"
+            }}</b-button
           >
-          <b-button type="is-danger" @click="cerrarModal()">Cancelar</b-button>
+          <b-button type="is-danger" @click="cerrarModal('modalSeleccionar')"
+            >Cancelar</b-button
+          >
         </footer>
       </div>
     </b-modal>
@@ -80,6 +91,8 @@
 import baseComponente from "@/components/shared/bases/baseComponente";
 import TablaSeleccionable from "@/components/application/TablaSeleccionable";
 import CardComponent from "@/components/application/CardComponent";
+import formularios from "@/router/Routing/formularios";
+
 export default {
   name: "SeleccionarEntidad",
   mixins: [baseComponente],
@@ -99,13 +112,31 @@ export default {
   },
   data() {
     return {
-      modalActivo: false,
+      modalSeleccionar: false,
+      mostrarFormulario: false,
+      formulario: null,
+      accionesFormulario: {
+        guardar: () => this.visualizarFormulario(),
+        cancelar: () => this.visualizarFormulario()
+      },
       entidad: {}
     };
   },
   computed: {},
-  created() {},
+  created() {
+    let formulario = Object.values(formularios).find((elem) => {
+      return elem.name === this.configuracion.formulario;
+    });
+    if (formulario) {
+      formulario.component().then((value) => {
+        this.formulario = value.default;
+      });
+    }
+  },
   methods: {
+    visualizarFormulario() {
+      this.mostrarFormulario = !this.mostrarFormulario;
+    },
     establecerCampoVisible(dato) {
       this.entidad = {};
       this.entidad[this.fieldVisible] = dato;
@@ -121,17 +152,18 @@ export default {
       this.$emit("input", entidad.id);
       this.$emit("modelo", entidad);
       this.entidad = entidad;
-      this.cerrarModal();
+      this.cerrarModal("modalSeleccionar");
     },
     resetear() {
       this.$emit("input", null);
       this.entidad = {};
     },
-    abrirModal() {
-      this.modalActivo = true;
+    abrirModal(modal) {
+      this[modal] = true;
     },
-    cerrarModal() {
-      this.modalActivo = false;
+    cerrarModal(modal) {
+      this.mostrarFormulario = false;
+      this[modal] = false;
     }
   }
 };

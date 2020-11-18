@@ -5,7 +5,12 @@ import baseComponente from "@/components/shared/bases/baseComponente";
 export default {
   mixins: [baseComponente],
   props: {
-    id: Number
+    id: Number,
+    accionesFormulario: {
+      type: Object,
+      default: () => new Object()
+    },
+    config: Object
   },
   components: { CardComponent },
   data() {
@@ -16,7 +21,7 @@ export default {
       return !this.id ? "NUEVO" : "MODIFICAR";
     },
     configuracion() {
-      return this.$parent.$parent.configuracion;
+      return this.config || this.$parent.$parent.configuracion;
     }
   },
   created() {
@@ -52,7 +57,9 @@ export default {
         (response) => {
           if (response.status == 201) {
             this.emitirMensaje("Guardado con éxito!", "is-success");
-            this.$router.back();
+            if (this.accionesFormulario && this.accionesFormulario["guardar"]) {
+              this.accionesFormulario["guardar"]();
+            } else this.$router.back();
           } else this.notificarErrores(response);
         }
       );
@@ -79,7 +86,9 @@ export default {
         (response) => {
           if (response.status == 200) {
             this.emitirMensaje("Editado con éxito!", "is-success");
-            this.$router.back();
+            if (this.accionesFormulario && this.accionesFormulario["editar"]) {
+              this.accionesFormulario["editar"]();
+            } else this.$router.back();
           } else this.notificarErrores(response);
         }
       );
@@ -93,10 +102,20 @@ export default {
         (response) => {
           if (response.status == 200) {
             this.emitirMensaje("Eliminado con éxito!", "is-success");
-            this.$router.back();
+            if (
+              this.accionesFormulario &&
+              this.accionesFormulario["eliminar"]
+            ) {
+              this.accionesFormulario["eliminar"]();
+            } else this.$router.back();
           } else this.notificarErrores(response);
         }
       );
+    },
+    cancelar() {
+      if (this.accionesFormulario && this.accionesFormulario["cancelar"]) {
+        this.accionesFormulario["cancelar"]();
+      } else this.$router.back();
     }
   }
 };

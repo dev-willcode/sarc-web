@@ -35,9 +35,11 @@ export default {
   },
   methods: {
     haveItemPermission(menu) {
-      return menu.vistas.some((vista) =>
-        vista.permisos.includes(this.usuario.tipo)
-      );
+      return this.usuario
+        ? menu.vistas.some((vista) =>
+            vista.permisos.includes(this.usuario.tipo)
+          )
+        : false;
     }
   }
 };

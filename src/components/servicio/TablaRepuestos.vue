@@ -2,7 +2,7 @@
   <card-component class="has-table has-mobile-sort-spaced" :title="label">
     <template slot="card-header">
       <seleccionar-entidad
-        label="Añadir"
+        label="Añadir repuesto"
         type="button"
         icon="plus"
         argumentos="?cantidad__gt=0"
@@ -28,6 +28,7 @@ export default {
   mixins: [baseComponente],
   components: { CardComponent, TablaEditable, SeleccionarEntidad },
   props: {
+    accion: String,
     value: Array,
     label: String,
     configuracion: Array
@@ -43,7 +44,7 @@ export default {
         {
           label: "cantidad",
           field: "cantidad",
-          editable: true,
+          editable: this.accion === "NUEVO",
           type: "integer",
           rules: (data) => {
             return {

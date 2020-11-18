@@ -19,7 +19,7 @@
               class="b-button is-primary is-inverted is-outlined"
               @click="$router.push('/login/register')"
             >
-              Resgistrarse
+              Registrarse
             </b-button>
           </div>
         </div>
@@ -105,7 +105,7 @@
               class="b-button is-primary"
               @click="$router.push('/login/sesion')"
             >
-              Reservar una cita
+              Ingrese al sistema para reservar una cita
             </b-button>
           </div>
         </div>

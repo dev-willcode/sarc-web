@@ -21,12 +21,12 @@
       :class="{ 'is-active': isMenuNavBarActive }"
     >
       <div class="navbar-end">
-        <nav-bar-menu class="has-divider has-user-avatar">
+        <nav-bar-menu class="has-divider has-user-avatar" v-if="usuario">
           <b-icon pack="fas" icon="user" custom-size="default"></b-icon>
           <div class="is-user-name">
             <span>{{ usuario.nombre }}</span>
           </div>
-          <div slot="dropdown" class="navbar-dropdown">
+          <div slot="dropdown" class="navbar-dropdown is-right">
             <a class="navbar-item" @click="cerrar">
               <b-icon icon="logout" custom-size="default"></b-icon>
               <span>Cerrar sesión</span>
