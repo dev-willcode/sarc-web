@@ -20,6 +20,9 @@ const configuraciones = {
     this.configurarDecimales();
   },
   configurarAxios() {
+    // local development
+    // axios.defaults.baseURL = "http://localhost:8000/api/";
+    // production
     axios.defaults.baseURL = "http://localhost:8000/api/";
     axios.defaults.headers.post["Content-Type"] = "application/json";
   },
