@@ -29,6 +29,23 @@ export default [
     ]
   },
   {
+    modulo: "Reportes",
+    vistas: [
+      {
+        to: "/apps/reporte_modelos",
+        label: "Venta de modelos",
+        icon: "car",
+        permisos: ["Admin"]
+      },
+      {
+        to: "/apps/reporte_vendedores",
+        label: "Mejores vendedores",
+        icon: "user-tie",
+        permisos: ["Admin"]
+      }
+    ]
+  },
+  {
     modulo: "Inventario",
     vistas: [
       {

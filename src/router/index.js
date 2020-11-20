@@ -45,6 +45,16 @@ const routes = [
         name: "citasCliente",
         component: () => import("@/views/Perfil/Citas")
       },
+      {
+        path: "reporte_modelos",
+        name: "reporteModelos",
+        component: () => import("@/views/Reportes/ModelosVendidos")
+      },
+      {
+        path: "reporte_vendedores",
+        name: "reporteVendedores",
+        component: () => import("@/views/Reportes/MejoresVendedores")
+      },
       ...vistas
     ]
   }

@@ -21,9 +21,9 @@ const configuraciones = {
   },
   configurarAxios() {
     // local development
-    // axios.defaults.baseURL = "http://localhost:8000/api/";
+    axios.defaults.baseURL = "http://localhost:8000/api/";
     // production
-    axios.defaults.baseURL = "https://rest-service-sarc.herokuapp.com/api/";
+    // axios.defaults.baseURL = "https://rest-service-sarc.herokuapp.com/api/";
     axios.defaults.headers.post["Content-Type"] = "application/json";
   },
   configurarValidaciones() {
