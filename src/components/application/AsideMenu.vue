@@ -1,8 +1,10 @@
 <template>
   <aside v-show="isAsideVisible" class="aside is-placed-left is-expanded">
-    <aside-tools :is-main-menu="true">
-      <span slot="label"> <b>SARC</b> Systems </span>
-    </aside-tools>
+    <div class="aside-tools">
+      <div class="aside-tools-label">
+        <span> <b>SARC</b> Systems </span>
+      </div>
+    </div>
     <div class="menu is-menu-main">
       <template v-for="(menu, index) in menu">
         <span :key="`modulo_${index}`" v-if="haveItemPermission(menu)">
@@ -18,12 +20,11 @@
 
 <script>
 import { mapState } from "vuex";
-import AsideTools from "@/components/application/AsideTools";
 import AsideMenuList from "@/components/application/AsideMenuList";
 
 export default {
   name: "AsideMenu",
-  components: { AsideTools, AsideMenuList },
+  components: { AsideMenuList },
   props: {
     menu: {
       type: Array,
