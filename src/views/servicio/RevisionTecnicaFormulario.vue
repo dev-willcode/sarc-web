@@ -123,7 +123,42 @@
             </validation-provider>
           </section>
         </div>
-
+        <tabla-revision-tecnica
+          ref="TablaRevision"
+          label="Detalle de la revisión"
+          v-model="revisionTecnica.revision_detalle"
+          :accion="accion"
+        />
+        <section class="level box">
+          <div class="level-item has-text-centered">
+            <div>
+              <p class="heading">Total de revisión</p>
+              <p class="title">{{ precioRevision }}</p>
+            </div>
+          </div>
+          <div class="level-item has-text-centered">
+            <div>
+              <p class="title is-1">+</p>
+            </div>
+          </div>
+          <div class="level-item has-text-centered">
+            <div>
+              <p class="heading">Total de detalles</p>
+              <p class="title">{{ precioDetalle }}</p>
+            </div>
+          </div>
+          <div class="level-item has-text-centered">
+            <div>
+              <p class="title is-1">=</p>
+            </div>
+          </div>
+          <div class="level-item has-text-centered">
+            <div>
+              <p class="heading">total</p>
+              <p class="title">{{ precioTotal }}</p>
+            </div>
+          </div>
+        </section>
         <br />
         <b-field horizontal>
           <b-field grouped>
@@ -159,11 +194,12 @@
 import dayjs from "dayjs";
 import baseFormulario from "@/components/shared/bases/baseFormulario";
 import SeleccionarEntidad from "@/components/application/SeleccionarEntidad";
+import TablaRevisionTecnica from "@/components/servicio/TablaRevisionTecnica";
 
 export default {
   name: "RevisionTecnicaFormulario",
   mixins: [baseFormulario],
-  components: { SeleccionarEntidad },
+  components: { SeleccionarEntidad, TablaRevisionTecnica },
   data() {
     return {
       entidad: "revisionTecnica",
@@ -175,7 +211,7 @@ export default {
         fecha_proxima_revision: dayjs().format("YYYY-MM-DD"),
         kilometraje_actual: 0,
         costo_revision: 0,
-        total: 0
+        revision_detalle: []
       }
     };
   },
@@ -201,6 +237,19 @@ export default {
           "YYYY-MM-DD"
         );
       }
+    },
+    precioRevision() {
+      return parseFloat(this.revisionTecnica.costo_revision || 0);
+    },
+    precioDetalle() {
+      return this.revisionTecnica.revision_detalle.reduce(
+        (acumulador, elem) =>
+          (acumulador += parseFloat(elem.precio) * parseFloat(elem.cantidad)),
+        0
+      );
+    },
+    precioTotal() {
+      return this.precioRevision + this.precioDetalle;
     }
   },
   methods: {

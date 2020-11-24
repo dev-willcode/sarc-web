@@ -75,7 +75,8 @@
                     :class="valid ? 'is-success' : 'is-danger'"
                     :options="{
                       decimalPlaces: 0,
-                      emptyInputBehavior: 'zero'
+                      emptyInputBehavior: 'zero',
+                      minimumValue: 0
                     }"
                     v-model="modeloAuto.cilindraje"
                     placeholder="cilindraje..."
@@ -96,7 +97,8 @@
                     :class="valid ? 'is-success' : 'is-danger'"
                     :options="{
                       currencySymbol: '$',
-                      emptyInputBehavior: 'zero'
+                      emptyInputBehavior: 'zero',
+                      minimumValue: 0
                     }"
                     v-model="modeloAuto.precio"
                     placeholder="precio..."
@@ -134,15 +136,75 @@
             </validation-provider>
           </section>
           <section class="column">
-            <tabla-equipamientos
-              ref="TablaEquipamientos"
-              label="Equipamientos del auto por defecto"
-              v-model="listados.equipamientos"
-              :configuracion="equipamientoConfiguracion"
-              @seleccionar="seleccionarEquipamiento"
-            />
+            <validation-provider rules="required" v-slot="{ errors, valid }">
+              <b-field
+                label="Tipo de freno"
+                horizontal
+                :type="errors[0] ? 'is-danger' : valid ? 'is-success' : ''"
+              >
+                <div class="row">
+                  <b-select
+                    v-model="modeloAuto.tipos_freno"
+                    placeholder="Elija el tipo de freno..."
+                    expanded
+                  >
+                    <option
+                      v-for="tipoFreno in tipoFrenoListado"
+                      :value="tipoFreno"
+                      :key="tipoFreno"
+                    >
+                      {{ tipoFreno }}
+                    </option>
+                  </b-select>
+                  <span class="has-text-danger">{{ errors[0] }}</span>
+                </div>
+              </b-field>
+            </validation-provider>
+            <validation-provider rules="required" v-slot="{ errors, valid }">
+              <b-field
+                label="Transmisión"
+                horizontal
+                :type="errors[0] ? 'is-danger' : valid ? 'is-success' : ''"
+              >
+                <div class="row">
+                  <b-select
+                    v-model="modeloAuto.transmision"
+                    placeholder="Elija la transmisión..."
+                    expanded
+                  >
+                    <option
+                      v-for="transmision in transmisionListado"
+                      :value="transmision"
+                      :key="transmision"
+                    >
+                      {{ transmision }}
+                    </option>
+                  </b-select>
+                  <span class="has-text-danger">{{ errors[0] }}</span>
+                </div>
+              </b-field>
+            </validation-provider>
+            <b-field label="Observaciones">
+              <b-input
+                maxlength="255"
+                type="textarea"
+                v-model="modeloAuto.observaciones"
+                placeholder="observaciones adicionales..."
+              />
+            </b-field>
           </section>
         </div>
+        <tabla-equipamientos
+          ref="TablaEquipamientos"
+          label="Equipamientos del auto por defecto"
+          v-model="listados.equipamientos"
+          :configuracion="equipamientoConfiguracion"
+          @seleccionar="seleccionarEquipamiento"
+        />
+        <Modelo-auto-imagenes
+          ref="modeloImagenes"
+          v-model="listados.modelo_imagenes"
+        />
         <br />
         <b-field horizontal>
           <b-field grouped>
@@ -175,12 +237,15 @@
 </template>
 
 <script>
+import axios from "axios";
 import baseFormulario from "@/components/shared/bases/baseFormulario";
 import TablaEquipamientos from "@/components/inventario/TablaEquipamientos";
+import ModeloAutoImagenes from "@/components/inventario/ModeloAutoImagenes";
+
 export default {
   name: "ModeloAutoFormulario",
   mixins: [baseFormulario],
-  components: { TablaEquipamientos },
+  components: { TablaEquipamientos, ModeloAutoImagenes },
   data() {
     return {
       entidad: "modeloAuto",
@@ -191,11 +256,18 @@ export default {
         cilindraje: 0,
         precio: 0,
         descuento: 0,
-        equipamientos: []
+        equipamientos: [],
+        modelo_imagenes: [],
+        transmision: "Manual",
+        tipos_freno: "Disco",
+        observaciones: ""
       },
       //listados
+      tipoFrenoListado: ["Disco", "Tambor", "ABS"],
+      transmisionListado: ["Manual", "Automática"],
       listados: {
-        equipamientos: []
+        equipamientos: [],
+        modelo_imagenes: []
       },
       marcaListado: [],
       // configuraciones
@@ -216,8 +288,29 @@ export default {
       );
     },
     // @Override
+    despuesGuardar(response) {
+      this.listados.modelo_imagenes.forEach((elem) => {
+        let data = {
+          imagen: elem.imagen,
+          modelo_auto: response.data.id
+        };
+        axios({
+          method: "post",
+          url: "modelo_auto_imagen/",
+          data: this.construirFormData(data),
+          headers: {
+            "Content-Type": "multipart/form-data"
+          }
+        }).then((response) => {
+          console.log(response);
+        });
+      });
+    },
+    // @Override
     despuesObtener(entidad) {
       this.listados.equipamientos = entidad.equipamientos_auto;
+      this.listados.modelo_imagenes = entidad.modelo_imagenes;
+      this.$refs.modeloImagenes.establecerImagenes(entidad.modelo_imagenes);
     },
     seleccionarEquipamiento(equipamiento) {
       let duplicado = !this.listados.equipamientos.some(

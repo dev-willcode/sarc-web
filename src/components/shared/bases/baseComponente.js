@@ -16,7 +16,11 @@ export default {
     peticion({ method, url, payload }, onResolve, onError) {
       this.cargando = true;
       url += url[url.length - 1] === "/" || url.includes("?") ? "" : "/";
-      axios[method](url, payload)
+      axios({
+        method: method,
+        url: url,
+        data: payload
+      })
         .then((response) => {
           onResolve(response);
         })
@@ -37,6 +41,15 @@ export default {
         .finally(() => {
           this.cargando = false;
         });
+    },
+    construirFormData(objeto) {
+      let data = new FormData();
+      for (let atributo in objeto) {
+        if (objeto[atributo] !== null) {
+          data.append(atributo, objeto[atributo]);
+        }
+      }
+      return data;
     },
     notificarErrores(response) {
       this.notificar(
@@ -70,9 +83,6 @@ export default {
     },
     agregarCeros(num, size) {
       return (Math.pow(10, size) + ~~num).toString().substring(1);
-    },
-    corregirNumeric(event, referencia) {
-      referencia.$emit("input", 10);
     }
   }
 };

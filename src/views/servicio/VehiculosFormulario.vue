@@ -31,7 +31,8 @@
             <div class="row">
               <b-input
                 v-model="vehiculo.matricula"
-                placeholder="matrícula..."
+                v-mask="'AAA-####'"
+                placeholder="matrícula en formato AAA-0000 ..."
               />
               <span class="has-text-danger">{{ errors[0] }}</span>
             </div>

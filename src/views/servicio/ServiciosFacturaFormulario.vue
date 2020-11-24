@@ -173,7 +173,6 @@ export default {
         fecha_proxima_revision: dayjs().format("YYYY-MM-DD"),
         kilometraje_actual: 0,
         costo_revision: 0,
-        total: 0,
         detalle_servicio: []
       },
       revisionSeleccionada: {}

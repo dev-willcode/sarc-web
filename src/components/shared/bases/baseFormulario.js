@@ -40,6 +40,11 @@ export default {
      */
     antesGuardar(entidad) {},
     /**
+     * Metodo sobrescribible que se ejecuta despues de guardar la entidad
+     * @param {entidad} entidad
+     */
+    despuesGuardar(entidad) {},
+    /**
      * Metodo sobreescribible que se ejecuta despues de obtener la entidad
      * @param {entidad} entidad
      */
@@ -57,6 +62,7 @@ export default {
         (response) => {
           if (response.status == 201) {
             this.emitirMensaje("Guardado con éxito!", "is-success");
+            this.despuesGuardar(response);
             if (this.accionesFormulario && this.accionesFormulario["guardar"]) {
               this.accionesFormulario["guardar"]();
             } else this.$router.back();
@@ -86,6 +92,7 @@ export default {
         (response) => {
           if (response.status == 200) {
             this.emitirMensaje("Editado con éxito!", "is-success");
+            this.despuesGuardar(response);
             if (this.accionesFormulario && this.accionesFormulario["editar"]) {
               this.accionesFormulario["editar"]();
             } else this.$router.back();
