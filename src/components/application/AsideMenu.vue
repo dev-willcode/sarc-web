@@ -3,8 +3,8 @@
     <div class="aside-tools is-flex is-justify-content-center">
       <div class="is-flex is-justify-content-end">
         <!-- <span> <b>SARC</b> Systems </span> -->
-        <figure class="image is-128x128">
-          <img src="./../../assets/logo.png" alt="SARC Systems" />
+        <figure class="image">
+          <img src="./../../assets/logo.png" class="img" alt="SARC Systems" />
         </figure>
       </div>
     </div>
@@ -48,3 +48,8 @@ export default {
   }
 };
 </script>
+<style>
+.image > .img {
+  width: 150px;
+}
+</style>

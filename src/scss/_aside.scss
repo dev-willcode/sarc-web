@@ -135,12 +135,6 @@ aside.aside {
       display: block;
       left: $aside-mobile-width * -1;
 
-      .image {
-        img {
-          max-width: $aside-mobile-width * 0.33;
-        }
-      }
-
       .menu-list {
         li.is-active {
           ul {

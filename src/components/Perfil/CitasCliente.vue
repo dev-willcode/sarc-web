@@ -80,25 +80,27 @@ export default {
         cliente: null,
         mecanico: null,
         fecha: dayjs().format("YYYY-MM-DD"),
-        hora: "07:00:00"
-      },
-      // listados
-      horarioListado: [
-        { descripcion: "7:00 AM", valor: "07:00:00" },
-        { descripcion: "8:00 AM", valor: "08:00:00" },
-        { descripcion: "9:00 AM", valor: "09:00:00" },
-        { descripcion: "10:00 AM", valor: "10:00:00" },
-        { descripcion: "11:00 AM", valor: "11:00:00" },
-        { descripcion: "12:00 AM", valor: "12:00:00" },
-        { descripcion: "2:00 AM", valor: "14:00:00" },
-        { descripcion: "3:00 AM", valor: "15:00:00" },
-        { descripcion: "4:00 AM", valor: "16:00:00" },
-        { descripcion: "5:00 AM", valor: "17:00:00" }
-      ]
+        hora: null
+      }
     };
   },
   computed: {
     ...mapState(["usuario"]),
+    horarioListado() {
+      let horario = [];
+      let dia = dayjs(new Date())
+        .add(1, "hour")
+        .set("second", 0)
+        .set("minute", 0);
+      while (dia.hour() <= 17) {
+        horario.push({
+          descripcion: dia.format("hh:mm A"),
+          valor: dia.format("hh:mm:ss")
+        });
+        dia = dia.set("hour", dia.hour() + 1);
+      }
+      return horario;
+    },
     fecha: {
       get() {
         return dayjs(this.citas.fecha || new Date()).toDate();

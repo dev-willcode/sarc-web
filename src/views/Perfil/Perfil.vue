@@ -32,20 +32,7 @@ export default {
     HeroBar
   },
   data() {
-    return {
-      cargando: false,
-      perfil: {
-        dni: "",
-        nombre: "",
-        correo: "",
-        domicilio: ""
-      },
-      contrasena: {
-        actual: "",
-        nueva: "",
-        confirmada: ""
-      }
-    };
+    return {};
   },
   methods: {}
 };
