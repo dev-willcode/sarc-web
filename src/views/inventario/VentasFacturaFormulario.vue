@@ -72,6 +72,7 @@
               field-visible="nombre"
               v-model="ventaFactura.vendedor"
               :configuracion="configuraciones.vendedor"
+              :disabled="usuario.tipo === 'Vendedor'"
             />
 
             <seleccionar-entidad
@@ -126,7 +127,7 @@
           <div class="level-item has-text-centered">
             <div>
               <p class="heading">Precio del auto</p>
-              <p class="title">{{ precioAuto }}</p>
+              <p class="title">{{ precioAuto | filtro_decimales(2) }}</p>
             </div>
           </div>
           <div class="level-item has-text-centered">
@@ -137,7 +138,9 @@
           <div class="level-item has-text-centered">
             <div>
               <p class="heading">Equipamientos</p>
-              <p class="title">{{ precioEquipamientos }}</p>
+              <p class="title">
+                {{ precioEquipamientos | filtro_decimales(2) }}
+              </p>
             </div>
           </div>
           <div class="level-item has-text-centered">
@@ -148,7 +151,7 @@
           <div class="level-item has-text-centered">
             <div>
               <p class="heading">Descuento</p>
-              <p class="title">{{ descuentos }}</p>
+              <p class="title">{{ descuentos | filtro_decimales(2) }}</p>
             </div>
           </div>
           <div class="level-item has-text-centered">
@@ -159,7 +162,7 @@
           <div class="level-item has-text-centered">
             <div>
               <p class="heading">total</p>
-              <p class="title">{{ precioTotal }}</p>
+              <p class="title">{{ precioTotal | filtro_decimales(2) }}</p>
             </div>
           </div>
         </section>
@@ -199,7 +202,7 @@ import dayjs from "dayjs";
 import baseFormulario from "@/components/shared/bases/baseFormulario";
 import SeleccionarEntidad from "@/components/application/SeleccionarEntidad";
 import TablaEquipamientos from "@/components/inventario/TablaEquipamientos";
-
+import { mapState } from "vuex";
 export default {
   name: "VentaFactura",
   mixins: [baseFormulario],
@@ -228,7 +231,13 @@ export default {
       ]
     };
   },
+  mounted() {
+    if (this.usuario.tipo === "Vendedor") {
+      this.$refs.SeleccionarVendedor.recuperarEntidad(this.usuario.id);
+    }
+  },
   computed: {
+    ...mapState(["usuario"]),
     descuentos() {
       return parseFloat(this.ventaFactura.descuento || 0);
     },

@@ -18,7 +18,7 @@ export default new Vuex.Store({
       localStorage.setItem("usuario", JSON.stringify(usuario));
     },
     cerrarSesion(state) {
-      state.usuario = null;
+      state.usuario = {};
       localStorage.removeItem("usuario");
     },
 

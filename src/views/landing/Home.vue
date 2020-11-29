@@ -25,7 +25,7 @@
         </div>
       </div>
     </section>
-    <Vehiculos-landing />
+    <vehiculos-landing />
     <section id="section-1" class="section">
       <div class="container">
         <div class="column">

@@ -1,8 +1,32 @@
 <template>
   <section>
+    <b-carousel-list :data="renderFiles" :items-to-show="4">
+      <template v-slot:item="{ list }">
+        <div class="card">
+          <div class="card-image">
+            <figure class="image is-4by3">
+              <img :src="list.imagen" />
+            </figure>
+          </div>
+          <div class="card-content">
+            <div class="field is-grouped">
+              <b-button
+                icon-pack="fas"
+                icon-left="times"
+                type="is-danger"
+                size="is-small"
+                expanded
+                @click="borrarImagen(list.imagen)"
+              >
+                Eliminar
+              </b-button>
+            </div>
+          </div>
+        </div>
+      </template>
+    </b-carousel-list>
     <b-field>
       <b-upload
-        v-model="dropFiles"
         multiple
         drag-drop
         expanded
@@ -19,28 +43,10 @@
         </section>
       </b-upload>
     </b-field>
-    <b-carousel-list :data="renderFiles" :items-to-show="4">
-      <template v-slot:item="{ list }">
-        <div class="card">
-          <figure class="image">
-            <img :src="list.img" />
-          </figure>
-          <b-button
-            icon-pack="fas"
-            icon-left="times"
-            type="is-danger"
-            size="is-small"
-            style="position: absolute; top: 5px; right: 5px"
-            @click="borrarImagen(list.img)"
-          />
-        </div>
-      </template>
-    </b-carousel-list>
   </section>
 </template>
 
 <script>
-import axios from "axios";
 import baseComponente from "@/components/shared/bases/baseComponente";
 
 export default {
@@ -52,7 +58,6 @@ export default {
   },
   data() {
     return {
-      dropFiles: [],
       renderFiles: []
     };
   },
@@ -75,31 +80,19 @@ export default {
     async seleccionarImagenes(listado) {
       listado.forEach(async (elemento) => {
         this.value.push({ imagen: elemento });
-        this.renderFiles.push({ img: await this.devolverImagen(elemento) });
+        this.renderFiles.push({ imagen: await this.devolverImagen(elemento) });
       });
     },
     borrarImagen(imagen) {
-      let index = this.renderFiles.findIndex((elem) => elem.img === imagen);
+      let index = this.renderFiles.findIndex((elem) => elem.imagen === imagen);
       if (index >= 0) {
-        this.renderFiles.splice(index, 1);
-        this.value.splice(index, 1);
+        let value = this.renderFiles.splice(index, 1);
+        if (typeof imagen !== "string") this.value.splice(index, 1);
+        else this.$emit("eliminar", value[0].id);
       }
     },
     establecerImagenes(listado) {
-      this.renderFiles = [];
-      listado.forEach((elem) => {
-        axios({
-          url: elem.imagen,
-          method: "GET",
-          responseType: "blob"
-        }).then(async (response) => {
-          let doc = new Blob([response.data], { type: "image/jpg" });
-          doc.lastModifiedDate = new Date();
-          doc.name = "img.jpg";
-          this.value.push({ imagen: doc });
-          this.renderFiles.push({ img: await this.devolverImagen(doc) });
-        });
-      });
+      this.renderFiles = [...listado];
     }
   }
 };

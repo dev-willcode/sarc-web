@@ -9,9 +9,9 @@
       <router-view :key="$route.path" />
       <section
         v-if="['/apps/', '/apps'].includes($route.path)"
-        class="hero is-white is-large m-5"
+        class="columns is-white m-5 has-background-white"
       >
-        <section class="column is-6 has-background-white m-5">
+        <section class="column is-6 m-5">
           <p class="title">
             <span class="is-size-1">Bienvenido a SARC Systems</span>
           </p>
@@ -22,6 +22,13 @@
           <span>
             Hola {{ usuario.nombre }} esperamos que tu estadia sea placentera
           </span>
+        </section>
+        <section
+          class="column is-flex is-justify-content-center is-align-items-center is-hidden-mobile"
+        >
+          <figure class="image">
+            <img src="../assets/logo-negativo.png" alt="SARC systems" />
+          </figure>
         </section>
       </section>
     </div>

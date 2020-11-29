@@ -204,6 +204,7 @@
         <Modelo-auto-imagenes
           ref="modeloImagenes"
           v-model="listados.modelo_imagenes"
+          @eliminar="eliminarImagenes"
         />
         <br />
         <b-field horizontal>
@@ -271,7 +272,8 @@ export default {
       },
       marcaListado: [],
       // configuraciones
-      equipamientoConfiguracion: [{ label: "nombre", field: "nombre" }]
+      equipamientoConfiguracion: [{ label: "nombre", field: "nombre" }],
+      eliminar_imagenes: ""
     };
   },
   created() {
@@ -289,21 +291,19 @@ export default {
     },
     // @Override
     despuesGuardar(response) {
-      this.listados.modelo_imagenes.forEach((elem) => {
-        let data = {
-          imagen: elem.imagen,
-          modelo_auto: response.data.id
-        };
-        axios({
-          method: "post",
-          url: "modelo_auto_imagen/",
-          data: this.construirFormData(data),
-          headers: {
-            "Content-Type": "multipart/form-data"
-          }
-        }).then((response) => {
-          console.log(response);
-        });
+      let datos = new FormData();
+      datos.append("modelo_auto", response.data.id);
+      datos.append("eliminar_imagenes", this.eliminar_imagenes);
+      this.listados.modelo_imagenes.forEach((elem, index) => {
+        datos.append(`imagen_${index}`, elem.imagen);
+      });
+      axios({
+        method: "post",
+        url: "modelo_auto_imagen/",
+        data: datos,
+        headers: {
+          "Content-Type": "multipart/form-data"
+        }
       });
     },
     // @Override
@@ -311,6 +311,9 @@ export default {
       this.listados.equipamientos = entidad.equipamientos_auto;
       this.listados.modelo_imagenes = entidad.modelo_imagenes;
       this.$refs.modeloImagenes.establecerImagenes(entidad.modelo_imagenes);
+    },
+    eliminarImagenes(id) {
+      this.eliminar_imagenes += `${id},`;
     },
     seleccionarEquipamiento(equipamiento) {
       let duplicado = !this.listados.equipamientos.some(

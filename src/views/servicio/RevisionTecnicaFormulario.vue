@@ -18,6 +18,7 @@
               field-visible="nombre"
               v-model="revisionTecnica.mecanico"
               :configuracion="configuraciones.mecanico"
+              :disabled="usuario.tipo === 'Mecanico'"
             />
 
             <seleccionar-entidad
@@ -133,7 +134,7 @@
           <div class="level-item has-text-centered">
             <div>
               <p class="heading">Total de revisión</p>
-              <p class="title">{{ precioRevision }}</p>
+              <p class="title">{{ precioRevision | filtro_decimales(2) }}</p>
             </div>
           </div>
           <div class="level-item has-text-centered">
@@ -144,7 +145,7 @@
           <div class="level-item has-text-centered">
             <div>
               <p class="heading">Total de detalles</p>
-              <p class="title">{{ precioDetalle }}</p>
+              <p class="title">{{ precioDetalle | filtro_decimales(2) }}</p>
             </div>
           </div>
           <div class="level-item has-text-centered">
@@ -155,7 +156,7 @@
           <div class="level-item has-text-centered">
             <div>
               <p class="heading">total</p>
-              <p class="title">{{ precioTotal }}</p>
+              <p class="title">{{ precioTotal | filtro_decimales(2) }}</p>
             </div>
           </div>
         </section>
@@ -195,6 +196,7 @@ import dayjs from "dayjs";
 import baseFormulario from "@/components/shared/bases/baseFormulario";
 import SeleccionarEntidad from "@/components/application/SeleccionarEntidad";
 import TablaRevisionTecnica from "@/components/servicio/TablaRevisionTecnica";
+import { mapState } from "vuex";
 
 export default {
   name: "RevisionTecnicaFormulario",
@@ -215,7 +217,13 @@ export default {
       }
     };
   },
+  mounted() {
+    if (this.usuario.tipo === "Mecanico") {
+      this.$refs.SeleccionarMecanico.recuperarEntidad(this.usuario.id);
+    }
+  },
   computed: {
+    ...mapState(["usuario"]),
     fecha_revision: {
       get() {
         return dayjs(

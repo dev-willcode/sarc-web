@@ -17,13 +17,14 @@ const configuraciones = {
     this.configurarAxios();
     this.configurarValidaciones();
     this.configurarDirectivas();
+    this.configurarFiltros();
     this.configurarDecimales();
   },
   configurarAxios() {
     // local development
-    // axios.defaults.baseURL = "http://localhost:8000/api/";
+    axios.defaults.baseURL = "http://localhost:8000/api/";
     // production
-    axios.defaults.baseURL = "https://rest-service-sarc.herokuapp.com/api/";
+    // axios.defaults.baseURL = "https://rest-service-sarc.herokuapp.com/api/";
     axios.defaults.headers.post["Content-Type"] = "application/json";
   },
   configurarValidaciones() {
@@ -63,6 +64,20 @@ const configuraciones = {
   },
   configurarDecimales() {
     Vue.component("numeric", VueAutonumeric);
+  },
+  configurarFiltros() {
+    const filtro_decimales = {};
+    const convertir_filtro_decimales = (numero_recibido, decimales) => {
+      return parseFloat(numero_recibido)
+        .toFixed(decimales)
+        .replace(/(\d)(?=(\d{3})+\.)/g, "$1,");
+    };
+    filtro_decimales.install = function(Vue) {
+      Vue.filter("filtro_decimales", (numero, decimales) => {
+        return convertir_filtro_decimales(numero, decimales || 6);
+      });
+    };
+    Vue.use(filtro_decimales);
   }
 };
 export default configuraciones;

@@ -11,7 +11,7 @@ export default [
       },
       {
         to: "/apps/perfil",
-        label: "Mi perifl",
+        label: "Mi perfil",
         icon: "user-cog",
         permisos: ["Admin", "Cliente", "Vendedor", "Mecanico"]
       }

@@ -1,8 +1,11 @@
 <template>
   <aside v-show="isAsideVisible" class="aside is-placed-left is-expanded">
-    <div class="aside-tools">
-      <div class="aside-tools-label">
-        <span> <b>SARC</b> Systems </span>
+    <div class="aside-tools is-flex is-justify-content-center">
+      <div class="is-flex is-justify-content-end">
+        <!-- <span> <b>SARC</b> Systems </span> -->
+        <figure class="image is-128x128">
+          <img src="./../../assets/logo.png" alt="SARC Systems" />
+        </figure>
       </div>
     </div>
     <div class="menu is-menu-main">

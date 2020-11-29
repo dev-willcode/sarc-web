@@ -91,7 +91,7 @@
           >
             <div>
               <p class="heading">Costo revisión</p>
-              <p class="title">{{ precioRevision }}</p>
+              <p class="title">{{ precioRevision | filtro_decimales(2) }}</p>
             </div>
           </div>
           <div
@@ -105,7 +105,7 @@
           <div class="level-item has-text-centered">
             <div>
               <p class="heading">Repuestos</p>
-              <p class="title">{{ precioRepuestos }}</p>
+              <p class="title">{{ precioRepuestos | filtro_decimales(2) }}</p>
             </div>
           </div>
           <div class="level-item has-text-centered">
@@ -116,7 +116,7 @@
           <div class="level-item has-text-centered">
             <div>
               <p class="heading">total</p>
-              <p class="title">{{ precioTotal }}</p>
+              <p class="title">{{ precioTotal | filtro_decimales(2) }}</p>
             </div>
           </div>
         </section>
