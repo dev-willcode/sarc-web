@@ -84,12 +84,6 @@ export default {
               "is-danger"
             );
           } else this.notificarErrores(response);
-        },
-        () => {
-          this.emitirMensaje(
-            `Error: Usuario o contrasena incorrectos.`,
-            "is-danger"
-          );
         }
       );
     }

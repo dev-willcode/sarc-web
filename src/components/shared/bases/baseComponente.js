@@ -71,7 +71,7 @@ export default {
     procesarErrores(data) {
       let errores = "";
       for (const error in data) {
-        errores += `${error}: ${data[error][0]}<br/>`;
+        errores += `error: ${data[error][0]}<br/>`;
       }
       return errores;
     },

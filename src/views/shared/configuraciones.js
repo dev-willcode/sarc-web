@@ -145,7 +145,9 @@ export default {
     listado: [
       { label: "cliente", field: "nombre_cliente" },
       { label: "fecha", field: "fecha" },
-      { label: "hora", field: "hora" }
+      { label: "hora", field: "hora" },
+      { label: "Taller", field: "nombre_taller" },
+      { label: "Dirección", field: "direccion_taller" }
     ]
   },
   facturaservicio: {

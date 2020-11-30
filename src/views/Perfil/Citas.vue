@@ -5,8 +5,9 @@
     </hero-bar>
     <section class="p-5">
       <b-notification v-if="citaActual.estado" type="is-success" has-icon>
-        Usted ya tiene una cita separada, porfavor acerquese a las oficinas del
-        servicio <b>{{ citaActual.nombre_servicio }}</b> el dia
+        Usted ya tiene una cita separada, porfavor acerquese al taller
+        <b>{{ citaActual.nombre_taller }}</b> en la dirección
+        <b>{{ citaActual.direccion_taller }}</b> el dia
         <b>{{ citaActual.fecha }}</b> en el horario de
         <b>{{ citaActual.hora }}</b
         >, para que nuestro grupo de tecnicos calificados, atiendan su

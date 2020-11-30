@@ -7,7 +7,7 @@
       ref="tabla"
       :url="configuraciones.citas.urlListado"
       :configuracion="configuracionCitas"
-      :argumentos="`?cliente=${usuario.id}&ordering=-fecha,-hora`"
+      :argumentos="`?cliente=${usuario.id}&ordering=-fecha,-hora,-id`"
       :custom-actions="true"
       @listado="establecerUltimaCita"
     >
