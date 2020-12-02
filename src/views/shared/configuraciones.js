@@ -6,10 +6,10 @@ export default {
     urlListado: "cliente",
     permisos: ["Admin", "Vendedor", "Mecanico"],
     listado: [
-      { label: "dni", field: "dni" },
-      { label: "nombre", field: "nombre" },
-      { label: "domicilio", field: "domicilio" },
-      { label: "correo", field: "correo" }
+      { label: "dni", field: "dni", searchable: true },
+      { label: "nombre", field: "nombre", searchable: true },
+      { label: "domicilio", field: "domicilio", searchable: true },
+      { label: "correo", field: "correo", searchable: true }
     ]
   },
   vendedor: {
@@ -18,10 +18,10 @@ export default {
     urlListado: "vendedor",
     permisos: ["Admin"],
     listado: [
-      { label: "dni", field: "dni" },
-      { label: "nombres", field: "nombre" },
-      { label: "domicilio", field: "domicilio" },
-      { label: "correo", field: "correo" }
+      { label: "dni", field: "dni", searchable: true },
+      { label: "nombres", field: "nombre", searchable: true },
+      { label: "domicilio", field: "domicilio", searchable: true },
+      { label: "correo", field: "correo", searchable: true }
     ]
   },
   servicio: {
@@ -30,10 +30,10 @@ export default {
     urlListado: "servicio",
     permisos: ["Admin"],
     listado: [
-      { label: "dni", field: "dni" },
-      { label: "nombres", field: "nombre" },
-      { label: "domicilio", field: "domicilio" },
-      { label: "tipo", field: "tipo" }
+      { label: "dni", field: "dni", searchable: true },
+      { label: "nombres", field: "nombre", searchable: true },
+      { label: "domicilio", field: "domicilio", searchable: true },
+      { label: "tipo", field: "tipo", searchable: true }
     ]
   },
   marca: {
@@ -41,7 +41,7 @@ export default {
     formulario: "MarcasFormulario",
     urlListado: "marca",
     permisos: ["Admin", "Vendedor"],
-    listado: [{ label: "descripcion", field: "descripcion" }]
+    listado: [{ label: "descripcion", field: "descripcion", searchable: true }]
   },
   equipamiento: {
     titulo: "Equipamientos",
@@ -49,8 +49,8 @@ export default {
     urlListado: "equipamiento",
     permisos: ["Admin", "Vendedor"],
     listado: [
-      { label: "nombre", field: "nombre" },
-      { label: "precio", field: "precio" }
+      { label: "nombre", field: "nombre", searchable: true },
+      { label: "precio", field: "precio", searchable: true }
     ]
   },
   modeloauto: {
@@ -59,10 +59,10 @@ export default {
     urlListado: "modelo_auto",
     permisos: ["Admin", "Vendedor"],
     listado: [
-      { label: "modelo", field: "nombre_modelo" },
-      { label: "potencia", field: "potencia" },
-      { label: "cilindraje", field: "cilindraje" },
-      { label: "precio", field: "precio" }
+      { label: "modelo", field: "nombre_modelo", searchable: true },
+      { label: "potencia", field: "potencia", searchable: true },
+      { label: "cilindraje", field: "cilindraje", searchable: true },
+      { label: "precio", field: "precio", searchable: true }
     ]
   },
   auto: {
@@ -71,10 +71,15 @@ export default {
     urlListado: "auto",
     permisos: ["Admin", "Vendedor"],
     listado: [
-      { label: "bastidor", field: "bastidor" },
-      { label: "modelo", field: "nombre_modelo" },
-      { label: "concesionario", field: "servicio" },
-      { label: "disponible", field: "estado", type: "boolean" }
+      { label: "bastidor", field: "bastidor", searchable: true },
+      { label: "modelo", field: "nombre_modelo", searchable: true },
+      { label: "concesionario", field: "servicio", searchable: true },
+      {
+        label: "disponible",
+        field: "estado",
+        searchable: true,
+        type: "boolean"
+      }
     ]
   },
   facturaventa: {
@@ -83,10 +88,10 @@ export default {
     urlListado: "factura_venta",
     permisos: ["Admin", "Vendedor"],
     listado: [
-      { label: "cliente", field: "nombre_cliente" },
-      { label: "modelo", field: "nombre_modelo" },
-      { label: "fecha", field: "fecha_emision" },
-      { label: "precio", field: "precio" }
+      { label: "cliente", field: "nombre_cliente", searchable: true },
+      { label: "modelo", field: "nombre_modelo", searchable: true },
+      { label: "fecha", field: "fecha_emision", searchable: true },
+      { label: "precio", field: "precio", searchable: true }
     ]
   },
   // modulo de servicio
@@ -96,10 +101,10 @@ export default {
     urlListado: "mecanico",
     permisos: ["Admin"],
     listado: [
-      { label: "dni", field: "dni" },
-      { label: "nombres", field: "nombre" },
-      { label: "domicilio", field: "domicilio" },
-      { label: "correo", field: "correo" }
+      { label: "dni", field: "dni", searchable: true },
+      { label: "nombres", field: "nombre", searchable: true },
+      { label: "domicilio", field: "domicilio", searchable: true },
+      { label: "correo", field: "correo", searchable: true }
     ]
   },
   vehiculo: {
@@ -108,9 +113,9 @@ export default {
     urlListado: "vehiculo",
     permisos: ["Admin", "Mecanico"],
     listado: [
-      { label: "chasis", field: "chasis" },
-      { label: "matricula", field: "matricula" },
-      { label: "cliente", field: "nombre_cliente" }
+      { label: "chasis", field: "chasis", searchable: true },
+      { label: "matricula", field: "matricula", searchable: true },
+      { label: "cliente", field: "nombre_cliente", searchable: true }
     ]
   },
   repuesto: {
@@ -119,9 +124,9 @@ export default {
     urlListado: "repuestos",
     permisos: ["Admin", "Vendedor", "Mecanico"],
     listado: [
-      { label: "nombre", field: "nombre" },
-      { label: "precio", field: "precio" },
-      { label: "cantidad", field: "cantidad" }
+      { label: "nombre", field: "nombre", searchable: true },
+      { label: "precio", field: "precio", searchable: true },
+      { label: "cantidad", field: "cantidad", searchable: true }
     ]
   },
   revisiontecnica: {
@@ -130,11 +135,15 @@ export default {
     urlListado: "revision_tecnica",
     permisos: ["Admin", "Vendedor", "Mecanico"],
     listado: [
-      { label: "cliente", field: "nombre_cliente" },
-      { label: "vehiculo", field: "matricula" },
-      { label: "fecha revision", field: "fecha_revision" },
-      { label: "fecha proxima revision", field: "fecha_proxima_revision" },
-      { label: "Costo", field: "costo_revision" }
+      { label: "cliente", field: "nombre_cliente", searchable: true },
+      { label: "vehiculo", field: "matricula", searchable: true },
+      { label: "fecha revision", field: "fecha_revision", searchable: true },
+      {
+        label: "fecha proxima revision",
+        field: "fecha_proxima_revision",
+        searchable: true
+      },
+      { label: "Costo", field: "costo_revision", searchable: true }
     ]
   },
   citas: {
@@ -143,11 +152,11 @@ export default {
     urlListado: "citas",
     permisos: ["Admin", "Vendedor", "Mecanico"],
     listado: [
-      { label: "cliente", field: "nombre_cliente" },
-      { label: "fecha", field: "fecha" },
-      { label: "hora", field: "hora" },
-      { label: "Taller", field: "nombre_taller" },
-      { label: "Dirección", field: "direccion_taller" }
+      { label: "cliente", field: "nombre_cliente", searchable: true },
+      { label: "fecha", field: "fecha", searchable: true },
+      { label: "hora", field: "hora", searchable: true },
+      { label: "Taller", field: "nombre_taller", searchable: true },
+      { label: "Dirección", field: "direccion_taller", searchable: true }
     ]
   },
   facturaservicio: {
@@ -156,8 +165,8 @@ export default {
     urlListado: "factura_servicio",
     permisos: ["Admin", "Mecanico"],
     listado: [
-      { label: "cliente", field: "nombre_cliente" },
-      { label: "fecha", field: "fecha_emision" }
+      { label: "cliente", field: "nombre_cliente", searchable: true },
+      { label: "fecha", field: "fecha_emision", searchable: true }
     ]
   }
 };

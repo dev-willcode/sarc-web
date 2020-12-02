@@ -13,21 +13,29 @@
       :hoverable="true"
       :data="listado"
     >
-      <b-table-column
-        v-for="item in configuracion"
-        :key="item.field"
-        :label="item.label"
-        :field="item.field"
-        v-slot="props"
-        sortable
-      >
-        <b-checkbox
-          v-if="item.type === 'boolean'"
-          v-model="props.row[item.field]"
-          disabled
-        ></b-checkbox>
-        <span v-else>{{ props.row[item.field] }}</span>
-      </b-table-column>
+      <template v-for="item in configuracion">
+        <b-table-column :key="item.id" v-bind="item">
+          <template v-if="item.searchable" slot="searchable" slot-scope="props">
+            <b-input
+              v-if="item.type !== 'boolean'"
+              v-model="props.filters[item.field]"
+              placeholder="Buscar..."
+              icon="search"
+              icon-pack="fas"
+              class="is-fullwidth"
+            />
+          </template>
+          <template v-slot="props">
+            <b-checkbox
+              v-if="item.type === 'boolean'"
+              v-model="props.row[item.field]"
+              disabled
+            ></b-checkbox>
+            <span v-else>{{ props.row[item.field] }}</span>
+          </template>
+        </b-table-column>
+      </template>
+
       <b-table-column
         custom-key="actions"
         cell-class="is-actions-cell"

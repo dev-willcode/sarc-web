@@ -5,7 +5,8 @@ table.table {
     }
   }
 
-  td, th {
+  td,
+  th {
     &.checkbox-cell {
       .b-checkbox.checkbox:not(.button) {
         margin-right: 0;
@@ -42,6 +43,9 @@ table.table {
   /* This stylizes buefy's pagination */
   .table-wrapper {
     margin-bottom: 0;
+    .th-wrap > span {
+      width: 100%;
+    }
   }
 
   .table-wrapper + .level {
@@ -62,7 +66,9 @@ table.table {
       }
     }
 
-    .pagination-previous, .pagination-next, .pagination-link {
+    .pagination-previous,
+    .pagination-next,
+    .pagination-link {
       border-color: $button-border-color;
       color: $base-color;
 
@@ -93,24 +99,25 @@ table.table {
     &.has-mobile-sort-spaced {
       .b-table {
         .field.table-mobile-sort {
-          padding-top: $default-padding * .5;
+          padding-top: $default-padding * 0.5;
         }
       }
     }
   }
   .b-table {
     .field.table-mobile-sort {
-      padding: 0 $default-padding * .5;
+      padding: 0 $default-padding * 0.5;
     }
 
     .table-wrapper.has-mobile-cards {
       tr {
         box-shadow: 0 2px 3px rgba(10, 10, 10, 0.1);
-        margin-bottom: 3px!important;
+        margin-bottom: 3px !important;
       }
       td {
         &.is-progress-col {
-          span, progress {
+          span,
+          progress {
             display: flex;
             width: 45%;
             align-items: center;
@@ -118,11 +125,13 @@ table.table {
           }
         }
 
-        &.checkbox-cell, &.is-image-cell {
-          border-bottom: 0!important;
+        &.checkbox-cell,
+        &.is-image-cell {
+          border-bottom: 0 !important;
         }
 
-        &.checkbox-cell, &.is-actions-cell {
+        &.checkbox-cell,
+        &.is-actions-cell {
           &:before {
             display: none;
           }
@@ -148,7 +157,7 @@ table.table {
             .image {
               width: $table-avatar-size-mobile;
               height: auto;
-              margin: 0 auto $default-padding * .25;
+              margin: 0 auto $default-padding * 0.25;
             }
           }
         }
